@@ -39,6 +39,20 @@ The UI follows [Neetix](https://neetix.neetokb.com/) best practices such as usin
 3. Send any HTTP request to this URL using `curl` or your integration. The Rails API will store the payload.
 4. Open the URL in your browser to see the list of requests as they arrive. Click a request to view its full details.
 
+### Sending test requests
+
+Use `curl` to hit your generated URL. Replace `<uuid>` with the value shown in the UI:
+
+```bash
+# POST with JSON body
+curl -X POST http://localhost:5173/<uuid> \
+     -H "Content-Type: application/json" \
+     -d '{"hello": "world"}'
+
+# Simple GET
+curl http://localhost:5173/<uuid>
+```
+
 ### Inspecting requests
 
 * After sending requests, open the generated endpoint page in your browser.
