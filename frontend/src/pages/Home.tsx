@@ -21,6 +21,10 @@ const Home: React.FC = () => {
   const [testUrl, setTestUrl] = useState('');
   const [testResult, setTestResult] = useState<{status: number; headers: Record<string,string>; body: string} | null>(null);
 
+  const apiOrigin =
+    (import.meta as any).env.VITE_API_ORIGIN ||
+    window.location.origin.replace(':5173', ':3000');
+
   const createEndpoint = async () => {
     setLoading(true);
     setApiStatus(null);
@@ -28,7 +32,7 @@ const Home: React.FC = () => {
     try {
       const res = await fetch('/api/endpoints', { method: 'POST' });
       const data = await res.json();
-      setCaptureUrl(`${window.location.origin}/${data.uuid}`);
+      setCaptureUrl(`${apiOrigin}/${data.uuid}`);
       setEndpointUrl(`${window.location.origin}/endpoint/${data.uuid}`);
       setEndpointId(data.id);
       setApiStatus(`Success: ${res.status}`);

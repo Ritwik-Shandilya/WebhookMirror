@@ -27,7 +27,10 @@ npm install           # install JavaScript dependencies
 npm run dev           # start Vite dev server on http://localhost:5173
 ```
 
-With both servers running you can browse to `http://localhost:5173` to use the application while it interacts with the Rails API running on port 3000.
+If your Rails server runs on a different port, set `VITE_API_ORIGIN` in
+`frontend/.env` so the frontend knows where to send capture requests.
+
+With both servers running you can browse to `http://localhost:5173` to use the application while it interacts with the Rails API running on port 3000. **When sending requests to your generated URL, be sure to hit the Rails server on port `3000`.**
 
 
 The UI follows [Neetix](https://neetix.neetokb.com/) best practices such as using sentence case and clear loading states.
@@ -35,22 +38,21 @@ The UI follows [Neetix](https://neetix.neetokb.com/) best practices such as usin
 ### Generating a capture URL
 
 1. Visit the homepage and click **Create Endpoint**.
-2. A unique URL containing a UUID will be generated, for example `http://localhost:5173/endpoint/abcd-1234`.
-3. Send any HTTP request to this URL using `curl` or your integration. The Rails API will store the payload.
-4. Open the URL in your browser to see the list of requests as they arrive. Click a request to view its full details.
+2. A unique URL containing a UUID will be generated, for example `http://localhost:3000/abcd-1234`. Send requests to this URL.
+3. Open the link shown in the UI (`/endpoint/abcd-1234`) to see captured requests as they arrive. Click any entry to view full details.
 
 ### Sending test requests
 
-Use `curl` to hit your generated URL. Replace `<uuid>` with the value shown in the UI:
+Use `curl` to hit your generated URL on port `3000`. Replace `<uuid>` with the value shown in the UI:
 
 ```bash
 # POST with JSON body
-curl -X POST http://localhost:5173/<uuid> \
+curl -X POST http://localhost:3000/<uuid> \
      -H "Content-Type: application/json" \
      -d '{"hello": "world"}'
 
 # Simple GET
-curl http://localhost:5173/<uuid>
+curl http://localhost:3000/<uuid>
 ```
 
 ### Inspecting requests
