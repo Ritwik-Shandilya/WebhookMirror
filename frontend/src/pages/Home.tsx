@@ -3,13 +3,28 @@ import React, { useState } from 'react';
 const Home: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [endpointUrl, setEndpointUrl] = useState('');
+  const [apiStatus, setApiStatus] = useState<string | null>(null);
+  const [apiHeaders, setApiHeaders] = useState<Record<string, string> | null>(null);
 
   const createEndpoint = async () => {
     setLoading(true);
-    const res = await fetch('/api/endpoints', { method: 'POST' });
-    const data = await res.json();
-    setLoading(false);
-    setEndpointUrl(`${window.location.origin}/endpoint/${data.uuid}`);
+    setApiStatus(null);
+    setApiHeaders(null);
+    try {
+      const res = await fetch('/api/endpoints', { method: 'POST' });
+      const data = await res.json();
+      setEndpointUrl(`${window.location.origin}/endpoint/${data.uuid}`);
+      setApiStatus(`Success: ${res.status}`);
+      const headersObj: Record<string, string> = {};
+      res.headers.forEach((v, k) => {
+        headersObj[k] = v;
+      });
+      setApiHeaders(headersObj);
+    } catch (err) {
+      setApiStatus('Error creating endpoint');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -25,6 +40,14 @@ const Home: React.FC = () => {
       <button onClick={createEndpoint} disabled={loading} className="btn">
         {loading && <span className="loading-spinner" />} {loading ? 'Creating...' : 'Generate URL'}
       </button>
+      {apiStatus && (
+        <div className="status">
+          <p>{apiStatus}</p>
+          {apiHeaders && (
+            <pre className="headers">{JSON.stringify(apiHeaders, null, 2)}</pre>
+          )}
+        </div>
+      )}
     </div>
   );
 };
