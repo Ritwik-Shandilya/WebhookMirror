@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import EndpointPage from './pages/EndpointPage';
 import RequestPage from './pages/RequestPage';
+import './index.css';
 
 const App = () => (
   <BrowserRouter>
