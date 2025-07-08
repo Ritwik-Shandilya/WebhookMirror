@@ -34,18 +34,20 @@ const EndpointPage: React.FC = () => {
   }, [endpointId]);
 
   return (
-    <div className="p-4 font-sans">
-      <h1 className="text-xl mb-4">Requests for {uuid}</h1>
+    <div className="p-8 space-y-4 font-sans">
+      <h1 className="text-2xl font-semibold">Requests for {uuid}</h1>
       {requests.length === 0 ? (
         <p>No requests yet.</p>
       ) : (
         <ul className="space-y-2">
-          {requests.map((r) => (
-            <li key={r.id} className="border p-2 rounded">
+          {requests.map(r => (
+            <li key={r.id} className="border rounded p-3 space-y-1">
               <div className="font-mono text-sm">
                 <Link to={`/endpoint/${uuid}/request/${r.id}`}>{r.method} - {r.created_at}</Link>
               </div>
-              <pre className="whitespace-pre-wrap text-xs">{r.body}</pre>
+              <pre className="whitespace-pre-wrap text-xs bg-gray-50 p-2 rounded">
+                {r.body}
+              </pre>
             </li>
           ))}
         </ul>
