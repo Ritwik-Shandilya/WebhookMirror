@@ -54,6 +54,8 @@ button:disabled {
   border: 1px solid #bbf7d0;
   padding: 0.5rem;
   border-radius: 4px;
+  overflow-x: auto;
+  white-space: pre-wrap;
 }
 
 .headers {
@@ -61,6 +63,17 @@ button:disabled {
   padding: 0.5rem;
   border-radius: 4px;
   font-size: 0.8rem;
+  overflow-x: auto;
+  word-break: break-all;
+}
+
+.link-box {
+  margin-top: 0.5rem;
+}
+
+.link-box a {
+  color: #2563eb;
+  text-decoration: underline;
 }
 .loading-spinner {
   border: 2px solid rgba(255, 255, 255, 0.3);

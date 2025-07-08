@@ -13,7 +13,7 @@ const Home: React.FC = () => {
     try {
       const res = await fetch('/api/endpoints', { method: 'POST' });
       const data = await res.json();
-      setEndpointUrl(`${window.location.origin}/endpoint/${data.uuid}`);
+      setEndpointUrl(`${window.location.origin}/${data.uuid}`);
       setApiStatus(`Success: ${res.status}`);
       const headersObj: Record<string, string> = {};
       res.headers.forEach((v, k) => {
@@ -37,6 +37,13 @@ const Home: React.FC = () => {
         value={endpointUrl}
         placeholder="Click 'Generate URL' to create an endpoint"
       />
+      {endpointUrl && (
+        <div className="link-box">
+          <a href={endpointUrl} target="_blank" rel="noopener noreferrer">
+            Open endpoint
+          </a>
+        </div>
+      )}
       <button onClick={createEndpoint} disabled={loading} className="btn">
         {loading && <span className="loading-spinner" />} {loading ? 'Creating...' : 'Generate URL'}
       </button>
