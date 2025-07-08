@@ -22,16 +22,20 @@ const RequestPage: React.FC = () => {
     loadRequest();
   }, [id]);
 
-  if (!request) return <div className="p-4">Loading...</div>;
+  if (!request) return <div className="p-8 font-sans">Loading...</div>;
 
   return (
-    <div className="p-4 font-sans">
-      <h1 className="text-xl mb-4">Request {request.id}</h1>
-      <div className="mb-2 font-mono text-sm">{request.method} - {request.created_at}</div>
+    <div className="p-8 space-y-4 font-sans">
+      <h1 className="text-2xl font-semibold">Request {request.id}</h1>
+      <div className="font-mono text-sm">{request.method} - {request.created_at}</div>
       <h2 className="font-semibold">Headers</h2>
-      <pre className="whitespace-pre-wrap text-xs mb-4">{JSON.stringify(request.headers, null, 2)}</pre>
+      <pre className="whitespace-pre-wrap text-xs mb-4 bg-gray-50 p-2 rounded">
+        {JSON.stringify(request.headers, null, 2)}
+      </pre>
       <h2 className="font-semibold">Body</h2>
-      <pre className="whitespace-pre-wrap text-xs">{request.body}</pre>
+      <pre className="whitespace-pre-wrap text-xs bg-gray-50 p-2 rounded">
+        {request.body}
+      </pre>
     </div>
   );
 };
