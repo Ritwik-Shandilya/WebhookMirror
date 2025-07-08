@@ -28,3 +28,19 @@ npm run dev           # start Vite dev server on http://localhost:5173
 ```
 
 With both servers running you can browse to `http://localhost:5173` to use the application while it interacts with the Rails API running on port 3000.
+
+
+The UI follows [Neetix](https://neetix.neetokb.com/) best practices such as using sentence case and clear loading states.
+
+### Generating a capture URL
+
+1. Visit the homepage and click **Create Endpoint**.
+2. A unique URL containing a UUID will be generated, for example `http://localhost:5173/endpoint/abcd-1234`.
+3. Send any HTTP request to this URL using `curl` or your integration. The Rails API will store the payload.
+4. Open the URL in your browser to see the list of requests as they arrive. Click a request to view its full details.
+
+### Inspecting requests
+
+* After sending requests, open the generated endpoint page in your browser.
+* The list of captured requests appears. Click any entry to view full headers and body.
+* Use these details to debug your webhook integrations.
