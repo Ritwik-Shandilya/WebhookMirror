@@ -1,0 +1,13 @@
+# Backend dependencies
+backend/vendor/
+backend/vendor/bundle/
+backend/log/
+backend/tmp/
+
+# Frontend dependencies
+frontend/node_modules/
+frontend/dist/
+
+# Generated files
+backend/db/schema.rb
+frontend/package-lock.json

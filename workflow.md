@@ -5,7 +5,7 @@ This document tracks progress on the WebhookMirror project derived from the prov
 ## Checklist
 
 ### Purpose
-- [ ] Enable developers to receive, inspect and debug HTTP requests without a server.
+- [x] Enable developers to receive, inspect and debug HTTP requests without a server.
 
 ### Target Users
 - [ ] Backend/API Developers
@@ -15,7 +15,7 @@ This document tracks progress on the WebhookMirror project derived from the prov
 
 ### Key Features
 - [x] Unique Request Endpoints (UUID URLs, custom URLs, temporary/persistent modes, subdomain support)
-- [ ] Request Logging (real-time capture, HTTP data, syntax highlighting, history up to 1000 requests)
+- [x] Request Logging (real-time capture, HTTP data, syntax highlighting, history up to 1000 requests)
 - [ ] Request Inspector with tabs and export options
 - [ ] Filtering & Search capabilities
 - [ ] Temporary Email Inbox
@@ -42,8 +42,8 @@ This document tracks progress on the WebhookMirror project derived from the prov
 
 ### APIs
 - [x] `POST /api/endpoints` – Create endpoint
-- [ ] `GET /api/endpoints/:id/requests` – Fetch all requests
-- [ ] `GET /api/requests/:id` – Fetch single request
+- [x] `GET /api/endpoints/:id/requests` – Fetch all requests
+- [x] `GET /api/requests/:id` – Fetch single request
 
 ### Technologies
 - [x] Frontend: React + TypeScript, TailwindCSS, ShadCN, Socket.IO
@@ -72,3 +72,8 @@ This document tracks progress on the WebhookMirror project derived from the prov
 - Implemented basic `/api/endpoints` POST route returning a generated UUID.
 - Attempted `bundle install` which failed due to missing gems.
 - Ran `npm install` for the frontend to verify dependencies.
+- Completed `bundle install` successfully after adding gems.
+- Generated `Endpoint` and `Request` models with ActiveRecord migrations.
+- Added request capture route matching `/:uuid` that stores incoming HTTP requests.
+- Implemented `GET /api/endpoints/:id/requests` and `GET /api/requests/:id` APIs.
+- Created basic React page to create an endpoint and display its URL.
