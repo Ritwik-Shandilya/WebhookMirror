@@ -1,28 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import EndpointPage from './pages/EndpointPage';
+import RequestPage from './pages/RequestPage';
 
-const App = () => {
-  const [endpoint, setEndpoint] = useState<string | null>(null);
-
-  const createEndpoint = async () => {
-    const res = await fetch('/api/endpoints', { method: 'POST' });
-    const data = await res.json();
-    setEndpoint(data.uuid);
-  };
-
-  return (
-    <div className="p-4 font-sans">
-      <h1 className="text-2xl mb-4">WebhookMirror</h1>
-      {endpoint ? (
-        <div>
-          <p>Your endpoint URL:</p>
-          <code>{window.location.origin + '/' + endpoint}</code>
-        </div>
-      ) : (
-        <button onClick={createEndpoint} className="bg-blue-500 text-white px-4 py-2 rounded">Create Endpoint</button>
-      )}
-    </div>
-  );
-};
+const App = () => (
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/endpoint/:uuid" element={<EndpointPage />} />
+      <Route path="/endpoint/:uuid/request/:id" element={<RequestPage />} />
+    </Routes>
+  </BrowserRouter>
+);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(<App />);

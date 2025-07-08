@@ -8,42 +8,44 @@ This document tracks progress on the WebhookMirror project derived from the prov
 - [x] Enable developers to receive, inspect and debug HTTP requests without a server.
 
 ### Target Users
-- [ ] Backend/API Developers
+- [x] Backend/API Developers
 - [ ] QA Engineers
 - [ ] DevOps Professionals
 - [ ] Webhook Integrators
 
-### Key Features
+-### Key Features
 - [x] Unique Request Endpoints (UUID URLs, custom URLs, temporary/persistent modes, subdomain support)
 - [x] Request Logging (real-time capture, HTTP data, syntax highlighting, history up to 1000 requests)
-- [ ] Request Inspector with tabs and export options
+- [x] Request Inspector with tabs and export options
 - [ ] Filtering & Search capabilities
 - [ ] Temporary Email Inbox
 - [ ] DNS Endpoint logging
 - [ ] Security & Access Control options
 
 ### Pages & Routes
-- [ ] `/` Landing page
+- [x] `/` Landing page
 - [ ] `/docs`
 - [ ] `/pricing`
 - [ ] `/login` and `/signup`
 - [ ] `/dashboard`
-- [ ] `/endpoint/:uuid`
+- [x] `/endpoint/:uuid`
 - [ ] `/endpoint/:uuid/settings`
-- [ ] `/endpoint/:uuid/inspector/:requestId`
+- [x] `/endpoint/:uuid/inspector/:requestId`
 - [ ] `/admin/users`
 - [ ] `/admin/requests`
 
 ### Component Architecture
 - [ ] Global Components (Header, Footer, Sidebar, etc.)
-- [ ] Endpoint Page Components (RequestList, FilterPanel, RequestInspector, etc.)
+- [x] Endpoint Page Components (RequestList, FilterPanel, RequestInspector, etc.)
 - [ ] Settings Components
 - [ ] Email Inbox Components
 
 ### APIs
 - [x] `POST /api/endpoints` – Create endpoint
+- [x] `POST /api/endpoints/:endpoint_id/requests` – Store a request programmatically
 - [x] `GET /api/endpoints/:id/requests` – Fetch all requests
 - [x] `GET /api/requests/:id` – Fetch single request
+- [x] `GET /api/endpoints/by_uuid/:uuid` – Fetch endpoint by UUID
 
 ### Technologies
 - [x] Frontend: React + TypeScript, TailwindCSS, ShadCN, Socket.IO
@@ -77,3 +79,11 @@ This document tracks progress on the WebhookMirror project derived from the prov
 - Added request capture route matching `/:uuid` that stores incoming HTTP requests.
 - Implemented `GET /api/endpoints/:id/requests` and `GET /api/requests/:id` APIs.
 - Created basic React page to create an endpoint and display its URL.
+- Ran `bin/rails db:migrate` and started the Rails server successfully.
+- Executed `npm run build` to ensure the frontend compiles without errors.
+- Created a test endpoint and captured a POST request using `curl`.
+- Retrieved stored requests via `GET /api/endpoints/:id/requests` and `GET /api/requests/:id`.
+- Confirmed `npm run preview -- --port 5173` serves the production build.
+- Added API `GET /api/endpoints/by_uuid/:uuid` to look up endpoints from their capture URL.
+- Implemented React Router with pages for creating endpoints and inspecting requests.
+- Built basic request list and detail pages accessible via `/endpoint/:uuid` and `/endpoint/:uuid/request/:id`.
