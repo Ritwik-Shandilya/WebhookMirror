@@ -12,6 +12,7 @@ const WebhookPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [endpointUrl, setEndpointUrl] = useState('');
   const [captureUrl, setCaptureUrl] = useState('');
+  const [curlUrl, setCurlUrl] = useState('');
   const [endpointId, setEndpointId] = useState<number | null>(null);
   const [requests, setRequests] = useState<Req[]>([]);
 
@@ -26,12 +27,15 @@ const WebhookPage: React.FC = () => {
     try {
       const res = await fetch('/api/endpoints', { method: 'POST' });
       const data = await res.json();
-      const { protocol, hostname } = window.location;
-      const baseUrl = hostname === 'localhost'
+      const { protocol, hostname, origin } = window.location;
+      // Display URLs should use the current origin (5173 when running locally)
+      setCaptureUrl(`${origin}/${data.uuid}`);
+      setEndpointUrl(`${origin}/endpoint/${data.uuid}`);
+      // Curl commands hit the Rails API on port 3000 during development
+      const curlBase = hostname === 'localhost'
         ? `${protocol}//${hostname}:3000`
-        : window.location.origin;
-      setCaptureUrl(`${baseUrl}/${data.uuid}`);
-      setEndpointUrl(`${baseUrl}/endpoint/${data.uuid}`);
+        : origin;
+      setCurlUrl(`${curlBase}/${data.uuid}`);
       setEndpointId(data.id);
       setApiStatus(`Success: ${res.status}`);
       const headersObj: Record<string, string> = {};
@@ -79,9 +83,9 @@ const WebhookPage: React.FC = () => {
       {captureUrl && (
         <div className="curl-examples">
           <p className="font-semibold">Example curl POST request</p>
-          <pre className="code-box">{`curl -X POST ${captureUrl} -H "Content-Type: application/json" -d '{"hello":"world"}'`}</pre>
+          <pre className="code-box">{`curl -X POST ${curlUrl} -H "Content-Type: application/json" -d '{"hello":"world"}'`}</pre>
           <p className="font-semibold mt-2">Example curl GET request</p>
-          <pre className="code-box">{`curl ${captureUrl}`}</pre>
+          <pre className="code-box">{`curl ${curlUrl}`}</pre>
         </div>
       )}
       <button onClick={createEndpoint} disabled={loading} className="btn">
