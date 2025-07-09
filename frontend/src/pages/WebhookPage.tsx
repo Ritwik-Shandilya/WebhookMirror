@@ -26,8 +26,12 @@ const WebhookPage: React.FC = () => {
     try {
       const res = await fetch('/api/endpoints', { method: 'POST' });
       const data = await res.json();
-      setCaptureUrl(`${window.location.origin}/${data.uuid}`);
-      setEndpointUrl(`${window.location.origin}/endpoint/${data.uuid}`);
+      const { protocol, hostname } = window.location;
+      const baseUrl = hostname === 'localhost'
+        ? `${protocol}//${hostname}:3000`
+        : window.location.origin;
+      setCaptureUrl(`${baseUrl}/${data.uuid}`);
+      setEndpointUrl(`${baseUrl}/endpoint/${data.uuid}`);
       setEndpointId(data.id);
       setApiStatus(`Success: ${res.status}`);
       const headersObj: Record<string, string> = {};
