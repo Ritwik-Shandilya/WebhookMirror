@@ -30,9 +30,6 @@ yarn dev              # start Vite dev server on http://localhost:5173
 
 With both servers running you can browse to `http://localhost:5173` to use the application while it interacts with the Rails API running on port 3000.
 
-
-The UI follows [Neetix](https://neetix.neetokb.com/) best practices such as using sentence case and clear loading states.
-
 ### Generating a capture URL
 
 1. Visit the homepage and click **Create Endpoint**.

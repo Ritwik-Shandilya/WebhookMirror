@@ -7,7 +7,6 @@ import WebhookPage from './pages/WebhookPage';
 import ApiTesterPage from './pages/ApiTesterPage';
 import EndpointPage from './pages/EndpointPage';
 import RequestPage from './pages/RequestPage';
-import '@bigbinary/neetoui/dist/index.css';
 import './index.scss';
 import { ToastContainer } from 'react-toastify';
 

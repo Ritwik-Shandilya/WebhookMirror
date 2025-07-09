@@ -1,15 +1,10 @@
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Button, Tooltip } from '@bigbinary/neetoui';
-import * as NeetoUI from '@bigbinary/neetoui';
-import { Form, Input, Button as FormButton } from '@bigbinary/neetoui/formik';
-import * as Yup from 'yup';
+// Removed NeetoUI components in favor of simple HTML elements
 
 const LandingPage: React.FC = () => {
   const navigate = useNavigate();
   const [expiresAt, setExpiresAt] = React.useState('');
-  const componentName = 'Badge';
-  const DynamicComponent = (NeetoUI as any)[componentName];
 
   const createEndpoint = async () => {
     try {
@@ -55,32 +50,6 @@ const LandingPage: React.FC = () => {
         <Link to="/api-test" className="btn">API Tester</Link>
       </div>
 
-      <div className="mt-4 space-y-2">
-        <Tooltip content="I am a tooltip">
-          <span>Hover me</span>
-        </Tooltip>
-        <Button label="Click me" style="primary" onClick={() => console.log('clicked')} />
-        {DynamicComponent && <DynamicComponent label="Dynamic!" />}
-
-        <Form
-          formikProps={{
-            initialValues: { name: '', email: '' },
-            validationSchema: Yup.object({
-              name: Yup.string().required('Name is required'),
-              email: Yup.string().email('Invalid email').required('Email is required'),
-            }),
-            onSubmit: values => console.log(values),
-          }}
-        >
-          {(props) => (
-            <>
-              <Input {...props} label="Name" name="name" />
-              <Input {...props} label="Email" name="email" />
-              <FormButton label="Submit" type="submit" style="primary" />
-            </>
-          )}
-        </Form>
-      </div>
     </div>
   );
 };

@@ -10,12 +10,6 @@
   },
   "dependencies": {
     "@babel/runtime": "7.19.0",
-    "@bigbinary/neeto-cist": "^1.0.3",
-    "@bigbinary/neeto-commons-frontend": "^4.13.45",
-    "@bigbinary/neeto-datepicker": "^1.0.4",
-    "@bigbinary/neeto-hotkeys": "^1.0.4",
-    "@bigbinary/neeto-icons": "^1.20.53",
-    "@bigbinary/neetoui": "^8.2.60",
     "@tippyjs/react": "^4.2.6",
     "@wojtekmaj/react-timerange-picker": "^5.5.0",
     "antd": "^5.9.2",
@@ -36,7 +30,7 @@
     "react-i18next": "^11.16.8",
     "react-json-tree": "^0.20.0",
     "react-resizable": "^3.0.4",
-    "react-router-dom": "5.3.3",
+    "react-router-dom": "^6.23.0",
     "react-time-picker": "^6.5.2",
     "react-toastify": "^11.0.5",
     "sass": "^1.89.2",
@@ -50,5 +44,6 @@
     "@vitejs/plugin-react": "^4.0.0",
     "typescript": "^5.2.0",
     "vite": "^5.0.0"
-  }
+  },
+  "packageManager": "yarn@4.9.2"
 }
