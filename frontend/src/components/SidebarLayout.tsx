@@ -33,7 +33,17 @@ const SidebarLayout: React.FC<Props> = ({ children }) => {
             <span className="logo-text">Webhook Mirror</span>
           </Link>
         </div>
-        <button className="nav-item" onClick={startTesting}>Start Testing</button>
+        <div
+          className="nav-item"
+          role="button"
+          tabIndex={0}
+          onClick={startTesting}
+          onKeyDown={e => {
+            if (e.key === 'Enter' || e.key === ' ') startTesting();
+          }}
+        >
+          Start Testing
+        </div>
         <Link to="/dashboard" className="nav-item">Dashboard</Link>
         <Link to="/api-test" className="nav-item">API Tester</Link>
       </div>
