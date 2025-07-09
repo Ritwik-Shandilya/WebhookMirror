@@ -5,6 +5,7 @@ interface Endpoint {
   id: number;
   uuid: string;
   created_at: string;
+  expires_at: string | null;
   disabled: boolean;
   can_delete: boolean;
   delete_reason: string | null;
@@ -13,6 +14,7 @@ interface Endpoint {
 const DashboardPage: React.FC = () => {
   const [endpoints, setEndpoints] = useState<Endpoint[]>([]);
   const [loading, setLoading] = useState(false);
+  const [expiresAt, setExpiresAt] = useState('');
 
   const loadEndpoints = async () => {
     setLoading(true);
@@ -45,7 +47,12 @@ const DashboardPage: React.FC = () => {
   }, [endpoints]);
 
   const createEndpoint = async () => {
-    await fetch('/api/endpoints', { method: 'POST' });
+    await fetch('/api/endpoints', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ expires_at: expiresAt || null })
+    });
+    setExpiresAt('');
     loadEndpoints();
   };
 
@@ -75,58 +82,85 @@ const DashboardPage: React.FC = () => {
       <div className="mb-2 text-sm">
         <Link to="/" className="btn">Back to home</Link>
       </div>
-      <button className="btn mb-4" onClick={createEndpoint}>Create new endpoint</button>
+      <div className="mb-4 flex" style={{gap: '0.5rem', alignItems: 'center'}}>
+        <input
+          type="datetime-local"
+          className="url-box"
+          value={expiresAt}
+          onChange={e => setExpiresAt(e.target.value)}
+          placeholder="Expiry (optional)"
+        />
+        <button className="btn" onClick={createEndpoint}>Create new endpoint</button>
+      </div>
       {loading ? <p>Loading...</p> : (
         <table className="w-full text-left table">
           <thead>
-            <tr><th>UUID</th><th>Created</th><th>Actions</th></tr>
+            <tr><th>UUID</th><th>Created</th><th>Expires</th><th>Actions</th></tr>
           </thead>
           <tbody>
             {groups.today.length > 0 && (
-              <tr><th colSpan={3} className="group-header">Today</th></tr>
+            <tr><th colSpan={4} className="group-header">Today</th></tr>
             )}
             {groups.today.map(e => (
               <tr key={e.id} className="endpoint-row">
                 <td><Link to={`/endpoint/${e.uuid}`}>{e.uuid}</Link></td>
                 <td>{new Date(e.created_at).toLocaleString()}</td>
+                <td>{e.expires_at ? new Date(e.expires_at).toLocaleString() : 'None'}</td>
                 <td>
                   <button className="btn mr-1" onClick={() => toggleDisabled(e.id, !e.disabled)}>
                     {e.disabled ? 'Enable' : 'Disable'}
                   </button>
                   <button className="btn" disabled={!e.can_delete} onClick={() => deleteEndpoint(e.id)}>Delete</button>
-                  {!e.can_delete && <span className="help-icon" title={e.delete_reason || ''}>?</span>}
+                  {!e.can_delete && (
+                    <span className="help-icon">
+                      ?
+                      <span className="tooltip">{e.delete_reason}</span>
+                    </span>
+                  )}
                 </td>
               </tr>
             ))}
             {groups.yesterday.length > 0 && (
-              <tr><th colSpan={3} className="group-header">Yesterday</th></tr>
+            <tr><th colSpan={4} className="group-header">Yesterday</th></tr>
             )}
             {groups.yesterday.map(e => (
               <tr key={e.id} className="endpoint-row">
                 <td><Link to={`/endpoint/${e.uuid}`}>{e.uuid}</Link></td>
                 <td>{new Date(e.created_at).toLocaleString()}</td>
+                <td>{e.expires_at ? new Date(e.expires_at).toLocaleString() : 'None'}</td>
                 <td>
                   <button className="btn mr-1" onClick={() => toggleDisabled(e.id, !e.disabled)}>
                     {e.disabled ? 'Enable' : 'Disable'}
                   </button>
                   <button className="btn" disabled={!e.can_delete} onClick={() => deleteEndpoint(e.id)}>Delete</button>
-                  {!e.can_delete && <span className="help-icon" title={e.delete_reason || ''}>?</span>}
+                  {!e.can_delete && (
+                    <span className="help-icon">
+                      ?
+                      <span className="tooltip">{e.delete_reason}</span>
+                    </span>
+                  )}
                 </td>
               </tr>
             ))}
             {groups.older.length > 0 && (
-              <tr><th colSpan={3} className="group-header">Older</th></tr>
+            <tr><th colSpan={4} className="group-header">Older</th></tr>
             )}
             {groups.older.map(e => (
               <tr key={e.id} className="endpoint-row">
                 <td><Link to={`/endpoint/${e.uuid}`}>{e.uuid}</Link></td>
                 <td>{new Date(e.created_at).toLocaleString()}</td>
+                <td>{e.expires_at ? new Date(e.expires_at).toLocaleString() : 'None'}</td>
                 <td>
                   <button className="btn mr-1" onClick={() => toggleDisabled(e.id, !e.disabled)}>
                     {e.disabled ? 'Enable' : 'Disable'}
                   </button>
                   <button className="btn" disabled={!e.can_delete} onClick={() => deleteEndpoint(e.id)}>Delete</button>
-                  {!e.can_delete && <span className="help-icon" title={e.delete_reason || ''}>?</span>}
+                  {!e.can_delete && (
+                    <span className="help-icon">
+                      ?
+                      <span className="tooltip">{e.delete_reason}</span>
+                    </span>
+                  )}
                 </td>
               </tr>
             ))}
