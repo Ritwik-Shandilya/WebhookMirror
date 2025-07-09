@@ -22,8 +22,9 @@ const SiteHeader: React.FC = () => {
 
   return (
     <header className="site-header">
-      <div className="site-logo">Webhook Mirror</div>
+      <Link to="/" className="site-logo">Webhook Mirror</Link>
       <div className="nav-links">
+        <Link to="/" className="btn">Home</Link>
         <button className="start-btn" onClick={createEndpoint}>Start Testing</button>
         <Link to="/dashboard" className="btn">Dashboard</Link>
         <Link to="/api-test" className="btn">API Tester</Link>
