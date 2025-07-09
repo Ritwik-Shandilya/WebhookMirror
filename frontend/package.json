@@ -9,10 +9,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@babel/runtime": "^7.27.6",
+    "@bigbinary/neetoui": "^8.2.60",
+    "formik": "^2.4.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-json-tree": "^0.20.0",
-    "react-router-dom": "^6.23.0"
+    "react-router-dom": "^6.23.0",
+    "react-toastify": "^11.0.5",
+    "sass": "^1.89.2",
+    "yup": "^1.6.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.0",
