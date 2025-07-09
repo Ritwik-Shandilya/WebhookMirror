@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   namespace :api do
     get "endpoints/by_uuid/:uuid", to: "endpoints#show_by_uuid"
-    resources :endpoints, only: [ :create, :index ] do
+    resources :endpoints, only: [ :create, :index, :update, :destroy ] do
       resources :requests, only: [ :index, :create ]
     end
     resources :requests, only: [ :show ]

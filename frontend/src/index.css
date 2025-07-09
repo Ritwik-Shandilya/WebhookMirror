@@ -247,3 +247,6 @@ button:disabled {
 .mt-4 { margin-top: 1rem; }
 .table { width: 100%; border-collapse: collapse; }
 .table th, .table td { padding: 0.5rem; border-bottom: 1px solid #e5e7eb; }
+.endpoint-row td { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+.group-header { text-align: center; padding: 0.5rem 0; background-color: #f3f4f6; }
+.mr-1 { margin-right: 0.25rem; }
