@@ -7,10 +7,12 @@ import WebhookPage from './pages/WebhookPage';
 import ApiTesterPage from './pages/ApiTesterPage';
 import EndpointPage from './pages/EndpointPage';
 import RequestPage from './pages/RequestPage';
-import './index.css';
+import './index.scss';
+import { ToastContainer } from 'react-toastify';
 
 const App = () => (
   <BrowserRouter>
+    <ToastContainer />
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/dashboard" element={<DashboardPage />} />
