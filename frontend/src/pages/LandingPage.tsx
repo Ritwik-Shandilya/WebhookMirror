@@ -25,12 +25,16 @@ const LandingPage: React.FC = () => {
     <div className="container">
       <h1 className="header">Webhook Mirror</h1>
       <p className="mb-4">Capture and inspect HTTP requests in real time.</p>
-      <div className="mb-4 flex" style={{gap: '0.5rem', alignItems: 'center'}}>
-        <div className="text-left">
+      <div
+        className="mb-4 flex"
+        style={{ gap: '0.5rem', alignItems: 'center', justifyContent: 'center' }}
+      >
+        <div>
           <label className="block mb-1">Select expiry time</label>
           <input
             type="datetime-local"
             className="url-box"
+            style={{ width: '220px' }}
             value={expiresAt}
             onChange={e => setExpiresAt(e.target.value)}
             placeholder="Expiry (optional)"
