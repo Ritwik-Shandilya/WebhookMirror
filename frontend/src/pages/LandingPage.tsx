@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '@bigbinary/neetoui';
 import SidebarLayout from '../components/SidebarLayout';
 
 const LandingPage: React.FC = () => {
@@ -42,7 +43,7 @@ const LandingPage: React.FC = () => {
             placeholder="Expiry (optional)"
           />
         </div>
-        <button className="btn" onClick={createEndpoint}>Create new endpoint</button>
+        <Button label="Create new endpoint" style="primary" onClick={createEndpoint} />
       </div>
       <p className="mb-2">Example curl command:</p>
       <pre className="code-box">{`curl -X POST http://localhost:3000/<endpoint-id> -H "Content-Type: application/json" -d '{"hello":"world"}'`}</pre>
