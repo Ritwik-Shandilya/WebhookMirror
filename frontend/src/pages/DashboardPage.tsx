@@ -16,7 +16,6 @@ const DashboardPage: React.FC = () => {
   const [endpoints, setEndpoints] = useState<Endpoint[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [expiresAt, setExpiresAt] = useState('');
   const [openMenuId, setOpenMenuId] = useState<number | null>(null);
 
   const loadEndpoints = async () => {
@@ -56,21 +55,6 @@ const DashboardPage: React.FC = () => {
     return { today, yesterday, older };
   }, [endpoints]);
 
-  const createEndpoint = async () => {
-    try {
-      const res = await fetch('/api/endpoints', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ expires_at: expiresAt || null })
-      });
-      if (!res.ok) throw new Error('Failed to create endpoint');
-    } catch (err) {
-      alert('Failed to create endpoint. Is the backend running?');
-    } finally {
-      setExpiresAt('');
-      loadEndpoints();
-    }
-  };
 
   const toggleDisabled = async (id: number, disabled: boolean) => {
     if (!window.confirm(`Are you sure you want to ${disabled ? 'disable' : 'enable'} this endpoint?`)) return;
@@ -103,19 +87,6 @@ const DashboardPage: React.FC = () => {
     <div className="container">
       <h1 className="header">Dashboard</h1>
       {error && <p className="text-red-500 mb-2">{error}</p>}
-      <div className="mb-4 flex" style={{gap: '0.5rem', alignItems: 'center'}}>
-        <div className="text-left">
-          <label className="block mb-1">Select expiry time</label>
-          <input
-            type="datetime-local"
-            className="url-box"
-            value={expiresAt}
-            onChange={e => setExpiresAt(e.target.value)}
-            placeholder="Expiry (optional)"
-          />
-        </div>
-        <button className="btn" onClick={createEndpoint}>Create new endpoint</button>
-      </div>
       {loading ? <p>Loading...</p> : (
         <table className="w-full text-left table">
           <thead>
