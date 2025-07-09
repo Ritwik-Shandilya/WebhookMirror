@@ -6,13 +6,19 @@ const LandingPage: React.FC = () => {
   const [expiresAt, setExpiresAt] = React.useState('');
 
   const createEndpoint = async () => {
-    const res = await fetch('/api/endpoints', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ expires_at: expiresAt || null })
-    });
-    const data = await res.json();
-    navigate(`/endpoint/${data.uuid}`);
+    try {
+      const res = await fetch('/api/endpoints', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ expires_at: expiresAt || null })
+      });
+      if (!res.ok) throw new Error('Failed to create endpoint');
+      const data = await res.json();
+      if (!data.uuid) throw new Error('Invalid response');
+      navigate(`/endpoint/${data.uuid}`);
+    } catch (err) {
+      alert('Failed to create endpoint. Is the backend running?');
+    }
   };
 
   return (
@@ -20,13 +26,16 @@ const LandingPage: React.FC = () => {
       <h1 className="header">Webhook Mirror</h1>
       <p className="mb-4">Capture and inspect HTTP requests in real time.</p>
       <div className="mb-4 flex" style={{gap: '0.5rem', alignItems: 'center'}}>
-        <input
-          type="datetime-local"
-          className="url-box"
-          value={expiresAt}
-          onChange={e => setExpiresAt(e.target.value)}
-          placeholder="Expiry (optional)"
-        />
+        <div className="text-left">
+          <label className="block mb-1">Select expiry time</label>
+          <input
+            type="datetime-local"
+            className="url-box"
+            value={expiresAt}
+            onChange={e => setExpiresAt(e.target.value)}
+            placeholder="Expiry (optional)"
+          />
+        </div>
         <button className="btn" onClick={createEndpoint}>Create new endpoint</button>
       </div>
       <p className="mb-2">Example curl command:</p>
