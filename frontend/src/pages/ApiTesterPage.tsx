@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const ApiTesterPage: React.FC = () => {
   const [testUrl, setTestUrl] = useState('');
@@ -82,7 +83,10 @@ const ApiTesterPage: React.FC = () => {
         onChange={e => setBodyText(e.target.value)}
         placeholder="Request body"
       />
-      <button onClick={testApi} className="btn">Send Request</button>
+      <div className="mb-2">
+        <button onClick={testApi} className="btn mr-2">Send Request</button>
+        <Link to="/" className="btn">Back to home</Link>
+      </div>
       {testResult && (
         <div className="status mt-2">
           <p>Status: {testResult.status}</p>

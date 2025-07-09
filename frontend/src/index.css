@@ -250,3 +250,4 @@ button:disabled {
 .endpoint-row td { padding-top: 0.5rem; padding-bottom: 0.5rem; }
 .group-header { text-align: center; padding: 0.5rem 0; background-color: #f3f4f6; }
 .mr-1 { margin-right: 0.25rem; }
+.mr-2 { margin-right: 0.5rem; }
