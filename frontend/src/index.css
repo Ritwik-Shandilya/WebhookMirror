@@ -137,5 +137,13 @@ button:disabled {
 .rounded { border-radius: 4px; }
 .p-2 { padding: 0.5rem; }
 .p-3 { padding: 0.75rem; }
+.p-8 { padding: 2rem; }
 .space-y-2 > * + * { margin-top: 0.5rem; }
+.space-y-1 > * + * { margin-top: 0.25rem; }
+.space-y-4 > * + * { margin-top: 1rem; }
 .whitespace-pre-wrap { white-space: pre-wrap; }
+.text-xs { font-size: 0.75rem; }
+.text-left { text-align: left; }
+.font-sans { font-family: Arial, sans-serif; }
+.mb-1 { margin-bottom: 0.25rem; }
+.bg-gray-50 { background-color: #f9fafb; }
