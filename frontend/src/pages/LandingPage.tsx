@@ -1,19 +1,35 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import WebhookPage from './WebhookPage';
+import ApiTesterPage from './ApiTesterPage';
 
-const LandingPage: React.FC = () => (
-  <div className="container">
-    <h1 className="header">Webhook Mirror</h1>
-    <p className="mb-4">WebhookMirror helps you debug webhooks and test APIs. Choose a tool below to get started.</p>
-    <Link to="/webhook" className="option-card block mb-2">
-      <h2>Webhook Endpoint</h2>
-      <p>Generate a unique URL to capture and inspect webhook requests.</p>
-    </Link>
-    <Link to="/api-test" className="option-card block">
-      <h2>API Tester</h2>
-      <p>Send simple HTTP requests and view the responses instantly.</p>
-    </Link>
-  </div>
-);
+const LandingPage: React.FC = () => {
+  const [active, setActive] = useState<'webhook' | 'api'>('webhook');
+
+  return (
+    <div className="layout">
+      <div className="sidebar">
+        <div className="logo">
+          <img src="/logo.svg" alt="WebhookMirror logo" />
+        </div>
+        <div
+          className={`nav-item ${active === 'webhook' ? 'active' : ''}`}
+          onClick={() => setActive('webhook')}
+        >
+          Webhook Endpoint
+        </div>
+        <div
+          className={`nav-item ${active === 'api' ? 'active' : ''}`}
+          onClick={() => setActive('api')}
+        >
+          API Testing
+        </div>
+      </div>
+      <div className="main-content">
+        {active === 'webhook' && <WebhookPage />}
+        {active === 'api' && <ApiTesterPage />}
+      </div>
+    </div>
+  );
+};
 
 export default LandingPage;

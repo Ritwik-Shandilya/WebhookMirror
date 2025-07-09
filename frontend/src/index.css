@@ -147,3 +147,39 @@ button:disabled {
 .font-sans { font-family: Arial, sans-serif; }
 .mb-1 { margin-bottom: 0.25rem; }
 .bg-gray-50 { background-color: #f9fafb; }
+
+/* Layout styles for landing page with sidebar */
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 220px;
+  background: #ffffff;
+  border-right: 1px solid #ccc;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.sidebar .logo img {
+  width: 150px;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.nav-item {
+  margin-bottom: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  color: #374151;
+}
+
+.nav-item.active {
+  color: #3b82f6;
+}
+
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+}
