@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { JSONTree } from 'react-json-tree';
 import { useParams } from 'react-router-dom';
 
 interface Req {
@@ -34,15 +35,20 @@ const RequestPage: React.FC = () => {
         </div>
         <div className="option-card text-left">
           <h2 className="font-semibold mb-1">Headers</h2>
-          <pre className="code-box whitespace-pre-wrap text-xs mb-2">
-{JSON.stringify(request.headers, null, 2)}
-          </pre>
+          <JSONTree data={request.headers} hideRoot={true} />
         </div>
         <div className="option-card text-left">
           <h2 className="font-semibold mb-1">Body</h2>
-          <pre className="code-box whitespace-pre-wrap text-xs">
-{request.body}
-          </pre>
+          {
+            (() => {
+              try {
+                const parsed = JSON.parse(request.body);
+                return <JSONTree data={parsed} hideRoot={true} />;
+              } catch {
+                return <pre className="code-box whitespace-pre-wrap text-xs">{request.body}</pre>;
+              }
+            })()
+          }
         </div>
       </div>
     </div>

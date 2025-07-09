@@ -13,4 +13,16 @@ class Api::EndpointsController < ApplicationController
     endpoint = Endpoint.find_by!(uuid: params[:uuid])
     render json: { id: endpoint.id, uuid: endpoint.uuid }
   end
+
+  def update
+    endpoint = Endpoint.find(params[:id])
+    endpoint.update!(disabled: params[:disabled])
+    render json: endpoint
+  end
+
+  def destroy
+    endpoint = Endpoint.find(params[:id])
+    endpoint.destroy!
+    head :no_content
+  end
 end

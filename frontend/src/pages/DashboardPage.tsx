@@ -46,44 +46,76 @@ const DashboardPage: React.FC = () => {
     loadEndpoints();
   };
 
+  const toggleDisabled = async (id: number, disabled: boolean) => {
+    await fetch(`/api/endpoints/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ disabled })
+    });
+    loadEndpoints();
+  };
+
+  const deleteEndpoint = async (id: number) => {
+    await fetch(`/api/endpoints/${id}`, { method: 'DELETE' });
+    loadEndpoints();
+  };
+
   return (
     <div className="container">
       <h1 className="header">Dashboard</h1>
       <div className="mb-2 text-sm">
-        <Link to="/">Back to home</Link>
+        <Link to="/" className="btn">Back to home</Link>
       </div>
       <button className="btn mb-4" onClick={createEndpoint}>Create new endpoint</button>
       {loading ? <p>Loading...</p> : (
-        <table className="w-full text-left">
+        <table className="w-full text-left table">
           <thead>
-            <tr><th>UUID</th><th>Created</th></tr>
+            <tr><th>UUID</th><th>Created</th><th>Actions</th></tr>
           </thead>
           <tbody>
             {groups.today.length > 0 && (
-              <tr><th colSpan={2}>Today</th></tr>
+              <tr><th colSpan={3} className="group-header">Today</th></tr>
             )}
             {groups.today.map(e => (
-              <tr key={e.id}>
+              <tr key={e.id} className="endpoint-row">
                 <td><Link to={`/endpoint/${e.uuid}`}>{e.uuid}</Link></td>
                 <td>{new Date(e.created_at).toLocaleString()}</td>
+                <td>
+                  <button className="btn mr-1" onClick={() => toggleDisabled(e.id, !e.disabled)}>
+                    {e.disabled ? 'Enable' : 'Disable'}
+                  </button>
+                  <button className="btn" onClick={() => deleteEndpoint(e.id)}>Delete</button>
+                </td>
               </tr>
             ))}
             {groups.yesterday.length > 0 && (
-              <tr><th colSpan={2}>Yesterday</th></tr>
+              <tr><th colSpan={3} className="group-header">Yesterday</th></tr>
             )}
             {groups.yesterday.map(e => (
-              <tr key={e.id}>
+              <tr key={e.id} className="endpoint-row">
                 <td><Link to={`/endpoint/${e.uuid}`}>{e.uuid}</Link></td>
                 <td>{new Date(e.created_at).toLocaleString()}</td>
+                <td>
+                  <button className="btn mr-1" onClick={() => toggleDisabled(e.id, !e.disabled)}>
+                    {e.disabled ? 'Enable' : 'Disable'}
+                  </button>
+                  <button className="btn" onClick={() => deleteEndpoint(e.id)}>Delete</button>
+                </td>
               </tr>
             ))}
             {groups.older.length > 0 && (
-              <tr><th colSpan={2}>Older</th></tr>
+              <tr><th colSpan={3} className="group-header">Older</th></tr>
             )}
             {groups.older.map(e => (
-              <tr key={e.id}>
+              <tr key={e.id} className="endpoint-row">
                 <td><Link to={`/endpoint/${e.uuid}`}>{e.uuid}</Link></td>
                 <td>{new Date(e.created_at).toLocaleString()}</td>
+                <td>
+                  <button className="btn mr-1" onClick={() => toggleDisabled(e.id, !e.disabled)}>
+                    {e.disabled ? 'Enable' : 'Disable'}
+                  </button>
+                  <button className="btn" onClick={() => deleteEndpoint(e.id)}>Delete</button>
+                </td>
               </tr>
             ))}
           </tbody>

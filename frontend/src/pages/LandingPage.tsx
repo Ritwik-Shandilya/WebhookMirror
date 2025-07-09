@@ -17,8 +17,9 @@ const LandingPage: React.FC = () => {
       <button className="btn mb-4" onClick={createEndpoint}>Create new endpoint</button>
       <p className="mb-2">Example curl command:</p>
       <pre className="code-box">{`curl -X POST http://localhost:3000/<endpoint-id> -H "Content-Type: application/json" -d '{"hello":"world"}'`}</pre>
-      <div className="mt-4 text-sm">
-        <Link to="/dashboard">Go to dashboard</Link> | <Link to="/api-test">API tester</Link>
+      <div className="mt-4 space-x-2">
+        <Link to="/dashboard" className="btn">Dashboard</Link>
+        <Link to="/api-test" className="btn">API Tester</Link>
       </div>
     </div>
   );

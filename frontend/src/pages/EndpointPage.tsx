@@ -46,8 +46,8 @@ const EndpointPage: React.FC = () => {
   return (
     <div className="container" style={{maxWidth: '1200px'}}>
       <h1 className="header">Endpoint {uuid} <LiveIndicator /></h1>
-      <div className="mb-2 text-sm text-left">
-        <Link to="/">Back to home</Link>
+      <div className="mb-2 text-left">
+        <Link to="/" className="btn">Back to home</Link>
       </div>
       <div className="flex" style={{gap: '1rem', alignItems: 'flex-start'}}>
         <div style={{flex: '1'}}>
