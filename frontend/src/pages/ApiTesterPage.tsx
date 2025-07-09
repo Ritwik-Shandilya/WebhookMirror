@@ -30,7 +30,7 @@ const ApiTesterPage: React.FC = () => {
         onChange={e => setTestUrl(e.target.value)}
         placeholder="https://example.com/api"
       />
-      <button onClick={testApi} className="btn mt-2">Send Request</button>
+      <button onClick={testApi} className="btn">Send Request</button>
       {testResult && (
         <div className="status mt-2">
           <p>Status: {testResult.status}</p>
