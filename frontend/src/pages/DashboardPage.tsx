@@ -17,6 +17,7 @@ const DashboardPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [expiresAt, setExpiresAt] = useState('');
+  const [openMenuId, setOpenMenuId] = useState<number | null>(null);
 
   const loadEndpoints = async () => {
     setLoading(true);
@@ -79,6 +80,11 @@ const DashboardPage: React.FC = () => {
       body: JSON.stringify({ disabled })
     });
     loadEndpoints();
+    setOpenMenuId(null);
+  };
+
+  const toggleMenu = (id: number) => {
+    setOpenMenuId(prev => (prev === id ? null : id));
   };
 
   const deleteEndpoint = async (id: number) => {
@@ -89,6 +95,7 @@ const DashboardPage: React.FC = () => {
       alert(data.error || 'Failed to delete endpoint');
     }
     loadEndpoints();
+    setOpenMenuId(null);
   };
 
   return (
@@ -123,16 +130,21 @@ const DashboardPage: React.FC = () => {
                 <td><Link to={`/endpoint/${e.uuid}`}>{e.uuid}</Link></td>
                 <td>{new Date(e.created_at).toLocaleString()}</td>
                 <td>{e.expires_at ? new Date(e.expires_at).toLocaleString() : 'None'}</td>
-                <td>
-                  <button className="btn mr-1" onClick={() => toggleDisabled(e.id, !e.disabled)}>
-                    {e.disabled ? 'Enable' : 'Disable'}
-                  </button>
-                  <button className="btn" disabled={!e.can_delete} onClick={() => deleteEndpoint(e.id)}>Delete</button>
-                  {!e.can_delete && (
-                    <span className="help-icon">
-                      ?
-                      <span className="tooltip">{e.delete_reason}</span>
-                    </span>
+                <td style={{ position: 'relative' }}>
+                  <button className="actions-toggle" onClick={() => toggleMenu(e.id)}>⋮</button>
+                  {openMenuId === e.id && (
+                    <div className="actions-menu">
+                      <button onClick={() => toggleDisabled(e.id, !e.disabled)}>
+                        {e.disabled ? 'Enable' : 'Disable'}
+                      </button>
+                      <button
+                        disabled={!e.can_delete}
+                        title={!e.can_delete ? e.delete_reason || undefined : undefined}
+                        onClick={() => deleteEndpoint(e.id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   )}
                 </td>
               </tr>
@@ -145,16 +157,21 @@ const DashboardPage: React.FC = () => {
                 <td><Link to={`/endpoint/${e.uuid}`}>{e.uuid}</Link></td>
                 <td>{new Date(e.created_at).toLocaleString()}</td>
                 <td>{e.expires_at ? new Date(e.expires_at).toLocaleString() : 'None'}</td>
-                <td>
-                  <button className="btn mr-1" onClick={() => toggleDisabled(e.id, !e.disabled)}>
-                    {e.disabled ? 'Enable' : 'Disable'}
-                  </button>
-                  <button className="btn" disabled={!e.can_delete} onClick={() => deleteEndpoint(e.id)}>Delete</button>
-                  {!e.can_delete && (
-                    <span className="help-icon">
-                      ?
-                      <span className="tooltip">{e.delete_reason}</span>
-                    </span>
+                <td style={{ position: 'relative' }}>
+                  <button className="actions-toggle" onClick={() => toggleMenu(e.id)}>⋮</button>
+                  {openMenuId === e.id && (
+                    <div className="actions-menu">
+                      <button onClick={() => toggleDisabled(e.id, !e.disabled)}>
+                        {e.disabled ? 'Enable' : 'Disable'}
+                      </button>
+                      <button
+                        disabled={!e.can_delete}
+                        title={!e.can_delete ? e.delete_reason || undefined : undefined}
+                        onClick={() => deleteEndpoint(e.id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   )}
                 </td>
               </tr>
@@ -167,16 +184,21 @@ const DashboardPage: React.FC = () => {
                 <td><Link to={`/endpoint/${e.uuid}`}>{e.uuid}</Link></td>
                 <td>{new Date(e.created_at).toLocaleString()}</td>
                 <td>{e.expires_at ? new Date(e.expires_at).toLocaleString() : 'None'}</td>
-                <td>
-                  <button className="btn mr-1" onClick={() => toggleDisabled(e.id, !e.disabled)}>
-                    {e.disabled ? 'Enable' : 'Disable'}
-                  </button>
-                  <button className="btn" disabled={!e.can_delete} onClick={() => deleteEndpoint(e.id)}>Delete</button>
-                  {!e.can_delete && (
-                    <span className="help-icon">
-                      ?
-                      <span className="tooltip">{e.delete_reason}</span>
-                    </span>
+                <td style={{ position: 'relative' }}>
+                  <button className="actions-toggle" onClick={() => toggleMenu(e.id)}>⋮</button>
+                  {openMenuId === e.id && (
+                    <div className="actions-menu">
+                      <button onClick={() => toggleDisabled(e.id, !e.disabled)}>
+                        {e.disabled ? 'Enable' : 'Disable'}
+                      </button>
+                      <button
+                        disabled={!e.can_delete}
+                        title={!e.can_delete ? e.delete_reason || undefined : undefined}
+                        onClick={() => deleteEndpoint(e.id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   )}
                 </td>
               </tr>
