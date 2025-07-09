@@ -53,6 +53,10 @@ curl -X POST http://localhost:3000/<uuid> \
 curl http://localhost:3000/<uuid>
 ```
 
+### API testing from the UI
+
+Navigate to `/api-test` in the frontend to open the **API Tester**. Enter the inbox URL you wish to target and customize the HTTP method, query parameters, headers and body. The response status, headers and body are shown instantly so you can simulate webhook calls without third-party tools.
+
 ### Inspecting requests
 
 * After sending requests, open the generated endpoint page in your browser.
