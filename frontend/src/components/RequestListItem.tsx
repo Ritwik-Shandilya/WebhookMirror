@@ -3,7 +3,7 @@ import React from 'react';
 export interface Req {
   id: number;
   method: string;
-  headers: Record<string, string>;
+  headers: Record<string, string> | string;
   body: string;
   created_at: string;
 }

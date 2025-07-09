@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 interface Req {
   id: number;
   method: string;
-  headers: Record<string, string>;
+  headers: Record<string, string> | string;
   body: string;
   created_at: string;
 }
@@ -21,6 +21,13 @@ const RequestPage: React.FC = () => {
     if (!request) return null;
     if (typeof request.headers === 'string') {
       try { return JSON.parse(request.headers); } catch { return null; }
+    }
+    return request.headers;
+  }, [request]);
+  const headersObj = useMemo(() => {
+    if (!request) return {} as Record<string, string>;
+    if (typeof request.headers === 'string') {
+      try { return JSON.parse(request.headers); } catch { return {}; }
     }
     return request.headers;
   }, [request]);
@@ -56,7 +63,7 @@ const RequestPage: React.FC = () => {
             <button className="btn mr-2" onClick={() => setShowRaw(!showRaw)}>{showRaw ? 'Collapse' : 'Expand'}</button>
           </div>
           {showRaw && (
-            <JSONTree data={{ ...request, headers: parsedHeaders || request.headers, body: parsedBody || request.body }} hideRoot={true} />
+            <JSONTree data={{ ...request, headers: parsedHeaders || headersObj, body: parsedBody || request.body }} hideRoot={true} />
           )}
         </div>
 
@@ -66,7 +73,15 @@ const RequestPage: React.FC = () => {
             <button className="btn mr-2" onClick={() => setShowHeaders(!showHeaders)}>{showHeaders ? 'Collapse' : 'Expand'}</button>
           </div>
           {showHeaders && (
-            parsedHeaders ? <JSONTree data={parsedHeaders} hideRoot={true} /> : <pre className="code-box whitespace-pre-wrap text-xs">{request.headers}</pre>
+            parsedHeaders ? (
+              <JSONTree data={parsedHeaders} hideRoot={true} />
+            ) : (
+              <pre className="code-box whitespace-pre-wrap text-xs">{
+                typeof request.headers === 'string'
+                  ? request.headers
+                  : JSON.stringify(request.headers, null, 2)
+              }</pre>
+            )
           )}
         </div>
 
