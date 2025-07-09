@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { JSONTree } from 'react-json-tree';
 import { useParams } from 'react-router-dom';
+import SiteHeader from '../components/SiteHeader';
 
 interface Req {
   id: number;
@@ -50,6 +51,7 @@ const RequestPage: React.FC = () => {
 
   return (
     <div className="container">
+      <SiteHeader />
       <div className="space-y-4">
         <h1 className="header">Request {request.id}</h1>
         <div className="option-card text-left">

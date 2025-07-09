@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import SiteHeader from '../components/SiteHeader';
 
 interface Endpoint {
   id: number;
@@ -92,10 +93,8 @@ const DashboardPage: React.FC = () => {
 
   return (
     <div className="container">
+      <SiteHeader />
       <h1 className="header">Dashboard</h1>
-      <div className="mb-2 text-sm">
-        <Link to="/" className="btn">Back to home</Link>
-      </div>
       {error && <p className="text-red-500 mb-2">{error}</p>}
       <div className="mb-4 flex" style={{gap: '0.5rem', alignItems: 'center'}}>
         <div className="text-left">

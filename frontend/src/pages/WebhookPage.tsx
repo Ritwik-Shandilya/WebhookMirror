@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import SiteHeader from '../components/SiteHeader';
 
 interface Req {
   id: number;
@@ -71,6 +72,7 @@ const WebhookPage: React.FC = () => {
 
   return (
     <div className="container">
+      <SiteHeader />
       <h1 className="header">Webhook Mirror</h1>
       <p className="mb-4">WebhookMirror lets you capture and inspect HTTP requests. Generate a unique URL below and send your webhooks to it.</p>
       <textarea

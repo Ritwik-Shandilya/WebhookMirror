@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import SiteHeader from '../components/SiteHeader';
 import RequestList from '../components/RequestList';
 import { Req } from '../components/RequestListItem';
 import RequestInspector from '../components/RequestInspector';
@@ -45,10 +46,8 @@ const EndpointPage: React.FC = () => {
 
   return (
     <div className="container" style={{maxWidth: '1200px'}}>
+      <SiteHeader />
       <h1 className="header">Endpoint {uuid} <LiveIndicator /></h1>
-      <div className="mb-2 text-left">
-        <Link to="/" className="btn">Back to home</Link>
-      </div>
       <div className="flex" style={{gap: '1rem', alignItems: 'flex-start'}}>
         <div style={{flex: '1'}}>
           <div className="mb-2 flex" style={{gap: '0.5rem', alignItems: 'center'}}>
