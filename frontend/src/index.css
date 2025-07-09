@@ -65,10 +65,11 @@ body {
   box-sizing: border-box;
 }
 .site-logo {
-  font-weight: bold;
-  font-size: 1.25rem;
-  color: inherit;
-  text-decoration: none;
+  display: block;
+}
+
+.logo-img {
+  height: 32px;
 }
 .nav-links {
   display: flex;
