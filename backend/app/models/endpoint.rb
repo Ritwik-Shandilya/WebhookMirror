@@ -3,6 +3,14 @@ class Endpoint < ApplicationRecord
 
   before_destroy :ensure_no_requests
 
+  def can_delete
+    requests.none?
+  end
+
+  def delete_reason
+    can_delete ? nil : 'Cannot delete endpoint with existing requests'
+  end
+
   private
 
   def ensure_no_requests

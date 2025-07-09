@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { JSONTree } from 'react-json-tree';
 import { useParams } from 'react-router-dom';
 
@@ -16,6 +16,19 @@ const RequestPage: React.FC = () => {
   const [showRaw, setShowRaw] = useState(true);
   const [showHeaders, setShowHeaders] = useState(true);
   const [showBody, setShowBody] = useState(true);
+
+  const parsedHeaders = useMemo(() => {
+    if (!request) return null;
+    if (typeof request.headers === 'string') {
+      try { return JSON.parse(request.headers); } catch { return null; }
+    }
+    return request.headers;
+  }, [request]);
+
+  const parsedBody = useMemo(() => {
+    if (!request) return null;
+    try { return JSON.parse(request.body); } catch { return null; }
+  }, [request]);
 
   useEffect(() => {
     const loadRequest = async () => {
@@ -42,7 +55,9 @@ const RequestPage: React.FC = () => {
             <h2 className="font-semibold">Raw</h2>
             <button className="btn mr-2" onClick={() => setShowRaw(!showRaw)}>{showRaw ? 'Collapse' : 'Expand'}</button>
           </div>
-          {showRaw && <JSONTree data={request} hideRoot={true} />}
+          {showRaw && (
+            <JSONTree data={{ ...request, headers: parsedHeaders || request.headers, body: parsedBody || request.body }} hideRoot={true} />
+          )}
         </div>
 
         <div className="option-card text-left">
@@ -50,7 +65,9 @@ const RequestPage: React.FC = () => {
             <h2 className="font-semibold">Headers</h2>
             <button className="btn mr-2" onClick={() => setShowHeaders(!showHeaders)}>{showHeaders ? 'Collapse' : 'Expand'}</button>
           </div>
-          {showHeaders && <JSONTree data={request.headers} hideRoot={true} />}
+          {showHeaders && (
+            parsedHeaders ? <JSONTree data={parsedHeaders} hideRoot={true} /> : <pre className="code-box whitespace-pre-wrap text-xs">{request.headers}</pre>
+          )}
         </div>
 
         <div className="option-card text-left">
@@ -59,14 +76,7 @@ const RequestPage: React.FC = () => {
             <button className="btn mr-2" onClick={() => setShowBody(!showBody)}>{showBody ? 'Collapse' : 'Expand'}</button>
           </div>
           {showBody && (
-            (() => {
-              try {
-                const parsed = JSON.parse(request.body);
-                return <JSONTree data={parsed} hideRoot={true} />;
-              } catch {
-                return <pre className="code-box whitespace-pre-wrap text-xs">{request.body}</pre>;
-              }
-            })()
+            parsedBody ? <JSONTree data={parsedBody} hideRoot={true} /> : <pre className="code-box whitespace-pre-wrap text-xs">{request.body}</pre>
           )}
         </div>
       </div>

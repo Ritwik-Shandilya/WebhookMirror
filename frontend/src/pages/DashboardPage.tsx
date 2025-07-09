@@ -5,6 +5,9 @@ interface Endpoint {
   id: number;
   uuid: string;
   created_at: string;
+  disabled: boolean;
+  can_delete: boolean;
+  delete_reason: string | null;
 }
 
 const DashboardPage: React.FC = () => {
@@ -90,7 +93,8 @@ const DashboardPage: React.FC = () => {
                   <button className="btn mr-1" onClick={() => toggleDisabled(e.id, !e.disabled)}>
                     {e.disabled ? 'Enable' : 'Disable'}
                   </button>
-                  <button className="btn" onClick={() => deleteEndpoint(e.id)}>Delete</button>
+                  <button className="btn" disabled={!e.can_delete} onClick={() => deleteEndpoint(e.id)}>Delete</button>
+                  {!e.can_delete && <span className="help-icon" title={e.delete_reason || ''}>?</span>}
                 </td>
               </tr>
             ))}
@@ -105,7 +109,8 @@ const DashboardPage: React.FC = () => {
                   <button className="btn mr-1" onClick={() => toggleDisabled(e.id, !e.disabled)}>
                     {e.disabled ? 'Enable' : 'Disable'}
                   </button>
-                  <button className="btn" onClick={() => deleteEndpoint(e.id)}>Delete</button>
+                  <button className="btn" disabled={!e.can_delete} onClick={() => deleteEndpoint(e.id)}>Delete</button>
+                  {!e.can_delete && <span className="help-icon" title={e.delete_reason || ''}>?</span>}
                 </td>
               </tr>
             ))}
@@ -120,7 +125,8 @@ const DashboardPage: React.FC = () => {
                   <button className="btn mr-1" onClick={() => toggleDisabled(e.id, !e.disabled)}>
                     {e.disabled ? 'Enable' : 'Disable'}
                   </button>
-                  <button className="btn" onClick={() => deleteEndpoint(e.id)}>Delete</button>
+                  <button className="btn" disabled={!e.can_delete} onClick={() => deleteEndpoint(e.id)}>Delete</button>
+                  {!e.can_delete && <span className="help-icon" title={e.delete_reason || ''}>?</span>}
                 </td>
               </tr>
             ))}

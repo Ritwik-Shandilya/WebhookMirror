@@ -1,7 +1,7 @@
 class Api::EndpointsController < ApplicationController
   def index
-    endpoints = Endpoint.order(created_at: :desc)
-    render json: endpoints
+    endpoints = Endpoint.includes(:requests).order(created_at: :desc)
+    render json: endpoints.as_json(methods: [:can_delete, :delete_reason])
   end
 
   def create
@@ -11,7 +11,7 @@ class Api::EndpointsController < ApplicationController
 
   def show_by_uuid
     endpoint = Endpoint.find_by!(uuid: params[:uuid])
-    render json: { id: endpoint.id, uuid: endpoint.uuid }
+    render json: endpoint.as_json(methods: [:can_delete, :delete_reason])
   end
 
   def update

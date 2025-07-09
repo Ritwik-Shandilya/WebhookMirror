@@ -1,9 +1,10 @@
 class CaptureController < ActionController::API
   def receive
     endpoint = Endpoint.find_by!(uuid: params[:uuid])
+    headers = request.headers.to_h.select { |k, _| k.start_with?("HTTP_") }
     req = endpoint.requests.create!(
       method: request.method,
-      headers: request.headers.to_h.select { |k, _| k.start_with?("HTTP_") },
+      headers: headers.to_json,
       body: request.raw_post
     )
 

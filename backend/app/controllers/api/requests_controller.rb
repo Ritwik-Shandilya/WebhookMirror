@@ -11,7 +11,7 @@ class Api::RequestsController < ApplicationController
   end
 
   def create
-    req = @endpoint.requests.create!(method: params[:method], headers: params[:headers], body: params[:body])
+    req = @endpoint.requests.create!(method: params[:method], headers: params[:headers].to_json, body: params[:body])
     render json: req, status: :created
   end
 
