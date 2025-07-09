@@ -41,13 +41,15 @@ const RequestInspector: React.FC<Props> = ({ request }) => {
       <h2 className="text-xl mb-2">Request {request.id}</h2>
       <Tabs tabs={['Raw', 'Headers', 'Body', 'Query Params', 'Cookies']} active={active} onChange={setActive} />
       {active === 'Raw' && (
-        <JSONTree data={{ ...request, headers: parsedHeaders || request.headers, body: parsedBody || request.body }} hideRoot={true} />
+        <div className="json-tree">
+          <JSONTree data={{ ...request, headers: parsedHeaders || request.headers, body: parsedBody || request.body }} hideRoot={true} />
+        </div>
       )}
       {active === 'Headers' && (
-        parsedHeaders ? <JSONTree data={parsedHeaders} hideRoot={true} /> : <pre className="code-box whitespace-pre-wrap text-xs">{request.headers}</pre>
+        parsedHeaders ? <div className="json-tree"><JSONTree data={parsedHeaders} hideRoot={true} /></div> : <pre className="code-box whitespace-pre-wrap text-xs">{request.headers}</pre>
       )}
       {active === 'Body' && (
-        parsedBody ? <JSONTree data={parsedBody} hideRoot={true} /> : <pre className="code-box whitespace-pre-wrap text-xs">{request.body}</pre>
+        parsedBody ? <div className="json-tree"><JSONTree data={parsedBody} hideRoot={true} /></div> : <pre className="code-box whitespace-pre-wrap text-xs">{request.body}</pre>
       )}
       {active === 'Query Params' && (
         <pre className="code-box whitespace-pre-wrap text-xs">{Array.from(queryParams.entries()).map(([k,v]) => `${k}: ${v}`).join('\n') || 'None'}</pre>
