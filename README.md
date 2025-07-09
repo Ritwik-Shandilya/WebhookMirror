@@ -35,7 +35,7 @@ The UI follows [Neetix](https://neetix.neetokb.com/) best practices such as usin
 ### Generating a capture URL
 
 1. Visit the homepage and click **Create Endpoint**.
-2. A unique URL containing a UUID will be generated, for example `http://localhost:3000/endpoint/abcd-1234`.
+2. A unique URL containing a UUID will be generated, for example `http://localhost:5173/endpoint/abcd-1234`.
 3. Send any HTTP request to this URL using `curl` or your integration. The Rails API will store the payload.
 4. Open the URL in your browser to see the list of requests as they arrive. Click a request to view its full details.
 
