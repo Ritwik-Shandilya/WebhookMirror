@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import LandingPage from './pages/LandingPage';
+import Home from './pages/Home';
 import DashboardPage from './pages/DashboardPage';
 import WebhookPage from './pages/WebhookPage';
 import ApiTesterPage from './pages/ApiTesterPage';
@@ -12,7 +12,7 @@ import './index.css';
 const App = () => (
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<LandingPage />} />
+      <Route path="/" element={<Home />} />
       <Route path="/dashboard" element={<DashboardPage />} />
       <Route path="/webhook" element={<WebhookPage />} />
       <Route path="/api-test" element={<ApiTesterPage />} />
