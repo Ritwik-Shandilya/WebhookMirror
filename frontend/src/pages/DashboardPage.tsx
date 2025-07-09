@@ -137,13 +137,17 @@ const DashboardPage: React.FC = () => {
                       <button onClick={() => toggleDisabled(e.id, !e.disabled)}>
                         {e.disabled ? 'Enable' : 'Disable'}
                       </button>
-                      <button
-                        disabled={!e.can_delete}
+                      <span
                         title={!e.can_delete ? e.delete_reason || undefined : undefined}
-                        onClick={() => deleteEndpoint(e.id)}
+                        style={{ display: 'inline-block' }}
                       >
-                        Delete
-                      </button>
+                        <button
+                          disabled={!e.can_delete}
+                          onClick={() => deleteEndpoint(e.id)}
+                        >
+                          Delete
+                        </button>
+                      </span>
                     </div>
                   )}
                 </td>
@@ -164,13 +168,17 @@ const DashboardPage: React.FC = () => {
                       <button onClick={() => toggleDisabled(e.id, !e.disabled)}>
                         {e.disabled ? 'Enable' : 'Disable'}
                       </button>
-                      <button
-                        disabled={!e.can_delete}
+                      <span
                         title={!e.can_delete ? e.delete_reason || undefined : undefined}
-                        onClick={() => deleteEndpoint(e.id)}
+                        style={{ display: 'inline-block' }}
                       >
-                        Delete
-                      </button>
+                        <button
+                          disabled={!e.can_delete}
+                          onClick={() => deleteEndpoint(e.id)}
+                        >
+                          Delete
+                        </button>
+                      </span>
                     </div>
                   )}
                 </td>
@@ -191,13 +199,17 @@ const DashboardPage: React.FC = () => {
                       <button onClick={() => toggleDisabled(e.id, !e.disabled)}>
                         {e.disabled ? 'Enable' : 'Disable'}
                       </button>
-                      <button
-                        disabled={!e.can_delete}
+                      <span
                         title={!e.can_delete ? e.delete_reason || undefined : undefined}
-                        onClick={() => deleteEndpoint(e.id)}
+                        style={{ display: 'inline-block' }}
                       >
-                        Delete
-                      </button>
+                        <button
+                          disabled={!e.can_delete}
+                          onClick={() => deleteEndpoint(e.id)}
+                        >
+                          Delete
+                        </button>
+                      </span>
                     </div>
                   )}
                 </td>

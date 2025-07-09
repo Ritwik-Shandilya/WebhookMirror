@@ -44,6 +44,7 @@ const SidebarLayout: React.FC<Props> = ({ children }) => {
         >
           Start Testing
         </div>
+        <Link to="/" className="nav-item">Home</Link>
         <Link to="/dashboard" className="nav-item">Dashboard</Link>
         <Link to="/api-test" className="nav-item">API Tester</Link>
       </div>
