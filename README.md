@@ -23,8 +23,9 @@ Open a new terminal and run:
 
 ```bash
 cd frontend
-npm install           # install JavaScript dependencies
-npm run dev           # start Vite dev server on http://localhost:5173
+yarn config set nodeLinker node-modules  # ensure packages install into node_modules
+yarn install          # install JavaScript dependencies
+yarn dev              # start Vite dev server on http://localhost:5173
 ```
 
 With both servers running you can browse to `http://localhost:5173` to use the application while it interacts with the Rails API running on port 3000.
