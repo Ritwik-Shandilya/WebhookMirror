@@ -6,7 +6,9 @@ Rails.application.routes.draw do
         delete "/", to: "requests#destroy_all", on: :collection
       end
     end
-    resources :requests, only: [ :show ]
+    resources :requests, only: [ :show ] do
+      post :replay, on: :member
+    end
   end
 
   match "/:uuid", to: "capture#receive", via: :all, constraints: { uuid: /[0-9a-fA-F\-]{36}/ }
