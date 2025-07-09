@@ -8,7 +8,7 @@ body {
 
 .container {
   padding: 2rem;
-  max-width: 800px;
+  max-width: 1000px;
   margin: 2rem auto;
   text-align: center;
   background: #fff;
@@ -141,6 +141,7 @@ button:disabled {
 .p-2 { padding: 0.5rem; }
 .p-3 { padding: 0.75rem; }
 .p-8 { padding: 2rem; }
+.space-x-2 > * + * { margin-left: 0.5rem; }
 .space-y-2 > * + * { margin-top: 0.5rem; }
 .space-y-1 > * + * { margin-top: 0.25rem; }
 .space-y-4 > * + * { margin-top: 1rem; }

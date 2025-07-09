@@ -6,7 +6,7 @@ interface Props {
   request: {
     id: number;
     method: string;
-    headers: Record<string, string>;
+    headers: Record<string, string> | string;
     body: string;
     created_at: string;
   };
@@ -14,8 +14,12 @@ interface Props {
 
 const RequestInspector: React.FC<Props> = ({ request }) => {
   const [active, setActive] = useState('Raw');
-  const queryParams = new URLSearchParams(request.headers['query-string'] || '');
-  const cookies = request.headers['cookie'] || '';
+  const headersObj =
+    typeof request.headers === 'string' ?
+      (() => { try { return JSON.parse(request.headers); } catch { return {}; } })() :
+      request.headers;
+  const queryParams = new URLSearchParams(headersObj['query-string'] || '');
+  const cookies = headersObj['cookie'] || '';
 
   const parsedHeaders = useMemo(() => {
     if (typeof request.headers === 'string') {
@@ -42,11 +46,19 @@ const RequestInspector: React.FC<Props> = ({ request }) => {
       <Tabs tabs={['Raw', 'Headers', 'Body', 'Query Params', 'Cookies']} active={active} onChange={setActive} />
       {active === 'Raw' && (
         <div className="json-tree">
-          <JSONTree data={{ ...request, headers: parsedHeaders || request.headers, body: parsedBody || request.body }} hideRoot={true} />
+          <JSONTree data={{ ...request, headers: parsedHeaders || headersObj, body: parsedBody || request.body }} hideRoot={true} />
         </div>
       )}
       {active === 'Headers' && (
-        parsedHeaders ? <div className="json-tree"><JSONTree data={parsedHeaders} hideRoot={true} /></div> : <pre className="code-box whitespace-pre-wrap text-xs">{request.headers}</pre>
+        parsedHeaders ? (
+          <div className="json-tree"><JSONTree data={parsedHeaders} hideRoot={true} /></div>
+        ) : (
+          <pre className="code-box whitespace-pre-wrap text-xs">{
+            typeof request.headers === 'string'
+              ? request.headers
+              : JSON.stringify(request.headers, null, 2)
+          }</pre>
+        )
       )}
       {active === 'Body' && (
         parsedBody ? <div className="json-tree"><JSONTree data={parsedBody} hideRoot={true} /></div> : <pre className="code-box whitespace-pre-wrap text-xs">{request.body}</pre>
