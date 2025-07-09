@@ -15,9 +15,9 @@ Refer to `workflow.md` for the ongoing development notes and checklist derived f
 
 ## Running the application
 
-The backend and frontend are developed separately. Ensure you have **Ruby** (version 3.0 or higher) and **Node.js** (version 18 or higher) installed on your machine.
+The backend and frontend are developed separately in development, but the production build runs from a single Rails server. Ensure you have **Ruby** (version 3.0 or higher) and **Node.js** (version 18 or higher) installed on your machine.
 
-### 1. Start the Rails API backend
+### 1. Start the Rails API backend (development)
 
 ```bash
 cd backend
@@ -26,7 +26,7 @@ bin/rails db:setup    # create and migrate the database
 bin/dev               # start the Rails server on http://localhost:3000
 ```
 
-### 2. Start the React frontend
+### 2. Start the React frontend (development)
 
 Open a new terminal and run:
 
@@ -37,6 +37,14 @@ npm run dev           # start Vite dev server on http://localhost:5173
 ```
 
 With both servers running you can browse to `http://localhost:5173` to use the application while it interacts with the Rails API running on port 3000.
+
+### Building and running the full stack
+
+To build the frontend and serve it via Rails on a single port run:
+
+```bash
+./start.sh
+```
 
 
 The UI follows [Neetix](https://neetix.neetokb.com/) best practices such as using sentence case and clear loading states.
