@@ -90,3 +90,24 @@ button:disabled {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.option-card {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.option-card:hover {
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.code-box {
+  background-color: #f3f4f6;
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  overflow-x: auto;
+}
