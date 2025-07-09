@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import SidebarLayout from '../components/SidebarLayout';
+import { Dropdown } from '@bigbinary/neetoui';
+import { MenuVertical } from '@bigbinary/neeto-icons';
 
 interface Endpoint {
   id: number;
@@ -17,7 +19,6 @@ const DashboardPage: React.FC = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [openMenuId, setOpenMenuId] = useState<number | null>(null);
 
   const loadEndpoints = async () => {
     setLoading(true);
@@ -72,12 +73,8 @@ const DashboardPage: React.FC = () => {
       body: JSON.stringify({ disabled })
     });
     loadEndpoints();
-    setOpenMenuId(null);
   };
 
-  const toggleMenu = (id: number) => {
-    setOpenMenuId(prev => (prev === id ? null : id));
-  };
 
   const deleteEndpoint = async (id: number) => {
     if (!window.confirm('Are you sure you want to delete this endpoint?')) return;
@@ -87,7 +84,6 @@ const DashboardPage: React.FC = () => {
       alert(data.error || 'Failed to delete endpoint');
     }
     loadEndpoints();
-    setOpenMenuId(null);
   };
 
   return (
@@ -99,39 +95,35 @@ const DashboardPage: React.FC = () => {
         <>
         <table className="w-full text-left table">
           <thead>
-            <tr><th>UUID</th><th>Created</th><th>Expires</th><th>Actions</th></tr>
+            <tr><th>UUID</th><th>Created</th><th>Expires</th></tr>
           </thead>
           <tbody>
             {pagedEndpoints.map((e, idx) => (
               <React.Fragment key={e.id}>
                 {(idx === 0 || pagedEndpoints[idx - 1].group !== e.group) && (
-                  <tr><th colSpan={4} className="group-header">{e.group}</th></tr>
+                  <tr><th colSpan={3} className="group-header">{e.group}</th></tr>
                 )}
                 <tr className="endpoint-row">
-                  <td><Link to={`/endpoint/${e.uuid}`}>{e.uuid}</Link></td>
-                  <td>{new Date(e.created_at).toLocaleString()}</td>
-                  <td>{e.expires_at ? new Date(e.expires_at).toLocaleString() : 'None'}</td>
-                  <td style={{ position: 'relative' }}>
-                    <button className="actions-toggle" onClick={() => toggleMenu(e.id)}>⋮</button>
-                    {openMenuId === e.id && (
-                      <div className="actions-menu">
-                        <button onClick={() => toggleDisabled(e.id, !e.disabled)}>
-                          {e.disabled ? 'Enable' : 'Disable'}
-                        </button>
-                        <span
-                          title={!e.can_delete ? e.delete_reason || undefined : undefined}
-                          style={{ display: 'inline-block' }}
-                        >
-                          <button
+                  <td>
+                    <div className="flex justify-between" style={{ alignItems: 'center' }}>
+                      <Link to={`/endpoint/${e.uuid}`}>{e.uuid}</Link>
+                      <Dropdown icon={MenuVertical} closeOnSelect>
+                        <Dropdown.Menu>
+                          <Dropdown.MenuItem onClick={() => toggleDisabled(e.id, !e.disabled)}>
+                            {e.disabled ? 'Enable' : 'Disable'}
+                          </Dropdown.MenuItem>
+                          <Dropdown.MenuItem
                             disabled={!e.can_delete}
                             onClick={() => deleteEndpoint(e.id)}
                           >
                             Delete
-                          </button>
-                        </span>
-                      </div>
-                    )}
+                          </Dropdown.MenuItem>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </div>
                   </td>
+                  <td>{new Date(e.created_at).toLocaleString()}</td>
+                  <td>{e.expires_at ? new Date(e.expires_at).toLocaleString() : 'None'}</td>
                 </tr>
               </React.Fragment>
             ))}

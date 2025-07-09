@@ -180,6 +180,11 @@
   resolved "https://registry.yarnpkg.com/@bigbinary/neetoui/-/neetoui-8.3.13.tgz#4b2805ade57a07eb1bd0f8e47a12d62e8016722b"
   integrity sha512-dnSn7wxwJ7KjD24LFI81N/HupIvH35787ADDzZBgX+y+AXA3YgaFi6IFQY/tL6QL5OmFHDoJ/ekGU8fBAQNLhg==
 
+"@bigbinary/neeto-icons@^1.20.53":
+  version "1.20.53"
+  resolved "https://registry.npmjs.org/@bigbinary/neeto-icons/-/neeto-icons-1.20.53.tgz"
+  integrity sha512-fkMod07z9iqnDak2H7fSzOwBpN+p3TJVQL/4V+2pVOcHG29X17UUTKaaq9buo4bR0unaCHT3KUy4aFAj6NUBhw==
+
 "@esbuild/aix-ppc64@0.21.5":
   version "0.21.5"
   resolved "https://registry.yarnpkg.com/@esbuild/aix-ppc64/-/aix-ppc64-0.21.5.tgz#c7184a326533fcdf1b8ee0733e21c713b975575f"
