@@ -1,5 +1,6 @@
 import React from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import SidebarLayout from '../components/SidebarLayout';
 
 const LandingPage: React.FC = () => {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ const LandingPage: React.FC = () => {
   };
 
   return (
+    <SidebarLayout>
     <div className="container">
       <h1 className="header">Webhook Mirror</h1>
       <p className="mb-4">Capture and inspect HTTP requests in real time.</p>
@@ -44,11 +46,8 @@ const LandingPage: React.FC = () => {
       </div>
       <p className="mb-2">Example curl command:</p>
       <pre className="code-box">{`curl -X POST http://localhost:3000/<endpoint-id> -H "Content-Type: application/json" -d '{"hello":"world"}'`}</pre>
-      <div className="mt-4 space-x-2">
-        <Link to="/dashboard" className="btn">Dashboard</Link>
-        <Link to="/api-test" className="btn">API Tester</Link>
-      </div>
     </div>
+    </SidebarLayout>
   );
 };
 

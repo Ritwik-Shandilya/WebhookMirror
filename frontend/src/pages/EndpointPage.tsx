@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import SiteHeader from '../components/SiteHeader';
+import SidebarLayout from '../components/SidebarLayout';
 import RequestList from '../components/RequestList';
 import { Req } from '../components/RequestListItem';
 import RequestInspector from '../components/RequestInspector';
@@ -44,10 +44,36 @@ const EndpointPage: React.FC = () => {
     return matchesMethod && matchesSearch;
   });
 
+  const clearRequests = async () => {
+    if (!endpointId) return;
+    if (!window.confirm('Clear all requests?')) return;
+    await fetch(`/api/endpoints/${endpointId}/requests`, { method: 'DELETE' });
+    const res = await fetch(`/api/endpoints/${endpointId}/requests`);
+    setRequests(await res.json());
+    setSelected(null);
+  };
+
+  const exportRequests = async () => {
+    if (!endpointId) return;
+    const res = await fetch(`/api/endpoints/${endpointId}/requests`);
+    const data = await res.json();
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `endpoint-${uuid}-requests.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
+    <SidebarLayout>
     <div className="container" style={{maxWidth: '1200px'}}>
-      <SiteHeader />
       <h1 className="header">Endpoint {uuid} <LiveIndicator /></h1>
+      <div className="mb-2 space-x-2 text-left">
+        <button className="btn" onClick={exportRequests}>Export JSON</button>
+        <button className="btn" onClick={clearRequests}>Clear All</button>
+      </div>
       <div className="flex" style={{gap: '1rem', alignItems: 'flex-start'}}>
         <div style={{flex: '1'}}>
           <div className="mb-2 flex" style={{gap: '0.5rem', alignItems: 'center'}}>
@@ -79,13 +105,14 @@ const EndpointPage: React.FC = () => {
         </div>
         <div style={{flex: '1'}}>
           {selected ? (
-            <RequestInspector request={selected} />
+            <RequestInspector request={selected} endpointUuid={uuid as string} />
           ) : (
             <p>Select a request to inspect</p>
           )}
         </div>
       </div>
     </div>
+    </SidebarLayout>
   );
 };
 

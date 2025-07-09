@@ -1,5 +1,5 @@
 class Api::RequestsController < ApplicationController
-  before_action :set_endpoint, only: [ :index, :create ]
+  before_action :set_endpoint, only: [ :index, :create, :destroy_all ]
   before_action :set_request, only: [ :show ]
 
   def index
@@ -13,6 +13,11 @@ class Api::RequestsController < ApplicationController
   def create
     req = @endpoint.requests.create!(method: params[:method], headers: params[:headers].to_json, body: params[:body])
     render json: req, status: :created
+  end
+
+  def destroy_all
+    @endpoint.requests.delete_all
+    head :no_content
   end
 
   private

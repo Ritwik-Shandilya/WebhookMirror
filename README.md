@@ -6,6 +6,13 @@ This project aims to be a production ready replica of [Webhook.site](https://web
 
 Refer to `workflow.md` for the ongoing development notes and checklist derived from the Product Requirements Document.
 
+## Features
+
+- Sidebar navigation with quick access to **Start Testing**, **Dashboard** and **API Tester**
+- Export captured requests to JSON
+- Clear all requests for an endpoint
+- Copy any request as a cURL command
+
 ## Running the application
 
 The backend and frontend are developed separately. Ensure you have **Ruby** (version 3.0 or higher) and **Node.js** (version 18 or higher) installed on your machine.

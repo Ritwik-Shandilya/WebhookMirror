@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import SiteHeader from '../components/SiteHeader';
+import SidebarLayout from '../components/SidebarLayout';
 
 const ApiTesterPage: React.FC = () => {
   const [testUrl, setTestUrl] = useState('');
@@ -44,8 +43,8 @@ const ApiTesterPage: React.FC = () => {
   };
 
   return (
+    <SidebarLayout>
     <div className="container">
-      <SiteHeader />
       <h1 className="header">API Tester</h1>
       <p className="mb-4">Send HTTP requests to quickly inspect status, headers, and body.</p>
       <input
@@ -96,6 +95,7 @@ const ApiTesterPage: React.FC = () => {
         </div>
       )}
     </div>
+    </SidebarLayout>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import SiteHeader from '../components/SiteHeader';
+import SidebarLayout from '../components/SidebarLayout';
 
 interface Req {
   id: number;
@@ -71,8 +71,8 @@ const WebhookPage: React.FC = () => {
   }, [endpointId]);
 
   return (
+    <SidebarLayout>
     <div className="container">
-      <SiteHeader />
       <h1 className="header">Webhook Mirror</h1>
       <p className="mb-4">WebhookMirror lets you capture and inspect HTTP requests. Generate a unique URL below and send your webhooks to it.</p>
       <textarea
@@ -137,6 +137,7 @@ const WebhookPage: React.FC = () => {
         </div>
       )}
     </div>
+    </SidebarLayout>
   );
 };
 
