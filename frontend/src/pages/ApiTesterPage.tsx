@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import SiteHeader from '../components/SiteHeader';
 
 const ApiTesterPage: React.FC = () => {
   const [testUrl, setTestUrl] = useState('');
@@ -44,6 +45,7 @@ const ApiTesterPage: React.FC = () => {
 
   return (
     <div className="container">
+      <SiteHeader />
       <h1 className="header">API Tester</h1>
       <p className="mb-4">Send HTTP requests to quickly inspect status, headers, and body.</p>
       <input
@@ -85,7 +87,6 @@ const ApiTesterPage: React.FC = () => {
       />
       <div className="mb-2">
         <button onClick={testApi} className="btn mr-2">Send Request</button>
-        <Link to="/" className="btn">Back to home</Link>
       </div>
       {testResult && (
         <div className="status mt-2">

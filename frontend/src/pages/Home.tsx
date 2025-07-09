@@ -1,5 +1,6 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import SiteHeader from '../components/SiteHeader';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -31,19 +32,6 @@ const Home = () => {
           background: #f9fafb;
           color: #1f2937;
         }
-        .home-header {
-          width: 100%;
-          background: #ffffff;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 1rem 2rem;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        .logo {
-          font-weight: bold;
-          font-size: 1.25rem;
-        }
         .hero {
           text-align: center;
           padding: 3rem 1rem;
@@ -65,7 +53,7 @@ const Home = () => {
           max-width: 600px;
           margin-bottom: 2rem;
         }
-        .cta, .start-btn {
+        .cta {
           background: #22C55E;
           color: #ffffff;
           border: none;
@@ -76,7 +64,7 @@ const Home = () => {
           box-shadow: 0 2px 4px rgba(0,0,0,0.1);
           transition: background 0.2s, transform 0.1s;
         }
-        .cta:hover, .start-btn:hover { background: #16a34a; }
+        .cta:hover { background: #16a34a; }
         .cta:active { transform: translateY(1px); }
         .features {
           display: flex;
@@ -94,15 +82,18 @@ const Home = () => {
           min-width: 120px;
           text-align: center;
         }
+        .actions {
+          padding-bottom: 2rem;
+          display: flex;
+          gap: 0.75rem;
+          justify-content: center;
+        }
         @media (min-width: 768px) {
           .hero h1 { font-size: 3rem; }
           .subtext { font-size: 1.25rem; }
         }
       `}</style>
-      <header className="home-header">
-        <div className="logo">Webhook Mirror</div>
-        <button className="start-btn" onClick={createEndpoint}>Start Testing</button>
-      </header>
+      <SiteHeader />
       <main className="hero">
         <h1>Debug webhooks <span>effortlessly</span></h1>
         <p className="subtext">Spin up a session-based URL and watch your requests arrive in real time.</p>
@@ -113,6 +104,10 @@ const Home = () => {
         <div className="feature">100% Free</div>
         <div className="feature">Real-time</div>
       </section>
+      <div className="actions">
+        <Link to="/dashboard" className="btn">Dashboard</Link>
+        <Link to="/api-test" className="btn">API Tester</Link>
+      </div>
     </div>
   );
 };

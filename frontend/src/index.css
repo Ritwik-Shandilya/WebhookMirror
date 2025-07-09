@@ -38,6 +38,42 @@ body {
 .btn:hover {
   background-color: #1d4ed8;
 }
+.site-header {
+  width: 100%;
+  background: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.site-logo {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+.nav-links {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.start-btn {
+  background: #22C55E;
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: background 0.2s, transform 0.1s;
+}
+.start-btn:hover {
+  background: #16a34a;
+}
+.start-btn:active {
+  transform: translateY(1px);
+}
+
 
 .url-box {
   width: 100%;
