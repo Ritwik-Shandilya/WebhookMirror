@@ -61,10 +61,12 @@ const EndpointPage: React.FC = () => {
               <option value="DELETE">DELETE</option>
             </select>
             <SearchInput value={search} onChange={setSearch} />
-            {search && (
-              <span className="text-sm">{filtered.length} {filtered.length === 1 ? 'match' : 'matches'}</span>
-            )}
           </div>
+          {search && (
+            <div className="mb-2 text-left">
+              <span className="text-sm">{filtered.length} {filtered.length === 1 ? 'match' : 'matches'}</span>
+            </div>
+          )}
           {filtered.length === 0 ? (
             <p>No requests yet.</p>
           ) : (
