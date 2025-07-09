@@ -5,8 +5,8 @@ class Api::EndpointsController < ApplicationController
   end
 
   def create
-    endpoint = Endpoint.create!(uuid: SecureRandom.uuid)
-    render json: { id: endpoint.id, uuid: endpoint.uuid }
+    endpoint = Endpoint.create!(uuid: SecureRandom.uuid, expires_at: params[:expires_at])
+    render json: { id: endpoint.id, uuid: endpoint.uuid, expires_at: endpoint.expires_at }
   end
 
   def show_by_uuid

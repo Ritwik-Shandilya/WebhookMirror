@@ -51,7 +51,7 @@ const EndpointPage: React.FC = () => {
       </div>
       <div className="flex" style={{gap: '1rem', alignItems: 'flex-start'}}>
         <div style={{flex: '1'}}>
-          <div className="mb-2 flex" style={{gap: '0.5rem'}}>
+          <div className="mb-2 flex" style={{gap: '0.5rem', alignItems: 'center'}}>
             <select className="url-box" value={methodFilter} onChange={e => setMethodFilter(e.target.value)}>
               <option value="">All methods</option>
               <option value="GET">GET</option>
@@ -61,11 +61,19 @@ const EndpointPage: React.FC = () => {
               <option value="DELETE">DELETE</option>
             </select>
             <SearchInput value={search} onChange={setSearch} />
+            {search && (
+              <span className="text-sm">{filtered.length} {filtered.length === 1 ? 'match' : 'matches'}</span>
+            )}
           </div>
           {filtered.length === 0 ? (
             <p>No requests yet.</p>
           ) : (
-            <RequestList requests={filtered} activeId={selected?.id || null} onSelect={setSelected} />
+            <RequestList
+              requests={filtered}
+              activeId={selected?.id || null}
+              onSelect={setSelected}
+              highlight={search}
+            />
           )}
         </div>
         <div style={{flex: '1'}}>

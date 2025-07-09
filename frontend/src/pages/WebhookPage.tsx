@@ -15,6 +15,7 @@ const WebhookPage: React.FC = () => {
   const [curlUrl, setCurlUrl] = useState('');
   const [endpointId, setEndpointId] = useState<number | null>(null);
   const [requests, setRequests] = useState<Req[]>([]);
+  const [expiresAt, setExpiresAt] = useState('');
 
   const [apiStatus, setApiStatus] = useState<string | null>(null);
   const [apiHeaders, setApiHeaders] = useState<Record<string, string> | null>(null);
@@ -25,7 +26,11 @@ const WebhookPage: React.FC = () => {
     setApiStatus(null);
     setApiHeaders(null);
     try {
-      const res = await fetch('/api/endpoints', { method: 'POST' });
+      const res = await fetch('/api/endpoints', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ expires_at: expiresAt || null })
+      });
       const data = await res.json();
       const { protocol, hostname, origin } = window.location;
       // Display URLs should use the current origin (5173 when running locally)
@@ -88,9 +93,18 @@ const WebhookPage: React.FC = () => {
           <pre className="code-box">{`curl ${curlUrl}`}</pre>
         </div>
       )}
-      <button onClick={createEndpoint} disabled={loading} className="btn">
-        {loading && <span className="loading-spinner" />} {loading ? 'Creating...' : 'Generate URL'}
-      </button>
+      <div className="mb-2 flex" style={{gap: '0.5rem', alignItems: 'center'}}>
+        <input
+          type="datetime-local"
+          className="url-box"
+          value={expiresAt}
+          onChange={e => setExpiresAt(e.target.value)}
+          placeholder="Expiry (optional)"
+        />
+        <button onClick={createEndpoint} disabled={loading} className="btn">
+          {loading && <span className="loading-spinner" />} {loading ? 'Creating...' : 'Generate URL'}
+        </button>
+      </div>
       {apiStatus && (
         <div className="status">
           <p>{apiStatus}</p>
