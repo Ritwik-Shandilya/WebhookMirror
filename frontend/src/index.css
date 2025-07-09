@@ -207,6 +207,7 @@ button:disabled {
 .layout {
   display: flex;
   min-height: 100vh;
+  align-items: stretch;
 }
 
 .sidebar {
@@ -215,6 +216,13 @@ button:disabled {
   border-right: 1px solid #ccc;
   padding: 1rem;
   box-sizing: border-box;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow-y: auto;
+  position: sticky;
+  top: 0;
 }
 .sidebar-logo {
   display: flex;
@@ -226,10 +234,15 @@ button:disabled {
 .nav-item {
   padding: 0.5rem;
   margin-bottom: 0.25rem;
-  border-bottom: 1px solid #e5e7eb;
-  cursor: pointer;
+  border-radius: 4px;
+  text-decoration: none;
+  display: block;
   font-weight: 600;
   color: #374151;
+  transition: background 0.2s;
+}
+.nav-item:hover {
+  background: #f3f4f6;
 }
 
 .nav-item.active {
@@ -349,4 +362,17 @@ button:disabled {
 .json-tree {
   text-align: left;
   font-family: monospace;
+}
+
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid #ccc;
+    position: relative;
+  }
 }
