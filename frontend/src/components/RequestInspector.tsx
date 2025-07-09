@@ -10,9 +10,10 @@ interface Props {
     body: string;
     created_at: string;
   };
+  endpointUuid: string;
 }
 
-const RequestInspector: React.FC<Props> = ({ request }) => {
+const RequestInspector: React.FC<Props> = ({ request, endpointUuid }) => {
   const [active, setActive] = useState('Raw');
   const headersObj =
     typeof request.headers === 'string' ?
@@ -20,6 +21,21 @@ const RequestInspector: React.FC<Props> = ({ request }) => {
       request.headers;
   const queryParams = new URLSearchParams(headersObj['query-string'] || '');
   const cookies = headersObj['cookie'] || '';
+
+  const copyCurl = () => {
+    const headers = headersObj as Record<string, string>;
+    let cmd = `curl -X ${request.method} ${window.location.origin}/${endpointUuid}`;
+    Object.entries(headers).forEach(([k, v]) => {
+      if (k.toLowerCase() === 'host') return;
+      cmd += ` -H "${k}: ${v}"`;
+    });
+    if (request.body) {
+      const body = request.body.replace(/'/g, "'\\''");
+      cmd += ` -d '${body}'`;
+    }
+    navigator.clipboard.writeText(cmd);
+    alert('Copied as cURL');
+  };
 
   const parsedHeaders = useMemo(() => {
     if (typeof request.headers === 'string') {
@@ -42,7 +58,10 @@ const RequestInspector: React.FC<Props> = ({ request }) => {
 
   return (
     <div className="inspector">
-      <h2 className="text-xl mb-2">Request {request.id}</h2>
+      <div className="flex justify-between mb-2">
+        <h2 className="text-xl">Request {request.id}</h2>
+        <button className="btn" onClick={copyCurl}>Copy as cURL</button>
+      </div>
       <Tabs tabs={['Raw', 'Headers', 'Body', 'Query Params', 'Cookies']} active={active} onChange={setActive} />
       {active === 'Raw' && (
         <div className="json-tree">

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import SiteHeader from '../components/SiteHeader';
+import { useNavigate } from 'react-router-dom';
+import SidebarLayout from '../components/SidebarLayout';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -22,6 +22,7 @@ const Home = () => {
   };
 
   return (
+    <SidebarLayout>
     <div className="home-page">
       <style>{`
         .home-page {
@@ -93,7 +94,6 @@ const Home = () => {
           .subtext { font-size: 1.25rem; }
         }
       `}</style>
-      <SiteHeader />
       <main className="hero">
         <h1>Debug webhooks <span>effortlessly</span></h1>
         <p className="subtext">Spin up a session-based URL and watch your requests arrive in real time.</p>
@@ -104,11 +104,8 @@ const Home = () => {
         <div className="feature">100% Free</div>
         <div className="feature">Real-time</div>
       </section>
-      <div className="actions">
-        <Link to="/dashboard" className="btn">Dashboard</Link>
-        <Link to="/api-test" className="btn">API Tester</Link>
-      </div>
     </div>
+    </SidebarLayout>
   );
 };
 

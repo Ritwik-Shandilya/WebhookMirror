@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   namespace :api do
     get "endpoints/by_uuid/:uuid", to: "endpoints#show_by_uuid"
     resources :endpoints, only: [ :create, :index, :update, :destroy ] do
-      resources :requests, only: [ :index, :create ]
+      resources :requests, only: [ :index, :create ] do
+        delete '/', to: 'requests#destroy_all', on: :collection
+      end
     end
     resources :requests, only: [ :show ]
   end

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import SiteHeader from '../components/SiteHeader';
+import SidebarLayout from '../components/SidebarLayout';
 
 interface Endpoint {
   id: number;
@@ -92,8 +92,8 @@ const DashboardPage: React.FC = () => {
   };
 
   return (
+    <SidebarLayout>
     <div className="container">
-      <SiteHeader />
       <h1 className="header">Dashboard</h1>
       {error && <p className="text-red-500 mb-2">{error}</p>}
       <div className="mb-4 flex" style={{gap: '0.5rem', alignItems: 'center'}}>
@@ -185,6 +185,7 @@ const DashboardPage: React.FC = () => {
         </table>
       )}
     </div>
+    </SidebarLayout>
   );
 };
 
