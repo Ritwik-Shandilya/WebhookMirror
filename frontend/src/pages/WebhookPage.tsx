@@ -8,7 +8,7 @@ interface Req {
   created_at: string;
 }
 
-const Home: React.FC = () => {
+const WebhookPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [endpointUrl, setEndpointUrl] = useState('');
   const [captureUrl, setCaptureUrl] = useState('');
@@ -18,8 +18,6 @@ const Home: React.FC = () => {
   const [apiStatus, setApiStatus] = useState<string | null>(null);
   const [apiHeaders, setApiHeaders] = useState<Record<string, string> | null>(null);
 
-  const [testUrl, setTestUrl] = useState('');
-  const [testResult, setTestResult] = useState<{status: number; headers: Record<string,string>; body: string} | null>(null);
 
   const createEndpoint = async () => {
     setLoading(true);
@@ -57,25 +55,10 @@ const Home: React.FC = () => {
     }
   }, [endpointId]);
 
-  const testApi = async () => {
-    if (!testUrl) return;
-    try {
-      const res = await fetch(testUrl);
-      const body = await res.text();
-      const headersObj: Record<string, string> = {};
-      res.headers.forEach((v, k) => {
-        headersObj[k] = v;
-      });
-      setTestResult({ status: res.status, headers: headersObj, body });
-    } catch (err) {
-      setTestResult({ status: 0, headers: {}, body: 'Request failed' });
-    }
-  };
-
   return (
     <div className="container">
       <h1 className="header">Webhook Mirror</h1>
-      <p>Generate a unique capture URL to inspect webhook payloads.</p>
+      <p className="mb-4">WebhookMirror lets you capture and inspect HTTP requests. Generate a unique URL below and send your webhooks to it.</p>
       <textarea
         className="url-box"
         readOnly
@@ -87,6 +70,14 @@ const Home: React.FC = () => {
           <a href={endpointUrl} target="_blank" rel="noopener noreferrer">
             Open endpoint
           </a>
+        </div>
+      )}
+      {captureUrl && (
+        <div className="curl-examples">
+          <p className="font-semibold">Example curl POST request</p>
+          <pre className="code-box">{`curl -X POST ${captureUrl} -H "Content-Type: application/json" -d '{"hello":"world"}'`}</pre>
+          <p className="font-semibold mt-2">Example curl GET request</p>
+          <pre className="code-box">{`curl ${captureUrl}`}</pre>
         </div>
       )}
       <button onClick={createEndpoint} disabled={loading} className="btn">
@@ -117,26 +108,8 @@ const Home: React.FC = () => {
           )}
         </div>
       )}
-      <div className="api-test mt-4">
-        <h2 className="header">Test an API</h2>
-        <input
-          className="url-box"
-          type="text"
-          value={testUrl}
-          onChange={e => setTestUrl(e.target.value)}
-          placeholder="https://example.com/api"
-        />
-        <button onClick={testApi} className="btn mt-2">Send Test Request</button>
-        {testResult && (
-          <div className="status mt-2">
-            <p>Status: {testResult.status}</p>
-            <pre className="headers">{JSON.stringify(testResult.headers, null, 2)}</pre>
-            <pre className="headers">{testResult.body}</pre>
-          </div>
-        )}
-      </div>
     </div>
   );
 };
 
-export default Home;
+export default WebhookPage;
