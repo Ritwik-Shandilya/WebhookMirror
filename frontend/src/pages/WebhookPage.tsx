@@ -31,6 +31,7 @@ const WebhookPage: React.FC = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ expires_at: expiresAt || null })
       });
+      if (!res.ok) throw new Error('Failed to create endpoint');
       const data = await res.json();
       const { protocol, hostname, origin } = window.location;
       // Display URLs should use the current origin (5173 when running locally)
@@ -94,13 +95,16 @@ const WebhookPage: React.FC = () => {
         </div>
       )}
       <div className="mb-2 flex" style={{gap: '0.5rem', alignItems: 'center'}}>
-        <input
-          type="datetime-local"
-          className="url-box"
-          value={expiresAt}
-          onChange={e => setExpiresAt(e.target.value)}
-          placeholder="Expiry (optional)"
-        />
+        <div className="text-left">
+          <label className="block mb-1">Select expiry time</label>
+          <input
+            type="datetime-local"
+            className="url-box"
+            value={expiresAt}
+            onChange={e => setExpiresAt(e.target.value)}
+            placeholder="Expiry (optional)"
+          />
+        </div>
         <button onClick={createEndpoint} disabled={loading} className="btn">
           {loading && <span className="loading-spinner" />} {loading ? 'Creating...' : 'Generate URL'}
         </button>

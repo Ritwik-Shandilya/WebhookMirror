@@ -14,14 +14,22 @@ interface Endpoint {
 const DashboardPage: React.FC = () => {
   const [endpoints, setEndpoints] = useState<Endpoint[]>([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [expiresAt, setExpiresAt] = useState('');
 
   const loadEndpoints = async () => {
     setLoading(true);
-    const res = await fetch('/api/endpoints');
-    const data = await res.json();
-    setEndpoints(data);
-    setLoading(false);
+    setError(null);
+    try {
+      const res = await fetch('/api/endpoints');
+      if (!res.ok) throw new Error('Failed to load endpoints');
+      const data = await res.json();
+      setEndpoints(data);
+    } catch (err) {
+      setError('Failed to load endpoints. Is the backend running?');
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => { loadEndpoints(); }, []);
@@ -47,13 +55,19 @@ const DashboardPage: React.FC = () => {
   }, [endpoints]);
 
   const createEndpoint = async () => {
-    await fetch('/api/endpoints', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ expires_at: expiresAt || null })
-    });
-    setExpiresAt('');
-    loadEndpoints();
+    try {
+      const res = await fetch('/api/endpoints', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ expires_at: expiresAt || null })
+      });
+      if (!res.ok) throw new Error('Failed to create endpoint');
+    } catch (err) {
+      alert('Failed to create endpoint. Is the backend running?');
+    } finally {
+      setExpiresAt('');
+      loadEndpoints();
+    }
   };
 
   const toggleDisabled = async (id: number, disabled: boolean) => {
@@ -82,14 +96,18 @@ const DashboardPage: React.FC = () => {
       <div className="mb-2 text-sm">
         <Link to="/" className="btn">Back to home</Link>
       </div>
+      {error && <p className="text-red-500 mb-2">{error}</p>}
       <div className="mb-4 flex" style={{gap: '0.5rem', alignItems: 'center'}}>
-        <input
-          type="datetime-local"
-          className="url-box"
-          value={expiresAt}
-          onChange={e => setExpiresAt(e.target.value)}
-          placeholder="Expiry (optional)"
-        />
+        <div className="text-left">
+          <label className="block mb-1">Select expiry time</label>
+          <input
+            type="datetime-local"
+            className="url-box"
+            value={expiresAt}
+            onChange={e => setExpiresAt(e.target.value)}
+            placeholder="Expiry (optional)"
+          />
+        </div>
         <button className="btn" onClick={createEndpoint}>Create new endpoint</button>
       </div>
       {loading ? <p>Loading...</p> : (

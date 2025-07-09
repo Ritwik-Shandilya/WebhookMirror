@@ -8,7 +8,7 @@ class Endpoint < ApplicationRecord
   end
 
   def delete_reason
-    can_delete ? nil : 'Cannot delete endpoint with existing requests'
+    can_delete ? nil : "Cannot delete endpoint with existing requests"
   end
 
   private
