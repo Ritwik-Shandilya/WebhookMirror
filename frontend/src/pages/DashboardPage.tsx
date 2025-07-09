@@ -14,6 +14,7 @@ interface Endpoint {
 
 const DashboardPage: React.FC = () => {
   const [endpoints, setEndpoints] = useState<Endpoint[]>([]);
+  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [openMenuId, setOpenMenuId] = useState<number | null>(null);
@@ -34,26 +35,33 @@ const DashboardPage: React.FC = () => {
   };
 
   useEffect(() => { loadEndpoints(); }, []);
+  useEffect(() => { setPage(1); }, [endpoints]);
 
-  const groups = useMemo(() => {
-    const today: Endpoint[] = [];
-    const yesterday: Endpoint[] = [];
-    const older: Endpoint[] = [];
+  const PAGE_SIZE = 10;
+
+  const endpointsWithGroup = useMemo(() => {
     const now = new Date();
     const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const startOfYesterday = new Date(startOfToday.getTime() - 86400000);
-    endpoints.forEach(e => {
+    return endpoints.map(e => {
       const created = new Date(e.created_at);
+      let group: 'Today' | 'Yesterday' | 'Older';
       if (created >= startOfToday) {
-        today.push(e);
+        group = 'Today';
       } else if (created >= startOfYesterday) {
-        yesterday.push(e);
+        group = 'Yesterday';
       } else {
-        older.push(e);
+        group = 'Older';
       }
+      return { ...e, group };
     });
-    return { today, yesterday, older };
   }, [endpoints]);
+
+  const totalPages = Math.ceil(endpointsWithGroup.length / PAGE_SIZE) || 1;
+  const pagedEndpoints = endpointsWithGroup.slice(
+    (page - 1) * PAGE_SIZE,
+    page * PAGE_SIZE
+  );
 
 
   const toggleDisabled = async (id: number, disabled: boolean) => {
@@ -88,106 +96,61 @@ const DashboardPage: React.FC = () => {
       <h1 className="header">Dashboard</h1>
       {error && <p className="text-red-500 mb-2">{error}</p>}
       {loading ? <p>Loading...</p> : (
+        <>
         <table className="w-full text-left table">
           <thead>
             <tr><th>UUID</th><th>Created</th><th>Expires</th><th>Actions</th></tr>
           </thead>
           <tbody>
-            {groups.today.length > 0 && (
-            <tr><th colSpan={4} className="group-header">Today</th></tr>
-            )}
-            {groups.today.map(e => (
-              <tr key={e.id} className="endpoint-row">
-                <td><Link to={`/endpoint/${e.uuid}`}>{e.uuid}</Link></td>
-                <td>{new Date(e.created_at).toLocaleString()}</td>
-                <td>{e.expires_at ? new Date(e.expires_at).toLocaleString() : 'None'}</td>
-                <td style={{ position: 'relative' }}>
-                  <button className="actions-toggle" onClick={() => toggleMenu(e.id)}>⋮</button>
-                  {openMenuId === e.id && (
-                    <div className="actions-menu">
-                      <button onClick={() => toggleDisabled(e.id, !e.disabled)}>
-                        {e.disabled ? 'Enable' : 'Disable'}
-                      </button>
-                      <span
-                        title={!e.can_delete ? e.delete_reason || undefined : undefined}
-                        style={{ display: 'inline-block' }}
-                      >
-                        <button
-                          disabled={!e.can_delete}
-                          onClick={() => deleteEndpoint(e.id)}
-                        >
-                          Delete
+            {pagedEndpoints.map((e, idx) => (
+              <React.Fragment key={e.id}>
+                {(idx === 0 || pagedEndpoints[idx - 1].group !== e.group) && (
+                  <tr><th colSpan={4} className="group-header">{e.group}</th></tr>
+                )}
+                <tr className="endpoint-row">
+                  <td><Link to={`/endpoint/${e.uuid}`}>{e.uuid}</Link></td>
+                  <td>{new Date(e.created_at).toLocaleString()}</td>
+                  <td>{e.expires_at ? new Date(e.expires_at).toLocaleString() : 'None'}</td>
+                  <td style={{ position: 'relative' }}>
+                    <button className="actions-toggle" onClick={() => toggleMenu(e.id)}>⋮</button>
+                    {openMenuId === e.id && (
+                      <div className="actions-menu">
+                        <button onClick={() => toggleDisabled(e.id, !e.disabled)}>
+                          {e.disabled ? 'Enable' : 'Disable'}
                         </button>
-                      </span>
-                    </div>
-                  )}
-                </td>
-              </tr>
-            ))}
-            {groups.yesterday.length > 0 && (
-            <tr><th colSpan={4} className="group-header">Yesterday</th></tr>
-            )}
-            {groups.yesterday.map(e => (
-              <tr key={e.id} className="endpoint-row">
-                <td><Link to={`/endpoint/${e.uuid}`}>{e.uuid}</Link></td>
-                <td>{new Date(e.created_at).toLocaleString()}</td>
-                <td>{e.expires_at ? new Date(e.expires_at).toLocaleString() : 'None'}</td>
-                <td style={{ position: 'relative' }}>
-                  <button className="actions-toggle" onClick={() => toggleMenu(e.id)}>⋮</button>
-                  {openMenuId === e.id && (
-                    <div className="actions-menu">
-                      <button onClick={() => toggleDisabled(e.id, !e.disabled)}>
-                        {e.disabled ? 'Enable' : 'Disable'}
-                      </button>
-                      <span
-                        title={!e.can_delete ? e.delete_reason || undefined : undefined}
-                        style={{ display: 'inline-block' }}
-                      >
-                        <button
-                          disabled={!e.can_delete}
-                          onClick={() => deleteEndpoint(e.id)}
+                        <span
+                          title={!e.can_delete ? e.delete_reason || undefined : undefined}
+                          style={{ display: 'inline-block' }}
                         >
-                          Delete
-                        </button>
-                      </span>
-                    </div>
-                  )}
-                </td>
-              </tr>
-            ))}
-            {groups.older.length > 0 && (
-            <tr><th colSpan={4} className="group-header">Older</th></tr>
-            )}
-            {groups.older.map(e => (
-              <tr key={e.id} className="endpoint-row">
-                <td><Link to={`/endpoint/${e.uuid}`}>{e.uuid}</Link></td>
-                <td>{new Date(e.created_at).toLocaleString()}</td>
-                <td>{e.expires_at ? new Date(e.expires_at).toLocaleString() : 'None'}</td>
-                <td style={{ position: 'relative' }}>
-                  <button className="actions-toggle" onClick={() => toggleMenu(e.id)}>⋮</button>
-                  {openMenuId === e.id && (
-                    <div className="actions-menu">
-                      <button onClick={() => toggleDisabled(e.id, !e.disabled)}>
-                        {e.disabled ? 'Enable' : 'Disable'}
-                      </button>
-                      <span
-                        title={!e.can_delete ? e.delete_reason || undefined : undefined}
-                        style={{ display: 'inline-block' }}
-                      >
-                        <button
-                          disabled={!e.can_delete}
-                          onClick={() => deleteEndpoint(e.id)}
-                        >
-                          Delete
-                        </button>
-                      </span>
-                    </div>
-                  )}
-                </td>
-              </tr>
+                          <button
+                            disabled={!e.can_delete}
+                            onClick={() => deleteEndpoint(e.id)}
+                          >
+                            Delete
+                          </button>
+                        </span>
+                      </div>
+                    )}
+                  </td>
+                </tr>
+              </React.Fragment>
             ))}
           </tbody>
         </table>
+        <div className="pagination">
+          <button disabled={page === 1} onClick={() => setPage(p => Math.max(1, p - 1))}>Previous</button>
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i}
+              className={page === i + 1 ? 'active' : undefined}
+              onClick={() => setPage(i + 1)}
+            >
+              {i + 1}
+            </button>
+          ))}
+          <button disabled={page === totalPages} onClick={() => setPage(p => Math.min(totalPages, p + 1))}>Next</button>
+        </div>
+        </>
       )}
     </div>
     </SidebarLayout>
