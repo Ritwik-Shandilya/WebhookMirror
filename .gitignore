@@ -4,6 +4,11 @@ backend/vendor/bundle/
 backend/log/
 backend/tmp/
 
+# Frontend build output served by Rails
+backend/public/assets/
+backend/public/index.html
+backend/public/logo.svg
+
 # Frontend dependencies
 frontend/node_modules/
 frontend/dist/
