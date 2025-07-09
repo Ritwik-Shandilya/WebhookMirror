@@ -22,7 +22,10 @@ class Api::EndpointsController < ApplicationController
 
   def destroy
     endpoint = Endpoint.find(params[:id])
-    endpoint.destroy!
-    head :no_content
+    if endpoint.destroy
+      head :no_content
+    else
+      render json: { error: endpoint.errors.full_messages.to_sentence }, status: :unprocessable_entity
+    end
   end
 end

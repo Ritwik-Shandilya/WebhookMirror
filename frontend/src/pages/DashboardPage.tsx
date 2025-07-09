@@ -47,6 +47,7 @@ const DashboardPage: React.FC = () => {
   };
 
   const toggleDisabled = async (id: number, disabled: boolean) => {
+    if (!window.confirm(`Are you sure you want to ${disabled ? 'disable' : 'enable'} this endpoint?`)) return;
     await fetch(`/api/endpoints/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
@@ -56,7 +57,12 @@ const DashboardPage: React.FC = () => {
   };
 
   const deleteEndpoint = async (id: number) => {
-    await fetch(`/api/endpoints/${id}`, { method: 'DELETE' });
+    if (!window.confirm('Are you sure you want to delete this endpoint?')) return;
+    const res = await fetch(`/api/endpoints/${id}`, { method: 'DELETE' });
+    if (!res.ok) {
+      const data = await res.json();
+      alert(data.error || 'Failed to delete endpoint');
+    }
     loadEndpoints();
   };
 
