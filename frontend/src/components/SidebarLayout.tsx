@@ -1,5 +1,7 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { Sidebar } from '@bigbinary/neetoui/layouts';
+import { Home, List, Code, Plus } from '@bigbinary/neeto-icons';
 
 interface Props {
   children: React.ReactNode;
@@ -24,30 +26,20 @@ const SidebarLayout: React.FC<Props> = ({ children }) => {
     }
   };
 
+  const navLinks = [
+    { label: 'Start Testing', to: '#', icon: Plus, onClick: startTesting },
+    { label: 'Home', to: '/', icon: Home },
+    { label: 'Dashboard', to: '/dashboard', icon: List },
+    { label: 'API Tester', to: '/api-test', icon: Code }
+  ];
+
   return (
     <div className="layout">
-      <div className="sidebar">
-        <div className="sidebar-logo">
-          <Link to="/" className="site-logo">
-            <img src="/logo.svg" alt="WebhookMirror logo" className="logo-img" />
-            <span className="logo-text">Webhook Mirror</span>
-          </Link>
-        </div>
-        <div
-          className="nav-item"
-          role="button"
-          tabIndex={0}
-          onClick={startTesting}
-          onKeyDown={e => {
-            if (e.key === 'Enter' || e.key === ' ') startTesting();
-          }}
-        >
-          Start Testing
-        </div>
-        <Link to="/" className="nav-item">Home</Link>
-        <Link to="/dashboard" className="nav-item">Dashboard</Link>
-        <Link to="/api-test" className="nav-item">API Tester</Link>
-      </div>
+      <Sidebar
+        navLinks={navLinks}
+        organizationInfo={{ logo: () => <img src="/logo.svg" alt="WebhookMirror" className="logo-img" /> }}
+        tooltipStyle="default"
+      />
       <div className="main-content">
         {children}
       </div>
