@@ -1,9 +1,10 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { Button } from '@bigbinary/neetoui';
 import SidebarLayout from '../components/SidebarLayout';
 
 const LandingPage: React.FC = () => {
-  const navigate = useNavigate();
+  const history = useHistory();
   const [expiresAt, setExpiresAt] = React.useState('');
   const [loading, setLoading] = React.useState(false);
 
@@ -18,7 +19,7 @@ const LandingPage: React.FC = () => {
       if (!res.ok) throw new Error('Failed to create endpoint');
       const data = await res.json();
       if (!data.uuid) throw new Error('Invalid response');
-      navigate(`/endpoint/${data.uuid}`);
+      history.push(`/endpoint/${data.uuid}`);
     } catch (err) {
       alert('Failed to create endpoint. Is the backend running?');
     } finally {
@@ -35,15 +36,13 @@ const LandingPage: React.FC = () => {
             <h1 className="hero-title">Webhook Mirror</h1>
             <p className="hero-subtitle">Capture and inspect HTTP requests in real time with our powerful webhook testing tool</p>
           </div>
-          <button 
-            onClick={() => navigate('/webhook')} 
+          <Button 
+            onClick={() => history.push('/webhook')} 
             className="start-testing-btn"
+            variant="primary"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
             Start Testing
-          </button>
+          </Button>
         </div>
 
         {/* Hero Section */}
@@ -76,25 +75,14 @@ const LandingPage: React.FC = () => {
                     />
                   </div>
                   
-                  <button 
+                  <Button 
                     onClick={createEndpoint} 
                     disabled={loading}
                     className="create-btn"
+                    variant="primary"
                   >
-                    {loading ? (
-                      <>
-                        <div className="loading-spinner"></div>
-                        Creating...
-                      </>
-                    ) : (
-                      <>
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                        </svg>
-                        Create Endpoint
-                      </>
-                    )}
-                  </button>
+                    {loading ? 'Creating...' : 'Create Endpoint'}
+                  </Button>
                 </div>
               </div>
             </div>

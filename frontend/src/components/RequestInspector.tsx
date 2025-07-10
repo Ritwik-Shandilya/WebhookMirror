@@ -1,6 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import Tabs from './Tabs';
 import { JSONTree } from 'react-json-tree';
+import { Button } from '@bigbinary/neetoui';
+import { Copy } from '@bigbinary/neeto-icons';
 
 interface Props {
   request: {
@@ -101,26 +103,13 @@ const RequestInspector: React.FC<Props> = ({ request, endpointUuid }) => {
             <span className="timestamp">{formatTimestamp(request.created_at)}</span>
           </div>
         </div>
-        <button 
-          className={`copy-curl-btn ${copied ? 'copied' : ''}`} 
+        <Button
           onClick={copyCurl}
+          className={`copy-curl-btn ${copied ? 'copied' : ''}`}
+          title="Copy cURL"
         >
-          {copied ? (
-            <>
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-              Copied!
-            </>
-          ) : (
-            <>
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-              </svg>
-              Copy cURL
-            </>
-          )}
-        </button>
+          {copied ? 'Copied!' : 'Copy cURL'}
+        </Button>
       </div>
 
       {/* Tabs */}

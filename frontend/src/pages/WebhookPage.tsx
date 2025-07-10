@@ -5,7 +5,8 @@ import RequestList from '../components/RequestList';
 import { Req } from '../components/RequestListItem';
 import SearchInput from '../components/SearchInput';
 import LiveIndicator from '../components/LiveIndicator';
-import { Button } from '@bigbinary/neetoui';
+import { Button, DatePicker, Spinner } from '@bigbinary/neetoui';
+import { Copy } from '@bigbinary/neeto-icons';
 
 const WebhookPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -153,11 +154,9 @@ const WebhookPage: React.FC = () => {
             </div>
             <div className="form-group">
               <label className="form-label">Expiry time (optional)</label>
-              <input
-                type="datetime-local"
-                className="form-input"
+              <DatePicker
                 value={expiresAt}
-                onChange={e => setExpiresAt(e.target.value)}
+                onChange={setExpiresAt}
                 placeholder="Set expiry date"
               />
             </div>
@@ -169,10 +168,7 @@ const WebhookPage: React.FC = () => {
             className="create-btn"
           >
             {loading ? (
-              <>
-                <div className="loading-spinner"></div>
-                Loading...
-              </>
+              <Spinner />
             ) : (
               <>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -190,27 +186,13 @@ const WebhookPage: React.FC = () => {
               <div className="result-card">
                 <div className="result-header">
                   <h3 className="result-title">Capture URL</h3>
-                  <button 
-                    className={`copy-btn ${copiedUrl === 'capture' ? 'copied' : ''}`}
+                  <Button
                     onClick={() => copyUrl(captureUrl, 'capture')}
+                    className={`copy-btn ${copiedUrl === 'capture' ? 'copied' : ''}`}
                     title="Copy capture URL"
                   >
-                    {copiedUrl === 'capture' ? (
-                      <>
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        Copied!
-                      </>
-                    ) : (
-                      <>
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                        </svg>
-                        Copy
-                      </>
-                    )}
-                  </button>
+                    {copiedUrl === 'capture' ? 'Copied!' : 'Copy'}
+                  </Button>
                 </div>
                 <div className="url-display">
                   <code className="url-code">{captureUrl}</code>
@@ -220,27 +202,13 @@ const WebhookPage: React.FC = () => {
               <div className="result-card">
                 <div className="result-header">
                   <h3 className="result-title">Endpoint URL</h3>
-                  <button 
-                    className={`copy-btn ${copiedUrl === 'endpoint' ? 'copied' : ''}`}
+                  <Button
                     onClick={() => copyUrl(endpointUrl, 'endpoint')}
+                    className={`copy-btn ${copiedUrl === 'endpoint' ? 'copied' : ''}`}
                     title="Copy endpoint URL"
                   >
-                    {copiedUrl === 'endpoint' ? (
-                      <>
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        Copied!
-                      </>
-                    ) : (
-                      <>
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                        </svg>
-                        Copy
-                      </>
-                    )}
-                  </button>
+                    {copiedUrl === 'endpoint' ? 'Copied!' : 'Copy'}
+                  </Button>
                 </div>
                 <div className="url-display">
                   <code className="url-code">{endpointUrl}</code>
@@ -260,20 +228,13 @@ const WebhookPage: React.FC = () => {
                 <div className="curl-card">
                   <div className="curl-header">
                     <span className="curl-method post">POST</span>
-                    <button 
+                    <Button
+                      onClick={() => copyUrl(`curl -X POST ${curlUrl} -H \"Content-Type: application/json\" -d '{\"hello\":\"world\"}'`, 'curl-post')}
                       className={`copy-btn small ${copiedUrl === 'curl-post' ? 'copied' : ''}`}
-                      onClick={() => copyUrl(`curl -X POST ${curlUrl} -H "Content-Type: application/json" -d '{"hello":"world"}'`, 'curl-post')}
+                      title="Copy POST cURL"
                     >
-                      {copiedUrl === 'curl-post' ? (
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                      ) : (
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                        </svg>
-                      )}
-                    </button>
+                      {copiedUrl === 'curl-post' ? 'Copied!' : 'Copy'}
+                    </Button>
                   </div>
                   <pre className="curl-code">{`curl -X POST ${curlUrl} -H "Content-Type: application/json" -d '{"hello":"world"}'`}</pre>
                 </div>
@@ -281,20 +242,13 @@ const WebhookPage: React.FC = () => {
                 <div className="curl-card">
                   <div className="curl-header">
                     <span className="curl-method get">GET</span>
-                    <button 
-                      className={`copy-btn small ${copiedUrl === 'curl-get' ? 'copied' : ''}`}
+                    <Button
                       onClick={() => copyUrl(`curl ${curlUrl}`, 'curl-get')}
+                      className={`copy-btn small ${copiedUrl === 'curl-get' ? 'copied' : ''}`}
+                      title="Copy GET cURL"
                     >
-                      {copiedUrl === 'curl-get' ? (
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                      ) : (
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                        </svg>
-                      )}
-                    </button>
+                      {copiedUrl === 'curl-get' ? 'Copied!' : 'Copy'}
+                    </Button>
                   </div>
                   <pre className="curl-code">{`curl ${curlUrl}`}</pre>
                 </div>

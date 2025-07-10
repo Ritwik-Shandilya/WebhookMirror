@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { Button, Dropdown, Pagination, Spinner } from '@bigbinary/neetoui';
+import { Copy, Dropdown as DropdownIcon } from '@bigbinary/neeto-icons';
 import SidebarLayout from '../components/SidebarLayout';
 
 interface Endpoint {
@@ -126,7 +128,7 @@ const DashboardPage: React.FC = () => {
       
       {loading ? (
         <div className="loading-state">
-          <div className="loading-spinner"></div>
+          <Spinner />
           <p>Loading endpoints...</p>
         </div>
       ) : (
@@ -189,34 +191,25 @@ const DashboardPage: React.FC = () => {
                           >
                             {copiedId === e.id ? "Copied!" : "Copy"}
                           </button>
-                          
-                          <div className="dropdown-container">
-                            <button
-                              onClick={() => toggleMenu(e.id)}
-                              className="dropdown-toggle"
-                              title="More actions"
-                            >
-                              More actions
-                            </button>
-                            {openMenuId === e.id && (
-                              <div className="dropdown-menu">
-                                <button
-                                  onClick={() => toggleDisabled(e.id, !e.disabled)}
-                                  className="dropdown-item"
-                                >
-                                  {e.disabled ? "Enable" : "Disable"}
-                                </button>
-                                <button
-                                  disabled={!e.can_delete}
-                                  onClick={() => deleteEndpoint(e.id)}
-                                  className={`dropdown-item ${!e.can_delete ? 'disabled' : 'danger'}`}
-                                  title={!e.can_delete ? e.delete_reason || 'Cannot delete' : 'Delete endpoint'}
-                                >
+                          <button
+                            onClick={() => toggleMenu(e.id)}
+                            className="dropdown-toggle"
+                            title="More actions"
+                          >
+                            <DropdownIcon size={20} />
+                          </button>
+                          {openMenuId === e.id && (
+                            <div className="dropdown-menu">
+                              <button onClick={() => toggleDisabled(e.id, !e.disabled)}>
+                                {e.disabled ? "Enable" : "Disable"}
+                              </button>
+                              {e.can_delete && (
+                                <button onClick={() => deleteEndpoint(e.id)}>
                                   Delete
                                 </button>
-                              </div>
-                            )}
-                          </div>
+                              )}
+                            </div>
+                          )}
                         </div>
                       </div>
                     </td>
@@ -238,31 +231,12 @@ const DashboardPage: React.FC = () => {
 
         {totalPages > 1 && (
           <div className="pagination-container">
-            <div className="pagination">
-              <button
-                onClick={() => setPage(p => Math.max(1, p - 1))}
-                className="pagination-btn"
-                disabled={page === 1}
-              >
-                Previous
-              </button>
-              {Array.from({ length: totalPages }, (_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setPage(i + 1)}
-                  className={`pagination-btn ${page === i + 1 ? 'active' : ''}`}
-                >
-                  {i + 1}
-                </button>
-              ))}
-              <button
-                onClick={() => setPage(p => Math.min(totalPages, p + 1))}
-                className="pagination-btn"
-                disabled={page === totalPages}
-              >
-                Next
-              </button>
-            </div>
+            <Pagination
+              pageSize={PAGE_SIZE}
+              count={endpointsWithGroup.length}
+              pageNo={page}
+              navigate={setPage}
+            />
           </div>
         )}
         </>

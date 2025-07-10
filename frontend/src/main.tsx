@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import DashboardPage from './pages/DashboardPage';
 import WebhookPage from './pages/WebhookPage';
@@ -9,18 +9,19 @@ import EndpointPage from './pages/EndpointPage';
 import RequestPage from './pages/RequestPage';
 import { ToastContainer } from 'react-toastify';
 import './index.css';
+import '../node_modules/@bigbinary/neetoui/dist/index.css';
 
 const App = () => (
   <BrowserRouter>
     <ToastContainer />
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/dashboard" element={<DashboardPage />} />
-      <Route path="/webhook" element={<WebhookPage />} />
-      <Route path="/api-test" element={<ApiTesterPage />} />
-      <Route path="/endpoint/:uuid" element={<EndpointPage />} />
-      <Route path="/endpoint/:uuid/request/:id" element={<RequestPage />} />
-    </Routes>
+    <Switch>
+      <Route exact path="/" component={Home} />
+      <Route exact path="/dashboard" component={DashboardPage} />
+      <Route exact path="/webhook" component={WebhookPage} />
+      <Route exact path="/api-test" component={ApiTesterPage} />
+      <Route exact path="/endpoint/:uuid" component={EndpointPage} />
+      <Route exact path="/endpoint/:uuid/request/:id" component={RequestPage} />
+    </Switch>
   </BrowserRouter>
 );
 

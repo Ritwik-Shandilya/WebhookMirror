@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import SidebarLayout from '../components/SidebarLayout';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { Button } from '@bigbinary/neetoui';
 
 const Home = () => {
   const [showMore, setShowMore] = useState(false);
-  const navigate = useNavigate();
+  const history = useHistory();
 
   useEffect(() => {
     const handleScroll = () => setShowMore(true);
@@ -126,15 +127,13 @@ const Home = () => {
         }
       `}</style>
       <div className="home-top-actions">
-        <button
+        <Button
           className="start-testing-btn home-cta-btn"
-          onClick={() => navigate('/webhook')}
+          onClick={() => history.push('/webhook')}
+          variant="primary"
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-          </svg>
-          <span>Start Testing</span>
-        </button>
+          Start Testing
+        </Button>
       </div>
       <main className="hero">
         <h1>Debug webhooks <span>effortlessly</span></h1>
