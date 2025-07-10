@@ -36,3 +36,5 @@
 
 # Ignore master key
 /config/master.key
+
+/config/credentials/production.key
