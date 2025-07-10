@@ -104,6 +104,23 @@ const Home = () => {
         <div className="feature">100% Free</div>
         <div className="feature">Real-time</div>
       </section>
+      <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+        <p style={{ marginBottom: '0.5rem' }}>Example curl command:</p>
+        <pre className="code-box" style={{ display: 'inline-block', textAlign: 'left' }}>{`curl -X POST http://localhost:3000/<endpoint-id> -H "Content-Type: application/json" -d '{"hello":"world"}'`}</pre>
+      </div>
+      <h2 style={{ textAlign: 'center', fontSize: '1.25rem', fontWeight: 600, marginBottom: '0.5rem' }}>Features</h2>
+      <ul style={{ textAlign: 'left', maxWidth: '600px', margin: '0 auto 1.5rem', listStyle: 'disc inside' }}>
+        <li>Sidebar navigation with quick access to Start Testing, Dashboard and API Tester</li>
+        <li>Export captured requests to JSON</li>
+        <li>Clear all requests for an endpoint</li>
+        <li>Copy any request as a cURL command</li>
+      </ul>
+      <h2 style={{ textAlign: 'center', fontSize: '1.25rem', fontWeight: 600, marginBottom: '0.5rem' }}>How it works</h2>
+      <ol style={{ textAlign: 'left', maxWidth: '600px', margin: '0 auto', listStyle: 'decimal inside' }}>
+        <li>Create a unique endpoint using the Start Testing button</li>
+        <li>Send HTTP requests from your service or via curl</li>
+        <li>Inspect the requests here in real time</li>
+      </ol>
     </div>
     </SidebarLayout>
   );

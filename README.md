@@ -13,6 +13,20 @@ Refer to `workflow.md` for the ongoing development notes and checklist derived f
 - Clear all requests for an endpoint
 - Copy any request as a cURL command
 
+## How it works
+
+1. Create a new endpoint from the homepage.
+2. Send HTTP requests to that endpoint using your service or `curl`.
+3. Inspect the captured requests in the dashboard.
+
+### Example curl command
+
+```bash
+curl -X POST http://localhost:3000/<endpoint-id> \
+     -H "Content-Type: application/json" \
+     -d '{"hello":"world"}'
+```
+
 ## Running the application
 
 The backend and frontend are developed separately in development, but the production build runs from a single Rails server. Ensure you have **Ruby** (version 3.0 or higher) and **Node.js** (version 18 or higher) installed on your machine.

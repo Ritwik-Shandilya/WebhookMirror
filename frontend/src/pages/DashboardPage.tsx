@@ -99,20 +99,20 @@ const DashboardPage: React.FC = () => {
         <>
         <table className="w-full text-left table">
           <thead>
-            <tr><th>UUID</th><th>Created</th><th>Expires</th><th>Actions</th></tr>
+            <tr><th>UUID</th><th>Created</th><th>Expires</th></tr>
           </thead>
           <tbody>
             {pagedEndpoints.map((e, idx) => (
               <React.Fragment key={e.id}>
                 {(idx === 0 || pagedEndpoints[idx - 1].group !== e.group) && (
-                  <tr><th colSpan={4} className="group-header">{e.group}</th></tr>
+                  <tr><th colSpan={3} className="group-header">{e.group}</th></tr>
                 )}
                 <tr className="endpoint-row">
-                  <td><Link to={`/endpoint/${e.uuid}`}>{e.uuid}</Link></td>
-                  <td>{new Date(e.created_at).toLocaleString()}</td>
-                  <td>{e.expires_at ? new Date(e.expires_at).toLocaleString() : 'None'}</td>
                   <td style={{ position: 'relative' }}>
-                    <button className="actions-toggle" onClick={() => toggleMenu(e.id)}>⋮</button>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <Link to={`/endpoint/${e.uuid}`}>{e.uuid}</Link>
+                      <button className="actions-toggle" onClick={() => toggleMenu(e.id)}>⋮</button>
+                    </div>
                     {openMenuId === e.id && (
                       <div className="actions-menu">
                         <button onClick={() => toggleDisabled(e.id, !e.disabled)}>
@@ -132,6 +132,8 @@ const DashboardPage: React.FC = () => {
                       </div>
                     )}
                   </td>
+                  <td>{new Date(e.created_at).toLocaleString()}</td>
+                  <td>{e.expires_at ? new Date(e.expires_at).toLocaleString() : 'None'}</td>
                 </tr>
               </React.Fragment>
             ))}
