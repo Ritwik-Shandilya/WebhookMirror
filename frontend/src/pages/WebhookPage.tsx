@@ -42,7 +42,12 @@ const WebhookPage: React.FC = () => {
       const data = await res.json();
       const { protocol, hostname, origin } = window.location;
       setCaptureUrl(`${origin}/${data.uuid}`);
-      setEndpointUrl(`${origin}/endpoint/${data.uuid}`);
+      // For localhost, use port 3000 for the Rails server, otherwise use the current origin
+      const endpointBase = hostname === 'localhost'
+        ? `${protocol}//${hostname}:3000`
+        : origin;
+      // The endpoint URL should be the same as the capture URL (just the UUID path)
+      setEndpointUrl(`${endpointBase}/${data.uuid}`);
       const curlBase = hostname === 'localhost'
         ? `${protocol}//${hostname}:3000`
         : origin;
