@@ -60,6 +60,11 @@ To build the frontend and serve it via Rails on a single port run:
 ./start.sh
 ```
 
+When deploying to platforms like Heroku, the frontend is automatically built by
+the `heroku-postbuild` script defined in the repository root `package.json`. The
+`start.sh` script therefore only launches the Rails server in production
+environments.
+
 
 The UI follows [Neetix](https://neetix.neetokb.com/) best practices such as using sentence case and clear loading states.
 
