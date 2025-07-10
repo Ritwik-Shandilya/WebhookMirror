@@ -24,7 +24,7 @@ const Home = () => {
         <div className="home-top-actions">
           <Button
             label="Start Testing"
-            style={{ minWidth: 120, background: '#16a34a', color: '#fff', border: 'none' }}
+            style={{ minWidth: 120, background: '#7a6401', color: '#fff', border: 'none' }}
             size="large"
             className="home-cta-btn"
             onClick={() => window.location.href = "/webhook"}
