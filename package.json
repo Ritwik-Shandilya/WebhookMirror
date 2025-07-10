@@ -6,6 +6,6 @@
     "node": ">=18"
   },
   "scripts": {
-    "heroku-postbuild": "npm --prefix frontend install && npm --prefix frontend run build"
+    "heroku-postbuild": "yarn --cwd frontend install && yarn --cwd frontend build"
   }
 }
