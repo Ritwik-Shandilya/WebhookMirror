@@ -7,9 +7,8 @@ import WebhookPage from './pages/WebhookPage';
 import ApiTesterPage from './pages/ApiTesterPage';
 import EndpointPage from './pages/EndpointPage';
 import RequestPage from './pages/RequestPage';
-import './index.css';
-
 import { ToastContainer } from 'react-toastify';
+import './index.css';
 
 const App = () => (
   <BrowserRouter>

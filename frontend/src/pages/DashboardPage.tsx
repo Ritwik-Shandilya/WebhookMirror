@@ -182,48 +182,29 @@ const DashboardPage: React.FC = () => {
                       <div className="capture-url-container">
                         <span className="capture-url">{window.location.origin}/{e.uuid}</span>
                         <div className="url-actions">
-                          <button 
-                            className={`copy-url-btn ${copiedId === e.id ? 'copied' : ''}`}
+                          <button
                             onClick={() => copyCaptureUrl(e.uuid, e.id)}
+                            className={`copy-url-btn ${copiedId === e.id ? 'copied' : ''}`}
                             title="Copy capture URL"
                           >
-                            {copiedId === e.id ? (
-                              <>
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                </svg>
-                                Copied!
-                              </>
-                            ) : (
-                              <>
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                                </svg>
-                                Copy
-                              </>
-                            )}
+                            {copiedId === e.id ? "Copied!" : "Copy"}
                           </button>
                           
                           <div className="dropdown-container">
-                            <button 
-                              className="dropdown-toggle" 
+                            <button
                               onClick={() => toggleMenu(e.id)}
+                              className="dropdown-toggle"
                               title="More actions"
                             >
-                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-                              </svg>
+                              More actions
                             </button>
                             {openMenuId === e.id && (
                               <div className="dropdown-menu">
-                                <button 
+                                <button
                                   onClick={() => toggleDisabled(e.id, !e.disabled)}
                                   className="dropdown-item"
                                 >
-                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={e.disabled ? "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" : "M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636m12.728 12.728L18.364 5.636M5.636 18.364l12.728-12.728"} />
-                                  </svg>
-                                  {e.disabled ? 'Enable' : 'Disable'}
+                                  {e.disabled ? "Enable" : "Disable"}
                                 </button>
                                 <button
                                   disabled={!e.can_delete}
@@ -231,9 +212,6 @@ const DashboardPage: React.FC = () => {
                                   className={`dropdown-item ${!e.can_delete ? 'disabled' : 'danger'}`}
                                   title={!e.can_delete ? e.delete_reason || 'Cannot delete' : 'Delete endpoint'}
                                 >
-                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                  </svg>
                                   Delete
                                 </button>
                               </div>
@@ -261,34 +239,28 @@ const DashboardPage: React.FC = () => {
         {totalPages > 1 && (
           <div className="pagination-container">
             <div className="pagination">
-              <button 
-                disabled={page === 1} 
+              <button
                 onClick={() => setPage(p => Math.max(1, p - 1))}
                 className="pagination-btn"
+                disabled={page === 1}
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
                 Previous
               </button>
               {Array.from({ length: totalPages }, (_, i) => (
                 <button
                   key={i}
-                  className={`pagination-btn ${page === i + 1 ? 'active' : ''}`}
                   onClick={() => setPage(i + 1)}
+                  className={`pagination-btn ${page === i + 1 ? 'active' : ''}`}
                 >
                   {i + 1}
                 </button>
               ))}
-              <button 
-                disabled={page === totalPages} 
+              <button
                 onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                 className="pagination-btn"
+                disabled={page === totalPages}
               >
                 Next
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
               </button>
             </div>
           </div>
