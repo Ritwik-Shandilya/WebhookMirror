@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import SidebarLayout from '../components/SidebarLayout';
 
 const Home = () => {
+  const [showMore, setShowMore] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setShowMore(true);
+    window.addEventListener('scroll', handleScroll, { once: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <SidebarLayout>
@@ -52,18 +59,17 @@ const Home = () => {
         .features {
           display: flex;
           justify-content: center;
-          gap: 1.5rem;
-          padding: 2rem 1rem 3rem;
+          gap: 0.75rem;
+          padding: 1rem;
           flex-wrap: wrap;
         }
         .feature {
-          background: #ffffff;
-          padding: 1rem 2rem;
-          border-radius: 8px;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+          background: #22C55E;
+          color: #fff;
+          padding: 0.5rem 1rem;
+          border-radius: 9999px;
           font-weight: 600;
-          min-width: 120px;
-          text-align: center;
+          font-size: 0.875rem;
         }
         .actions {
           padding-bottom: 2rem;
@@ -110,23 +116,27 @@ const Home = () => {
         <div className="feature">Open source</div>
         <div className="feature">Session-based</div>
       </section>
-      <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-        <p style={{ marginBottom: '0.5rem' }}>Example curl command:</p>
-        <pre className="code-box" style={{ display: 'inline-block', textAlign: 'left' }}>{`curl -X POST http://localhost:3000/<endpoint-id> -H "Content-Type: application/json" -d '{"hello":"world"}'`}</pre>
-      </div>
-      <h2 className="section-title">Features</h2>
-      <div className="info-grid">
-        <div className="info-item">Sidebar navigation with quick access to Start Testing, Dashboard and API Tester</div>
-        <div className="info-item">Export captured requests to JSON</div>
-        <div className="info-item">Clear all requests for an endpoint</div>
-        <div className="info-item">Copy any request as a cURL command</div>
-      </div>
-      <h2 className="section-title">How it works</h2>
-      <div className="info-grid">
-        <div className="info-item">1. Create a unique endpoint from the Start Testing page</div>
-        <div className="info-item">2. Send HTTP requests from your service or via curl</div>
-        <div className="info-item">3. Inspect the requests here in real time</div>
-      </div>
+      {showMore && (
+        <>
+        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+          <p style={{ marginBottom: '0.5rem' }}>Example curl command:</p>
+          <pre className="code-box" style={{ display: 'inline-block', textAlign: 'left' }}>{`curl -X POST http://localhost:3000/<endpoint-id> -H "Content-Type: application/json" -d '{"hello":"world"}'`}</pre>
+        </div>
+        <h2 className="section-title">Features</h2>
+        <div className="info-grid">
+          <div className="info-item">Sidebar navigation with quick access to Start Testing, Dashboard and API Tester</div>
+          <div className="info-item">Export captured requests to JSON</div>
+          <div className="info-item">Clear all requests for an endpoint</div>
+          <div className="info-item">Copy any request as a cURL command</div>
+        </div>
+        <h2 className="section-title">How it works</h2>
+        <div className="info-grid">
+          <div className="info-item">1. Create a unique endpoint from the Start Testing page</div>
+          <div className="info-item">2. Send HTTP requests from your service or via curl</div>
+          <div className="info-item">3. Inspect the requests here in real time</div>
+        </div>
+        </>
+      )}
     </div>
     </SidebarLayout>
   );
