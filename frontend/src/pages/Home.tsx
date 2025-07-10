@@ -130,7 +130,7 @@ const Home = () => {
         <Button
           onClick={() => history.push('/webhook')}
           variant="primary"
-          size="small"
+          size="medium"
         >
           Start Testing
         </Button>
