@@ -47,6 +47,21 @@ const LandingPage: React.FC = () => {
       </div>
       <p className="mb-2">Example curl command:</p>
       <pre className="code-box">{`curl -X POST http://localhost:3000/<endpoint-id> -H "Content-Type: application/json" -d '{"hello":"world"}'`}</pre>
+
+      <h2 className="text-xl font-semibold mt-4 mb-2">Features</h2>
+      <ul className="text-left mb-4" style={{ marginLeft: '1.5rem' }}>
+        <li>Sidebar navigation with quick access to Start Testing, Dashboard and API Tester</li>
+        <li>Export captured requests to JSON</li>
+        <li>Clear all requests for an endpoint</li>
+        <li>Copy any request as a cURL command</li>
+      </ul>
+
+      <h2 className="text-xl font-semibold mb-2">How it works</h2>
+      <ol className="text-left" style={{ marginLeft: '1.5rem' }}>
+        <li>Create a unique endpoint using the form above</li>
+        <li>Send HTTP requests from your service to that endpoint</li>
+        <li>Inspect the requests here in real time</li>
+      </ol>
     </div>
     </SidebarLayout>
   );
