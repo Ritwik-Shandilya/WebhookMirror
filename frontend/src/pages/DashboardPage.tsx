@@ -184,32 +184,31 @@ const DashboardPage: React.FC = () => {
                       <div className="capture-url-container">
                         <span className="capture-url">{window.location.origin}/{e.uuid}</span>
                         <div className="url-actions">
-                          <button
+                          <Button
                             onClick={() => copyCaptureUrl(e.uuid, e.id)}
                             className={`copy-url-btn ${copiedId === e.id ? 'copied' : ''}`}
                             title="Copy capture URL"
+                            variant="secondary"
+                            size="small"
                           >
                             {copiedId === e.id ? "Copied!" : "Copy"}
-                          </button>
-                          <button
-                            onClick={() => toggleMenu(e.id)}
-                            className="dropdown-toggle"
-                            title="More actions"
+                          </Button>
+                          <Dropdown
+                            label="More actions"
+                            buttonStyle="secondary"
+                            buttonSize="small"
                           >
-                            <DropdownIcon size={20} />
-                          </button>
-                          {openMenuId === e.id && (
-                            <div className="dropdown-menu">
-                              <button onClick={() => toggleDisabled(e.id, !e.disabled)}>
-                                {e.disabled ? "Enable" : "Disable"}
-                              </button>
+                            <Dropdown.Menu>
+                              <Dropdown.MenuItem onClick={() => toggleDisabled(e.id, !e.disabled)}>
+                                {e.disabled ? 'Enable' : 'Disable'}
+                              </Dropdown.MenuItem>
                               {e.can_delete && (
-                                <button onClick={() => deleteEndpoint(e.id)}>
+                                <Dropdown.MenuItem className="neeto-ui-dropdown__popup-menu-item-btn--style-danger" onClick={() => deleteEndpoint(e.id)}>
                                   Delete
-                                </button>
+                                </Dropdown.MenuItem>
                               )}
-                            </div>
-                          )}
+                            </Dropdown.Menu>
+                          </Dropdown>
                         </div>
                       </div>
                     </td>

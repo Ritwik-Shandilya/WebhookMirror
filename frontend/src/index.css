@@ -5,12 +5,26 @@
   box-sizing: border-box;
 }
 
+:root {
+  --primary: #16a34a;
+  --primary-hover: #22c55e;
+  --primary-active: #15803d;
+  --secondary: #2563eb;
+  --secondary-hover: #1d4ed8;
+  --secondary-active: #1e40af;
+  --danger: #dc2626;
+  --background: #f8fafc;
+  --surface: #fff;
+  --text: #1e293b;
+  --text-muted: #64748b;
+}
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  background: #f9fafb;
+  background: var(--background);
+  color: var(--text);
 }
 
 .container {
@@ -1753,8 +1767,8 @@ button:disabled {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: linear-gradient(135deg, #22C55E, #16a34a);
-  color: white;
+  background: var(--primary) !important;
+  color: #fff !important;
   border: none;
   padding: 0.5rem 1rem;
   border-radius: 6px;
@@ -1762,12 +1776,13 @@ button:disabled {
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
-  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.2);
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.12);
 }
-
 .start-testing-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(34, 197, 94, 0.4);
+  background: var(--primary-hover) !important;
+}
+.start-testing-btn:active {
+  background: var(--primary-active) !important;
 }
 
 .hero-section {
@@ -2109,6 +2124,7 @@ button:disabled {
   color: #374151;
 }
 
+/*
 .dropdown-menu {
   position: absolute;
   top: 100%;
@@ -2163,6 +2179,7 @@ button:disabled {
   background: transparent;
   color: #9ca3af;
 }
+*/
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -2219,18 +2236,48 @@ button:disabled {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: linear-gradient(135deg, #22C55E, #16a34a);
-  color: #fff;
+  background: var(--primary) !important;
+  color: #fff !important;
   box-shadow: 0 2px 8px rgba(34, 197, 94, 0.12);
-  transition: all 0.2s;
+  border: none;
+  transition: background 0.2s;
 }
 .home-cta-btn:hover {
-  background: linear-gradient(135deg, #16a34a, #22C55E);
-  transform: translateY(-1px) scale(1.02);
-  box-shadow: 0 4px 16px rgba(34, 197, 94, 0.15);
+  background: var(--primary-hover) !important;
+}
+.home-cta-btn:active {
+  background: var(--primary-active) !important;
 }
 .home-cta-btn svg {
   width: 1.35rem;
   height: 1.35rem;
   flex-shrink: 0;
+}
+
+/* Custom neetoui dropdown menu item appearance */
+.neeto-ui-dropdown__popup-menu-item,
+.neeto-ui-dropdown__popup-menu-item-btn {
+  font-family: var(--neeto-ui-body-font-family, Inter, Arial, sans-serif) !important;
+  font-size: 1rem !important;         /* 16px for larger text */
+  font-weight: 500 !important;        /* Bolder text */
+  padding: 0.75rem 1.25rem !important; /* More vertical and horizontal space */
+  min-width: 180px !important;        /* Wider menu */
+  line-height: 1.5 !important;
+}
+
+/* Feature badges on Home page */
+.feature-badge {
+  display: inline-block;
+  background: #e6f9ed;
+  color: #16a34a;
+  padding: 0.35em 1em;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin: 0 0.25em;
+  box-shadow: none;
+  border: none;
+  cursor: default;
+  letter-spacing: 0.01em;
+  transition: none;
 }

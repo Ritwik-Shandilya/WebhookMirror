@@ -162,22 +162,18 @@ const WebhookPage: React.FC = () => {
             </div>
           </div>
           
-          <button 
+          <Button 
             onClick={handleOpen} 
             disabled={loading} 
-            className="create-btn"
+            variant="primary"
+            size="medium"
           >
             {loading ? (
               <Spinner />
             ) : (
-              <>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                </svg>
-                {uuidInput.trim() ? 'Open Endpoint' : 'Create New Endpoint'}
-              </>
+              <>{uuidInput.trim() ? 'Open Endpoint' : 'Create New Endpoint'}</>
             )}
-          </button>
+          </Button>
         </div>
         
         {loaded && (
@@ -188,8 +184,9 @@ const WebhookPage: React.FC = () => {
                   <h3 className="result-title">Capture URL</h3>
                   <Button
                     onClick={() => copyUrl(captureUrl, 'capture')}
-                    className={`copy-btn ${copiedUrl === 'capture' ? 'copied' : ''}`}
                     title="Copy capture URL"
+                    variant="primary"
+                    size="small"
                   >
                     {copiedUrl === 'capture' ? 'Copied!' : 'Copy'}
                   </Button>
@@ -204,20 +201,20 @@ const WebhookPage: React.FC = () => {
                   <h3 className="result-title">Endpoint URL</h3>
                   <Button
                     onClick={() => copyUrl(endpointUrl, 'endpoint')}
-                    className={`copy-btn ${copiedUrl === 'endpoint' ? 'copied' : ''}`}
                     title="Copy endpoint URL"
+                    variant="primary"
+                    size="small"
                   >
                     {copiedUrl === 'endpoint' ? 'Copied!' : 'Copy'}
                   </Button>
                 </div>
                 <div className="url-display">
                   <code className="url-code">{endpointUrl}</code>
-                  <button onClick={openEndpoint} className="open-btn">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                    </svg>
+                  <Button onClick={openEndpoint} variant="secondary" iconPosition="left"
+                    size="small"
+                  >
                     Open
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>
@@ -230,8 +227,9 @@ const WebhookPage: React.FC = () => {
                     <span className="curl-method post">POST</span>
                     <Button
                       onClick={() => copyUrl(`curl -X POST ${curlUrl} -H \"Content-Type: application/json\" -d '{\"hello\":\"world\"}'`, 'curl-post')}
-                      className={`copy-btn small ${copiedUrl === 'curl-post' ? 'copied' : ''}`}
                       title="Copy POST cURL"
+                      variant="primary"
+                      size="small"
                     >
                       {copiedUrl === 'curl-post' ? 'Copied!' : 'Copy'}
                     </Button>
@@ -244,8 +242,9 @@ const WebhookPage: React.FC = () => {
                     <span className="curl-method get">GET</span>
                     <Button
                       onClick={() => copyUrl(`curl ${curlUrl}`, 'curl-get')}
-                      className={`copy-btn small ${copiedUrl === 'curl-get' ? 'copied' : ''}`}
                       title="Copy GET cURL"
+                      variant="primary"
+                      size="small"
                     >
                       {copiedUrl === 'curl-get' ? 'Copied!' : 'Copy'}
                     </Button>
@@ -293,24 +292,15 @@ const WebhookPage: React.FC = () => {
               </div>
             </div>
             <div className="header-actions">
-              <button onClick={loadRequests} className="action-btn">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                </svg>
+              <Button onClick={loadRequests} variant="secondary" size="small">
                 Refresh
-              </button>
-              <button onClick={exportRequests} className="action-btn">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
+              </Button>
+              <Button onClick={exportRequests} variant="secondary" size="small">
                 Export JSON
-              </button>
-              <button onClick={clearRequests} className="action-btn danger">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                </svg>
+              </Button>
+              <Button onClick={clearRequests} variant="danger" size="small">
                 Clear All
-              </button>
+              </Button>
             </div>
           </div>
           

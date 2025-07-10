@@ -107,6 +107,7 @@ const RequestInspector: React.FC<Props> = ({ request, endpointUuid }) => {
           onClick={copyCurl}
           className={`copy-curl-btn ${copied ? 'copied' : ''}`}
           title="Copy cURL"
+          variant="secondary"
         >
           {copied ? 'Copied!' : 'Copy cURL'}
         </Button>

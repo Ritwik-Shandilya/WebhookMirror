@@ -128,9 +128,9 @@ const Home = () => {
       `}</style>
       <div className="home-top-actions">
         <Button
-          className="start-testing-btn home-cta-btn"
           onClick={() => history.push('/webhook')}
           variant="primary"
+          size="small"
         >
           Start Testing
         </Button>
@@ -141,9 +141,9 @@ const Home = () => {
         {/* Removed endpoint creation controls */}
       </main>
       <section className="features">
-        <div className="feature">Easy setup</div>
-        <div className="feature">Open source</div>
-        <div className="feature">Session-based</div>
+        <span className="feature-badge">Easy setup</span>
+        <span className="feature-badge">Open source</span>
+        <span className="feature-badge">Session-based</span>
       </section>
       {showMore && (
         <>

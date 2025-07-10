@@ -6,6 +6,7 @@ import { Req } from '../components/RequestListItem';
 import RequestInspector from '../components/RequestInspector';
 import SearchInput from '../components/SearchInput';
 import LiveIndicator from '../components/LiveIndicator';
+import { Button } from '@bigbinary/neetoui';
 
 
 const EndpointPage: React.FC = () => {
@@ -71,8 +72,8 @@ const EndpointPage: React.FC = () => {
     <div className="container" style={{maxWidth: '1200px'}}>
       <h1 className="header">Endpoint {uuid} <LiveIndicator /></h1>
       <div className="mb-2 space-x-2 text-left">
-        <button className="btn" onClick={exportRequests}>Export JSON</button>
-        <button className="btn" onClick={clearRequests}>Clear All</button>
+        <Button className="btn" onClick={exportRequests} variant="secondary">Export JSON</Button>
+        <Button className="btn" onClick={clearRequests} variant="danger">Clear All</Button>
       </div>
       <div className="flex" style={{gap: '1rem', alignItems: 'flex-start'}}>
         <div style={{flex: '1'}}>
