@@ -56,6 +56,26 @@ body {
 .start-btn:active {
   transform: translateY(1px);
 }
+
+/* Additional button styles */
+.btn-secondary {
+  background: #6b7280;
+  color: #ffffff;
+}
+
+.btn-secondary:hover {
+  background: #4b5563;
+}
+
+.btn-danger {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+.btn-danger:hover {
+  background: #dc2626;
+}
+
 .site-header {
   width: 100%;
   background: #ffffff;
@@ -156,12 +176,13 @@ button:disabled {
 }
 
 .option-card {
-  border: 1px solid #ccc;
-  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  padding: 1.5rem;
   border-radius: 8px;
   box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-  cursor: pointer;
+  background: #ffffff;
   margin-bottom: 1rem;
+  text-align: left;
 }
 
 .option-card:hover {
@@ -175,7 +196,20 @@ button:disabled {
   font-size: 0.85rem;
   overflow-x: auto;
   text-align: left;
+  border: 1px solid #e5e7eb;
 }
+
+/* Additional utility classes */
+.mb-6 { margin-bottom: 1.5rem; }
+.gap-2 { gap: 0.5rem; }
+.gap-4 { gap: 1rem; }
+.text-gray-500 { color: #6b7280; }
+.text-center { text-align: center; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.flex-col { flex-direction: column; }
+.space-y-4 > * + * { margin-top: 1rem; }
+
 .mb-2 { margin-bottom: 0.5rem; }
 .mb-4 { margin-bottom: 1rem; }
 .mt-2 { margin-top: 0.5rem; }
@@ -198,13 +232,6 @@ button:disabled {
 .space-x-2 > * + * { margin-left: 0.5rem; }
 .space-y-2 > * + * { margin-top: 0.5rem; }
 .space-y-1 > * + * { margin-top: 0.25rem; }
-.space-y-4 > * + * { margin-top: 1rem; }
-.whitespace-pre-wrap { white-space: pre-wrap; }
-.text-xs { font-size: 0.75rem; }
-.text-left { text-align: left; }
-.font-sans { font-family: Arial, sans-serif; }
-.mb-1 { margin-bottom: 0.25rem; }
-.bg-gray-50 { background-color: #f9fafb; }
 
 /* Layout styles for landing page with sidebar */
 .layout {

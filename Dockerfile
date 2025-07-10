@@ -47,8 +47,9 @@ COPY . .
 
 # Build frontend
 WORKDIR /rails/frontend
-RUN yarn install && yarn build
-RUN ls -la /rails/public/ || echo "Public directory not found"
+RUN yarn install --frozen-lockfile
+RUN yarn build
+RUN ls -la /rails/public/ || echo "Public directory not found after build"
 
 # Return to Rails directory
 WORKDIR /rails
@@ -63,13 +64,14 @@ FROM base
 COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --from=build /rails /rails
 
-# Verify frontend files are copied
-RUN ls -la /rails/public/ || echo "Public directory not found in final stage"
+# Verify frontend files are copied and create public directory if needed
+RUN mkdir -p /rails/public
+RUN ls -la /rails/public/ || echo "Public directory is empty"
 
 # Run and own only the runtime files as a non-root user for security
 RUN groupadd --system --gid 1000 rails && \
     useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
-    chown -R rails:rails db log storage tmp
+    chown -R rails:rails db log storage tmp public
 USER 1000:1000
 
 # Entrypoint prepares the database.
