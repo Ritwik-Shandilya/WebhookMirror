@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="220" height="48" viewBox="0 0 220 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="260" height="60" viewBox="0 0 260 60" fill="none" xmlns="http://www.w3.org/2000/svg">
   <g>
-    <!-- Icon: Mirror + Webhook motif -->
-    <rect x="4" y="4" width="40" height="40" rx="10" fill="#2563eb"/>
+    <!-- Larger Icon: Mirror + Webhook motif, now green -->
+    <rect x="8" y="8" width="52" height="52" rx="13" fill="#22C55E"/>
     <g>
-      <path d="M16 24c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M24 32v-8h8" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      <circle cx="24" cy="24" r="3" fill="#fff"/>
+      <path d="M26 34c0-7 5.82-12 13-12s13 5 13 12-5.82 12-13 12" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M39 46V34h12" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="39" cy="34" r="5" fill="#fff"/>
     </g>
     <!-- Text: Webhook Mirror -->
-    <text x="56" y="31" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700" fill="#1a1a1a">Webhook <tspan fill="#2563eb">Mirror</tspan></text>
+    <text x="76" y="42" font-family="Inter, Arial, sans-serif" font-size="32" font-weight="700" fill="#1a1a1a">Webhook <tspan fill="#2563eb">Mirror</tspan></text>
   </g>
 </svg>
