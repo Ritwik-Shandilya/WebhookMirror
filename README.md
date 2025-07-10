@@ -60,6 +60,9 @@ To build the frontend and serve it via Rails on a single port run:
 ./start.sh
 ```
 
+The script checks for Bundler and the required Ruby gems. If they are missing
+they will be installed automatically before the Rails server starts.
+
 When deploying to platforms like Heroku, the frontend is automatically built by
 the `heroku-postbuild` script defined in the repository root `package.json`. The
 `start.sh` script therefore only launches the Rails server in production
