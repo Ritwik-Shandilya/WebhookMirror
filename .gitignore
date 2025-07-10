@@ -1,18 +1,38 @@
 # Backend dependencies
-backend/vendor/
-backend/vendor/bundle/
-backend/log/
-backend/tmp/
+/vendor/*
+!/vendor/.keep
+/vendor/bundle/
+/log/*
+!/log/.keep
+/tmp/*
+!/tmp/.keep
 
 # Frontend build output served by Rails
-backend/public/assets/
-backend/public/index.html
-backend/public/logo.svg
+/public/assets/
+/public/index.html
+/public/logo.svg
 
 # Frontend dependencies
-frontend/node_modules/
-frontend/dist/
+/frontend/node_modules/
+/frontend/dist/
 
 # Generated files
-backend/db/schema.rb
-frontend/package-lock.json
+/db/schema.rb
+/frontend/package-lock.json
+
+# Bundler config and environment files
+/.bundle
+/.env*
+
+# Uploaded files and temporary storage
+/storage/*
+!/storage/.keep
+/tmp/storage/*
+!/tmp/storage/
+!/tmp/storage/.keep
+/tmp/pids/*
+!/tmp/pids/
+!/tmp/pids/.keep
+
+# Ignore master key
+/config/master.key
