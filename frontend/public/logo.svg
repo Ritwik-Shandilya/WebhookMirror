@@ -1,5 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <circle cx="50" cy="50" r="45" fill="#10B981"/>
-  <path d="M30 50 L45 65 L70 35" stroke="white" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-  <polygon points="50,20 80,80 20,80" fill="white" opacity="0.4"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="220" height="48" viewBox="0 0 220 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g>
+    <!-- Icon: Mirror + Webhook motif -->
+    <rect x="4" y="4" width="40" height="40" rx="10" fill="#2563eb"/>
+    <g>
+      <path d="M16 24c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M24 32v-8h8" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="24" cy="24" r="3" fill="#fff"/>
+    </g>
+    <!-- Text: Webhook Mirror -->
+    <text x="56" y="31" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700" fill="#1a1a1a">Webhook <tspan fill="#2563eb">Mirror</tspan></text>
+  </g>
 </svg>

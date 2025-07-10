@@ -13,7 +13,6 @@ const SidebarLayout: React.FC<Props> = ({ children }) => {
         <div className="sidebar-logo">
           <Link to="/" className="site-logo">
             <img src="/logo.svg" alt="WebhookMirror logo" className="logo-img" />
-            <span className="logo-text">Webhook Mirror</span>
           </Link>
         </div>
         
