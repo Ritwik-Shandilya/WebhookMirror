@@ -24,7 +24,7 @@ const Home = () => {
         <div className="home-top-actions">
           <Button
             label="Start Testing"
-            style={{ minWidth: 120 }}
+            style={{ minWidth: 120, background: '#22C55E', color: '#fff', border: 'none' }}
             size="large"
             className="home-cta-btn"
             onClick={() => window.location.href = "/webhook"}
@@ -38,13 +38,15 @@ const Home = () => {
             Spin up a session-based URL and watch your requests arrive in real time.
           </p>
         </div>
-        <div className="feature-cards">
-          {featureCards.map(card => (
-            <div className="feature-card" key={card.title}>
-              <div className="feature-card-title">{card.title}</div>
-              <div className="feature-card-desc">{card.description}</div>
-            </div>
-          ))}
+        <div className="feature-cards-wrapper">
+          <div className="feature-cards">
+            {featureCards.map(card => (
+              <div className="feature-card" key={card.title}>
+                <div className="feature-card-title">{card.title}</div>
+                <div className="feature-card-desc">{card.description}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       <style>{`
@@ -88,13 +90,18 @@ const Home = () => {
           max-width: 600px;
           margin-bottom: 2.5rem;
         }
+        .feature-cards-wrapper {
+          width: 100%;
+          max-width: 900px;
+          margin-top: 4rem;
+          display: flex;
+          justify-content: flex-start;
+        }
         .feature-cards {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
           gap: 2rem;
-          margin-top: 4rem;
           width: 100%;
-          max-width: 900px;
         }
         .feature-card {
           background: #fff;
@@ -128,6 +135,9 @@ const Home = () => {
             grid-template-columns: 1fr;
             gap: 1.5rem;
             max-width: 400px;
+          }
+          .feature-cards-wrapper {
+            justify-content: center;
           }
         }
         @media (max-width: 768px) {
