@@ -165,7 +165,7 @@ const WebhookPage: React.FC = () => {
           <button 
             onClick={handleOpen} 
             disabled={loading} 
-            className="primary-btn"
+            className="create-btn"
           >
             {loading ? (
               <>

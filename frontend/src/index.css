@@ -1872,12 +1872,14 @@ button:disabled {
   background: linear-gradient(135deg, #22C55E, #16a34a);
   color: white;
   border: none;
-  padding: 0.75rem 1.5rem;
+  padding: 0.5rem 1.25rem;
   border-radius: 6px;
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
+  min-width: 180px;
+  white-space: nowrap;
 }
 
 .create-btn:hover:not(:disabled) {
