@@ -10,9 +10,9 @@ const SidebarLayout: React.FC<Props> = ({ children }) => {
   return (
     <div className="layout">
       <div className="sidebar">
-        <div className="sidebar-logo">
+        <div className="sidebar-logo" style={{ justifyContent: 'center' }}>
           <Link to="/" className="site-logo">
-            <img src="/logo.svg" alt="WebhookMirror logo" className="logo-img" style={{ width: 120, height: 'auto', display: 'block' }} />
+            <img src="/logo-icon.svg" alt="WebhookMirror icon" style={{ width: 48, height: 'auto', display: 'block' }} />
           </Link>
         </div>
         
