@@ -9,11 +9,9 @@ Refer to `workflow.md` for the ongoing development notes and checklist derived f
 ## Features
 
 - Sidebar navigation with quick access to **Start Testing**, **Dashboard** and **API Tester**
-- Request inspector with tabs for headers, body, query params and cookies
 - Export captured requests to JSON
 - Clear all requests for an endpoint
 - Copy any request as a cURL command
-- Replay captured requests to any target URL
 
 ## Running the application
 
@@ -87,9 +85,3 @@ Navigate to `/api-test` in the frontend to open the **API Tester**. Enter the in
 * After sending requests, open the generated endpoint page in your browser.
 * The list of captured requests appears. Click any entry to view full headers and body.
 * Use these details to debug your webhook integrations.
-
-### Replaying requests
-
-* While viewing a request in the inspector, click **Replay**.
-* Enter the target URL you want to send the captured request to.
-* The backend will resend the request and report the status code.

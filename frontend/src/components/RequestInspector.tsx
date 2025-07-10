@@ -37,22 +37,6 @@ const RequestInspector: React.FC<Props> = ({ request, endpointUuid }) => {
     alert('Copied as cURL');
   };
 
-  const replayRequest = async () => {
-    const target = window.prompt('Replay to URL:', `${window.location.origin}/${endpointUuid}`);
-    if (!target) return;
-    try {
-      const res = await fetch(`/api/requests/${request.id}/replay`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ target_url: target })
-      });
-      const data = await res.json();
-      alert(`Replay status: ${data.status}`);
-    } catch {
-      alert('Replay failed');
-    }
-  };
-
   const parsedHeaders = useMemo(() => {
     if (typeof request.headers === 'string') {
       try {
@@ -76,10 +60,7 @@ const RequestInspector: React.FC<Props> = ({ request, endpointUuid }) => {
     <div className="inspector">
       <div className="flex justify-between mb-2">
         <h2 className="text-xl">Request {request.id}</h2>
-        <div className="space-x-2">
-          <button className="btn" onClick={copyCurl}>Copy as cURL</button>
-          <button className="btn" onClick={replayRequest}>Replay</button>
-        </div>
+        <button className="btn" onClick={copyCurl}>Copy as cURL</button>
       </div>
       <Tabs tabs={['Raw', 'Headers', 'Body', 'Query Params', 'Cookies']} active={active} onChange={setActive} />
       {active === 'Raw' && (
