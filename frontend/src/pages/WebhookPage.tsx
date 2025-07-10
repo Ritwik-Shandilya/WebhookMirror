@@ -86,11 +86,11 @@ const WebhookPage: React.FC = () => {
     <div className="container">
       <h1 className="header">Start Testing</h1>
       <p className="mb-4">Enter an existing endpoint ID or leave blank to create a new one.</p>
-      <div className="mb-4 flex" style={{gap: '0.5rem', alignItems: 'flex-end', justifyContent: 'center'}}>
+      <div className="mb-4 flex" style={{gap: '0.5rem', alignItems: 'center', justifyContent: 'center'}}>
         <input
           type="text"
           className="url-box"
-          style={{ width: '220px' }}
+          style={{ width: '220px', marginBottom: 0 }}
           value={uuidInput}
           onChange={e => setUuidInput(e.target.value)}
           placeholder="Endpoint ID (optional)"
