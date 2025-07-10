@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import SidebarLayout from '../components/SidebarLayout';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const [showMore, setShowMore] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => setShowMore(true);
@@ -21,6 +23,23 @@ const Home = () => {
           flex-direction: column;
           background: #f9fafb;
           color: #1f2937;
+          position: relative;
+        }
+        .home-top-actions {
+          position: absolute;
+          top: 2rem;
+          right: 2rem;
+          z-index: 10;
+        }
+        @media (max-width: 768px) {
+          .home-top-actions {
+            position: static;
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 1rem;
+            right: 0;
+            top: 0;
+          }
         }
         .hero {
           text-align: center;
@@ -106,6 +125,17 @@ const Home = () => {
           .info-item { font-size: 1.25rem; }
         }
       `}</style>
+      <div className="home-top-actions">
+        <button
+          className="start-testing-btn home-cta-btn"
+          onClick={() => navigate('/webhook')}
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          <span>Start Testing</span>
+        </button>
+      </div>
       <main className="hero">
         <h1>Debug webhooks <span>effortlessly</span></h1>
         <p className="subtext">Spin up a session-based URL and watch your requests arrive in real time.</p>
