@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-# Build frontend into Rails public folder
-cd frontend
-npm run build
-cd ../backend
-
-# Start Rails server
+# Start Rails server from the backend directory.
+cd backend
 bundle exec rails server
