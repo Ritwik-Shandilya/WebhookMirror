@@ -1868,23 +1868,25 @@ button:disabled {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  background: linear-gradient(135deg, #22C55E, #16a34a);
-  color: white;
+  gap: 0.4rem;
+  background: linear-gradient(135deg, #22C55E, #16a34a) !important;
+  color: #fff !important;
   border: none;
-  padding: 0.5rem 1.25rem;
+  padding: 0.45rem 1.1rem !important;
   border-radius: 6px;
-  font-size: 1rem;
-  font-weight: 500;
+  font-size: 0.97rem !important;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
-  min-width: 180px;
+  min-width: 140px;
   white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.10);
 }
 
 .create-btn:hover:not(:disabled) {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+  background: linear-gradient(135deg, #16a34a, #22C55E) !important;
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 4px 16px rgba(34, 197, 94, 0.15);
 }
 
 .create-btn:disabled {
@@ -2125,14 +2127,15 @@ button:disabled {
 .dropdown-item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: 0.4rem 0.85rem !important;
   background: transparent;
   border: none;
   border-radius: 6px;
   color: #374151;
-  font-size: 0.875rem;
+  font-size: 0.93rem !important;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
   text-align: left;
