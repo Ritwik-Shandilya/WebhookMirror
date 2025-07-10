@@ -29,7 +29,7 @@ curl -X POST http://localhost:3000/<endpoint-id> \
 
 ## Running the application
 
-The backend and frontend are developed separately in development, but the production build runs from a single Rails server. Ensure you have **Ruby** (version 3.0 or higher) and **Node.js** (version 18 or higher) installed on your machine.
+The backend and frontend are developed separately in development and are deployed as independent services in production. Ensure you have **Ruby** (version 3.0 or higher) and **Node.js** (version 18 or higher) installed on your machine.
 
 ### 1. Start the Rails API backend (development)
 
@@ -52,21 +52,43 @@ npm run dev           # start Vite dev server on http://localhost:5173
 
 With both servers running you can browse to `http://localhost:5173` to use the application while it interacts with the Rails API running on port 3000.
 
-### Building and running the full stack
+### Building for production
 
-To build the frontend and serve it via Rails on a single port run:
+Build the React frontend as a static site:
 
 ```bash
-./start.sh
+cd frontend
+npm install
+npm run build
 ```
 
-The script checks for Bundler and the required Ruby gems. If they are missing
-they will be installed automatically before the Rails server starts.
+Deploy the contents of `frontend/dist` to your static hosting service.
 
-When deploying to platforms like Heroku, the frontend is automatically built by
-the `heroku-postbuild` script defined in the repository root `package.json`. The
-`start.sh` script therefore only launches the Rails server in production
-environments.
+Deploy the Rails API separately. The service should run `bundle install` during
+build and start with:
+
+```bash
+bundle exec puma -C config/puma.rb
+```
+
+Run database migrations in a release phase using:
+
+```bash
+bundle exec rake db:migrate
+```
+
+When deploying to platforms like **Render** or **Railway**, configure two
+separate services:
+
+1. **Static Site**
+   - Root directory: `frontend/`
+   - Build command: `npm install && npm run build`
+   - Publish directory: `frontend/dist`
+2. **Rails API**
+   - Root directory: `backend/`
+   - Build command: `bundle install`
+   - Start command: `bundle exec puma -C config/puma.rb`
+   - Release command: `bundle exec rake db:migrate`
 
 
 The UI follows [Neetix](https://neetix.neetokb.com/) best practices such as using sentence case and clear loading states.
