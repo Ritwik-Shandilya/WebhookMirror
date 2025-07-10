@@ -66,6 +66,12 @@ const WebhookPage: React.FC = () => {
     }
   };
 
+  const openEndpoint = () => {
+    if (endpointUrl) {
+      window.open(endpointUrl, '_blank');
+    }
+  };
+
   const loadRequests = async () => {
     if (!endpointId) return;
     const res = await fetch(`/api/endpoints/${endpointId}/requests`);
@@ -103,9 +109,9 @@ const WebhookPage: React.FC = () => {
       />
       {endpointUrl && (
         <div className="link-box">
-          <a href={endpointUrl} target="_blank" rel="noopener noreferrer">
+          <button onClick={openEndpoint} className="btn">
             Open endpoint
-          </a>
+          </button>
         </div>
       )}
       {captureUrl && (

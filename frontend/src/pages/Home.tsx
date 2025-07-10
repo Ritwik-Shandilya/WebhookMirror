@@ -1,33 +1,7 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import SidebarLayout from '../components/SidebarLayout';
 
 const Home = () => {
-  const navigate = useNavigate();
-  const [existingUuid, setExistingUuid] = React.useState('');
-  const [expiresAt, setExpiresAt] = React.useState('');
-
-  const createEndpoint = async () => {
-    try {
-      const res = await fetch('/api/endpoints', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ expires_at: expiresAt || null })
-      });
-      if (!res.ok) throw new Error('Failed to create endpoint');
-      const data = await res.json();
-      if (!data.uuid) throw new Error('Invalid response');
-      navigate(`/endpoint/${data.uuid}`);
-    } catch (err) {
-      alert('Failed to create endpoint. Is the backend running?');
-    }
-  };
-
-  const openExistingEndpoint = () => {
-    if (existingUuid.trim()) {
-      navigate(`/endpoint/${existingUuid.trim()}`);
-    }
-  };
 
   return (
     <SidebarLayout>
@@ -119,28 +93,7 @@ const Home = () => {
       <main className="hero">
         <h1>Debug webhooks <span>effortlessly</span></h1>
         <p className="subtext">Spin up a session-based URL and watch your requests arrive in real time.</p>
-        <div className="actions" style={{ marginBottom: '1rem' }}>
-          <input
-            type="text"
-            className="url-box"
-            style={{ width: '220px' }}
-            value={existingUuid}
-            onChange={e => setExistingUuid(e.target.value)}
-            placeholder="Existing endpoint ID"
-          />
-          <button className="cta" onClick={openExistingEndpoint}>Open</button>
-        </div>
-        <div className="actions">
-          <input
-            type="datetime-local"
-            className="url-box"
-            style={{ width: '220px' }}
-            value={expiresAt}
-            onChange={e => setExpiresAt(e.target.value)}
-            placeholder="Expiry (optional)"
-          />
-          <button className="cta" onClick={createEndpoint}>Create Endpoint</button>
-        </div>
+        {/* Removed endpoint creation controls */}
       </main>
       <section className="features">
         <div className="feature">Instant</div>
@@ -160,7 +113,7 @@ const Home = () => {
       </div>
       <h2 style={{ textAlign: 'center', fontSize: '1.25rem', fontWeight: 600, marginBottom: '0.5rem' }}>How it works</h2>
       <div className="info-grid">
-        <div className="info-item">1. Create a unique endpoint using the form above</div>
+        <div className="info-item">1. Create a unique endpoint from the Start Testing page</div>
         <div className="info-item">2. Send HTTP requests from your service or via curl</div>
         <div className="info-item">3. Inspect the requests here in real time</div>
       </div>
