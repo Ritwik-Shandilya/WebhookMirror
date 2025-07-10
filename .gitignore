@@ -7,10 +7,10 @@
 /tmp/*
 !/tmp/.keep
 
-# Frontend build output served by Rails
-/public/assets/
-/public/index.html
-/public/logo.svg
+# Frontend build output served by Rails (allow for deployment)
+# /public/assets/
+# /public/index.html
+# /public/logo.svg
 
 # Frontend dependencies
 /frontend/node_modules/

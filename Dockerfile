@@ -48,6 +48,7 @@ COPY . .
 # Build frontend
 WORKDIR /rails/frontend
 RUN yarn install && yarn build
+RUN ls -la /rails/public/ || echo "Public directory not found"
 
 # Return to Rails directory
 WORKDIR /rails
@@ -61,6 +62,9 @@ FROM base
 # Copy built artifacts: gems, application
 COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --from=build /rails /rails
+
+# Verify frontend files are copied
+RUN ls -la /rails/public/ || echo "Public directory not found in final stage"
 
 # Run and own only the runtime files as a non-root user for security
 RUN groupadd --system --gid 1000 rails && \
