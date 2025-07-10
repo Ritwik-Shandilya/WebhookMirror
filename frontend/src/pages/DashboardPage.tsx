@@ -155,7 +155,6 @@ const DashboardPage: React.FC = () => {
                 <th>Created</th>
                 <th>Expires</th>
                 <th>Status</th>
-                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -163,7 +162,7 @@ const DashboardPage: React.FC = () => {
                 <React.Fragment key={e.id}>
                   {(idx === 0 || pagedEndpoints[idx - 1].group !== e.group) && (
                     <tr className="group-header-row">
-                      <td colSpan={6} className="group-header">
+                      <td colSpan={5} className="group-header">
                         <div className="group-header-content">
                           <span className="group-title">{e.group}</span>
                           <span className="group-count">
@@ -182,27 +181,65 @@ const DashboardPage: React.FC = () => {
                     <td className="capture-url-cell">
                       <div className="capture-url-container">
                         <span className="capture-url">{window.location.origin}/{e.uuid}</span>
-                        <button 
-                          className={`copy-url-btn ${copiedId === e.id ? 'copied' : ''}`}
-                          onClick={() => copyCaptureUrl(e.uuid, e.id)}
-                          title="Copy capture URL"
-                        >
-                          {copiedId === e.id ? (
-                            <>
+                        <div className="url-actions">
+                          <button 
+                            className={`copy-url-btn ${copiedId === e.id ? 'copied' : ''}`}
+                            onClick={() => copyCaptureUrl(e.uuid, e.id)}
+                            title="Copy capture URL"
+                          >
+                            {copiedId === e.id ? (
+                              <>
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                </svg>
+                                Copied!
+                              </>
+                            ) : (
+                              <>
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                </svg>
+                                Copy
+                              </>
+                            )}
+                          </button>
+                          
+                          <div className="dropdown-container">
+                            <button 
+                              className="dropdown-toggle" 
+                              onClick={() => toggleMenu(e.id)}
+                              title="More actions"
+                            >
                               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
                               </svg>
-                              Copied!
-                            </>
-                          ) : (
-                            <>
-                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                              </svg>
-                              Copy
-                            </>
-                          )}
-                        </button>
+                            </button>
+                            {openMenuId === e.id && (
+                              <div className="dropdown-menu">
+                                <button 
+                                  onClick={() => toggleDisabled(e.id, !e.disabled)}
+                                  className="dropdown-item"
+                                >
+                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={e.disabled ? "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" : "M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636m12.728 12.728L18.364 5.636M5.636 18.364l12.728-12.728"} />
+                                  </svg>
+                                  {e.disabled ? 'Enable' : 'Disable'}
+                                </button>
+                                <button
+                                  disabled={!e.can_delete}
+                                  onClick={() => deleteEndpoint(e.id)}
+                                  className={`dropdown-item ${!e.can_delete ? 'disabled' : 'danger'}`}
+                                  title={!e.can_delete ? e.delete_reason || 'Cannot delete' : 'Delete endpoint'}
+                                >
+                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                  </svg>
+                                  Delete
+                                </button>
+                              </div>
+                            )}
+                          </div>
+                        </div>
                       </div>
                     </td>
                     <td className="timestamp">{formatTimestamp(e.created_at)}</td>
@@ -213,43 +250,6 @@ const DashboardPage: React.FC = () => {
                       <span className={`status-badge ${e.disabled ? 'disabled' : 'active'}`}>
                         {e.disabled ? 'Disabled' : 'Active'}
                       </span>
-                    </td>
-                    <td className="actions">
-                      <div className="actions-container">
-                        <button 
-                          className="actions-toggle" 
-                          onClick={() => toggleMenu(e.id)}
-                          title="More actions"
-                        >
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-                          </svg>
-                        </button>
-                        {openMenuId === e.id && (
-                          <div className="actions-menu horizontal">
-                            <button 
-                              onClick={() => toggleDisabled(e.id, !e.disabled)}
-                              className="action-btn"
-                            >
-                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={e.disabled ? "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" : "M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636m12.728 12.728L18.364 5.636M5.636 18.364l12.728-12.728"} />
-                              </svg>
-                              {e.disabled ? 'Enable' : 'Disable'}
-                            </button>
-                            <button
-                              disabled={!e.can_delete}
-                              onClick={() => deleteEndpoint(e.id)}
-                              className="action-btn danger"
-                              title={!e.can_delete ? e.delete_reason || 'Cannot delete' : 'Delete endpoint'}
-                            >
-                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                              </svg>
-                              Delete
-                            </button>
-                          </div>
-                        )}
-                      </div>
                     </td>
                   </tr>
                 </React.Fragment>
