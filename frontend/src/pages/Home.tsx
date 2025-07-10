@@ -74,20 +74,30 @@ const Home = () => {
         .info-grid {
           display: grid;
           gap: 1rem;
-          grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
           padding: 1rem;
           margin-bottom: 2rem;
         }
         .info-item {
           background: #ffffff;
-          padding: 1rem 1.5rem;
+          padding: 1.5rem 2rem;
           border-radius: 8px;
           box-shadow: 0 2px 4px rgba(0,0,0,0.05);
           text-align: left;
+          color: #6b7280;
+          font-size: 1.125rem;
+        }
+        .section-title {
+          text-align: center;
+          font-size: 2.5rem;
+          font-weight: 700;
+          margin-bottom: 1rem;
         }
         @media (min-width: 768px) {
           .hero h1 { font-size: 3rem; }
           .subtext { font-size: 1.25rem; }
+          .section-title { font-size: 3rem; }
+          .info-item { font-size: 1.25rem; }
         }
       `}</style>
       <main className="hero">
@@ -96,22 +106,22 @@ const Home = () => {
         {/* Removed endpoint creation controls */}
       </main>
       <section className="features">
-        <div className="feature">Instant</div>
-        <div className="feature">100% Free</div>
-        <div className="feature">Real-time</div>
+        <div className="feature">Easy setup</div>
+        <div className="feature">Open source</div>
+        <div className="feature">Session-based</div>
       </section>
       <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
         <p style={{ marginBottom: '0.5rem' }}>Example curl command:</p>
         <pre className="code-box" style={{ display: 'inline-block', textAlign: 'left' }}>{`curl -X POST http://localhost:3000/<endpoint-id> -H "Content-Type: application/json" -d '{"hello":"world"}'`}</pre>
       </div>
-      <h2 style={{ textAlign: 'center', fontSize: '1.25rem', fontWeight: 600, marginBottom: '0.5rem' }}>Features</h2>
+      <h2 className="section-title">Features</h2>
       <div className="info-grid">
         <div className="info-item">Sidebar navigation with quick access to Start Testing, Dashboard and API Tester</div>
         <div className="info-item">Export captured requests to JSON</div>
         <div className="info-item">Clear all requests for an endpoint</div>
         <div className="info-item">Copy any request as a cURL command</div>
       </div>
-      <h2 style={{ textAlign: 'center', fontSize: '1.25rem', fontWeight: 600, marginBottom: '0.5rem' }}>How it works</h2>
+      <h2 className="section-title">How it works</h2>
       <div className="info-grid">
         <div className="info-item">1. Create a unique endpoint from the Start Testing page</div>
         <div className="info-item">2. Send HTTP requests from your service or via curl</div>
