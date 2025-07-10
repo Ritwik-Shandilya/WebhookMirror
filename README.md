@@ -34,7 +34,6 @@ The backend and frontend are developed separately in development and are deploye
 ### 1. Start the Rails API backend (development)
 
 ```bash
-cd backend
 bundle install        # install Ruby gems
 bin/rails db:setup    # create and migrate the database
 bin/dev               # start the Rails server on http://localhost:3000
@@ -85,10 +84,18 @@ separate services:
    - Build command: `npm install && npm run build`
    - Publish directory: `frontend/dist`
 2. **Rails API**
-   - Root directory: `backend/`
+   - Root directory: `.`
    - Build command: `bundle install`
    - Start command: `bundle exec puma -C config/puma.rb`
    - Release command: `bundle exec rake db:migrate`
+
+When using NeetoDeploy set `NEETO_DEPLOY_PROCESS_TYPE` to:
+```json
+{
+  "release": "bundle exec rake db:migrate",
+  "web": "bundle exec puma -C config/puma.rb"
+}
+```
 
 
 The UI follows [Neetix](https://neetix.neetokb.com/) best practices such as using sentence case and clear loading states.
