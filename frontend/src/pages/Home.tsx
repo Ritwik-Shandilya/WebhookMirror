@@ -4,13 +4,15 @@ import SidebarLayout from '../components/SidebarLayout';
 
 const Home = () => {
   const navigate = useNavigate();
+  const [existingUuid, setExistingUuid] = React.useState('');
+  const [expiresAt, setExpiresAt] = React.useState('');
 
   const createEndpoint = async () => {
     try {
       const res = await fetch('/api/endpoints', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ expires_at: null })
+        body: JSON.stringify({ expires_at: expiresAt || null })
       });
       if (!res.ok) throw new Error('Failed to create endpoint');
       const data = await res.json();
@@ -18,6 +20,12 @@ const Home = () => {
       navigate(`/endpoint/${data.uuid}`);
     } catch (err) {
       alert('Failed to create endpoint. Is the backend running?');
+    }
+  };
+
+  const openExistingEndpoint = () => {
+    if (existingUuid.trim()) {
+      navigate(`/endpoint/${existingUuid.trim()}`);
     }
   };
 
@@ -89,6 +97,20 @@ const Home = () => {
           gap: 0.75rem;
           justify-content: center;
         }
+        .info-grid {
+          display: grid;
+          gap: 1rem;
+          grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+          padding: 1rem;
+          margin-bottom: 2rem;
+        }
+        .info-item {
+          background: #ffffff;
+          padding: 1rem 1.5rem;
+          border-radius: 8px;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+          text-align: left;
+        }
         @media (min-width: 768px) {
           .hero h1 { font-size: 3rem; }
           .subtext { font-size: 1.25rem; }
@@ -97,7 +119,28 @@ const Home = () => {
       <main className="hero">
         <h1>Debug webhooks <span>effortlessly</span></h1>
         <p className="subtext">Spin up a session-based URL and watch your requests arrive in real time.</p>
-        <button className="cta" onClick={createEndpoint}>Start Testing Now</button>
+        <div className="actions" style={{ marginBottom: '1rem' }}>
+          <input
+            type="text"
+            className="url-box"
+            style={{ width: '220px' }}
+            value={existingUuid}
+            onChange={e => setExistingUuid(e.target.value)}
+            placeholder="Existing endpoint ID"
+          />
+          <button className="cta" onClick={openExistingEndpoint}>Open</button>
+        </div>
+        <div className="actions">
+          <input
+            type="datetime-local"
+            className="url-box"
+            style={{ width: '220px' }}
+            value={expiresAt}
+            onChange={e => setExpiresAt(e.target.value)}
+            placeholder="Expiry (optional)"
+          />
+          <button className="cta" onClick={createEndpoint}>Create Endpoint</button>
+        </div>
       </main>
       <section className="features">
         <div className="feature">Instant</div>
@@ -109,18 +152,18 @@ const Home = () => {
         <pre className="code-box" style={{ display: 'inline-block', textAlign: 'left' }}>{`curl -X POST http://localhost:3000/<endpoint-id> -H "Content-Type: application/json" -d '{"hello":"world"}'`}</pre>
       </div>
       <h2 style={{ textAlign: 'center', fontSize: '1.25rem', fontWeight: 600, marginBottom: '0.5rem' }}>Features</h2>
-      <ul style={{ textAlign: 'left', maxWidth: '600px', margin: '0 auto 1.5rem', listStyle: 'disc inside' }}>
-        <li>Sidebar navigation with quick access to Start Testing, Dashboard and API Tester</li>
-        <li>Export captured requests to JSON</li>
-        <li>Clear all requests for an endpoint</li>
-        <li>Copy any request as a cURL command</li>
-      </ul>
+      <div className="info-grid">
+        <div className="info-item">Sidebar navigation with quick access to Start Testing, Dashboard and API Tester</div>
+        <div className="info-item">Export captured requests to JSON</div>
+        <div className="info-item">Clear all requests for an endpoint</div>
+        <div className="info-item">Copy any request as a cURL command</div>
+      </div>
       <h2 style={{ textAlign: 'center', fontSize: '1.25rem', fontWeight: 600, marginBottom: '0.5rem' }}>How it works</h2>
-      <ol style={{ textAlign: 'left', maxWidth: '600px', margin: '0 auto', listStyle: 'decimal inside' }}>
-        <li>Create a unique endpoint using the Start Testing button</li>
-        <li>Send HTTP requests from your service or via curl</li>
-        <li>Inspect the requests here in real time</li>
-      </ol>
+      <div className="info-grid">
+        <div className="info-item">1. Create a unique endpoint using the form above</div>
+        <div className="info-item">2. Send HTTP requests from your service or via curl</div>
+        <div className="info-item">3. Inspect the requests here in real time</div>
+      </div>
     </div>
     </SidebarLayout>
   );

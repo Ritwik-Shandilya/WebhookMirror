@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SidebarLayout from '../components/SidebarLayout';
 
 interface Req {
@@ -10,6 +11,7 @@ interface Req {
 }
 
 const WebhookPage: React.FC = () => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [endpointUrl, setEndpointUrl] = useState('');
   const [captureUrl, setCaptureUrl] = useState('');
@@ -17,6 +19,7 @@ const WebhookPage: React.FC = () => {
   const [endpointId, setEndpointId] = useState<number | null>(null);
   const [requests, setRequests] = useState<Req[]>([]);
   const [expiresAt, setExpiresAt] = useState('');
+  const [existingUuid, setExistingUuid] = useState('');
 
   const [apiStatus, setApiStatus] = useState<string | null>(null);
   const [apiHeaders, setApiHeaders] = useState<Record<string, string> | null>(null);
@@ -57,6 +60,12 @@ const WebhookPage: React.FC = () => {
     }
   };
 
+  const openExisting = () => {
+    if (existingUuid.trim()) {
+      navigate(`/endpoint/${existingUuid.trim()}`);
+    }
+  };
+
   const loadRequests = async () => {
     if (!endpointId) return;
     const res = await fetch(`/api/endpoints/${endpointId}/requests`);
@@ -75,6 +84,17 @@ const WebhookPage: React.FC = () => {
     <div className="container">
       <h1 className="header">Webhook Mirror</h1>
       <p className="mb-4">WebhookMirror lets you capture and inspect HTTP requests. Generate a unique URL below and send your webhooks to it.</p>
+      <div className="mb-2 flex" style={{gap: '0.5rem', alignItems: 'center'}}>
+        <input
+          type="text"
+          className="url-box"
+          style={{ width: '220px' }}
+          value={existingUuid}
+          onChange={e => setExistingUuid(e.target.value)}
+          placeholder="Existing endpoint ID"
+        />
+        <button onClick={openExisting} className="btn">Open</button>
+      </div>
       <textarea
         className="url-box"
         readOnly

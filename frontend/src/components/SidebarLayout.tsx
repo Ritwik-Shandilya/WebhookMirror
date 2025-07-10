@@ -1,28 +1,11 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 interface Props {
   children: React.ReactNode;
 }
 
 const SidebarLayout: React.FC<Props> = ({ children }) => {
-  const navigate = useNavigate();
-
-  const startTesting = async () => {
-    try {
-      const res = await fetch('/api/endpoints', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ expires_at: null })
-      });
-      if (!res.ok) throw new Error('Failed to create endpoint');
-      const data = await res.json();
-      if (!data.uuid) throw new Error('Invalid response');
-      navigate(`/endpoint/${data.uuid}`);
-    } catch (err) {
-      alert('Failed to create endpoint. Is the backend running?');
-    }
-  };
 
   return (
     <div className="layout">
@@ -33,17 +16,7 @@ const SidebarLayout: React.FC<Props> = ({ children }) => {
             <span className="logo-text">Webhook Mirror</span>
           </Link>
         </div>
-        <div
-          className="nav-item"
-          role="button"
-          tabIndex={0}
-          onClick={startTesting}
-          onKeyDown={e => {
-            if (e.key === 'Enter' || e.key === ' ') startTesting();
-          }}
-        >
-          Start Testing
-        </div>
+        <Link to="/webhook" className="nav-item">Start Testing</Link>
         <Link to="/" className="nav-item">Home</Link>
         <Link to="/dashboard" className="nav-item">Dashboard</Link>
         <Link to="/api-test" className="nav-item">API Tester</Link>
