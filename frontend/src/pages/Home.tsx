@@ -1,30 +1,49 @@
-import React, { useEffect, useState } from 'react';
-import SidebarLayout from '../components/SidebarLayout';
-import { useHistory } from 'react-router-dom';
-import { Button } from '@bigbinary/neetoui';
+import React from "react";
+import SidebarLayout from "../components/SidebarLayout";
+import { Button } from "@bigbinary/neetoui";
+
+const featureBadges = [
+  "Easy setup",
+  "Open source",
+  "Session-based"
+];
 
 const Home = () => {
-  const [showMore, setShowMore] = useState(false);
-  const history = useHistory();
-
-  useEffect(() => {
-    const handleScroll = () => setShowMore(true);
-    window.addEventListener('scroll', handleScroll, { once: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
     <SidebarLayout>
-    <div className="home-page">
+      <div className="home-landing">
+        <div className="home-top-actions">
+          <Button
+            label="Start Testing"
+            style={{ minWidth: 120 }}
+            size="large"
+            className="home-cta-btn"
+            onClick={() => window.location.href = "/webhook"}
+          />
+        </div>
+        <div className="hero-section">
+          <h1 className="hero-title">
+            Debug webhooks <span className="hero-accent">effortlessly</span>
+          </h1>
+          <p className="hero-subtext">
+            Spin up a session-based URL and watch your requests arrive in real time.
+          </p>
+        </div>
+        <div className="feature-badges">
+          {featureBadges.map(badge => (
+            <span className="feature-badge" key={badge}>{badge}</span>
+          ))}
+        </div>
+      </div>
       <style>{`
-        .home-page {
-          font-family: Arial, sans-serif;
+        .home-landing {
           min-height: 100vh;
           display: flex;
           flex-direction: column;
-          background: #f9fafb;
-          color: #1f2937;
+          align-items: center;
+          justify-content: center;
           position: relative;
+          background: #f8fafc;
         }
         .home-top-actions {
           position: absolute;
@@ -32,141 +51,56 @@ const Home = () => {
           right: 2rem;
           z-index: 10;
         }
-        @media (max-width: 768px) {
-          .home-top-actions {
-            position: static;
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 1rem;
-            right: 0;
-            top: 0;
-          }
-        }
-        .hero {
-          text-align: center;
-          padding: 3rem 1rem;
-          flex: 1;
+        .hero-section {
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
+          flex: 1;
+          margin-top: 6vh;
         }
-        .hero h1 {
-          font-size: 2.5rem;
-          font-weight: 700;
-          margin-bottom: 1rem;
+        .hero-title {
+          font-size: 3rem;
+          font-weight: 800;
+          color: #1a1a1a;
+          margin-bottom: 1.5rem;
+          text-align: center;
         }
-        .hero h1 span { color: #3B82F6; }
-        .subtext {
+        .hero-accent {
+          color: #2563eb;
+        }
+        .hero-subtext {
           color: #6b7280;
-          font-size: 1.125rem;
+          font-size: 1.25rem;
+          text-align: center;
           max-width: 600px;
-          margin-bottom: 2rem;
+          margin-bottom: 2.5rem;
         }
-        .cta {
-          background: #22C55E;
-          color: #ffffff;
-          border: none;
-          padding: 0.75rem 1.5rem;
-          font-size: 1rem;
-          border-radius: 6px;
-          cursor: pointer;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-          transition: background 0.2s, transform 0.1s;
-        }
-        .cta:hover { background: #16a34a; }
-        .cta:active { transform: translateY(1px); }
-        .features {
+        .feature-badges {
           display: flex;
+          gap: 1rem;
           justify-content: center;
-          gap: 0.75rem;
-          padding: 1rem;
-          flex-wrap: wrap;
+          margin-top: 4rem;
         }
-        .feature {
-          background: #22C55E;
-          color: #fff;
-          padding: 0.5rem 1rem;
+        .feature-badge {
+          background: #e6f9ed;
+          color: #16a34a;
+          padding: 0.5em 1.5em;
           border-radius: 9999px;
           font-weight: 600;
-          font-size: 0.875rem;
+          font-size: 1.05rem;
+          box-shadow: none;
+          border: none;
+          cursor: default;
+          letter-spacing: 0.01em;
+          transition: none;
         }
-        .actions {
-          padding-bottom: 2rem;
-          display: flex;
-          gap: 0.75rem;
-          justify-content: center;
-        }
-        .info-grid {
-          display: grid;
-          gap: 1rem;
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-          padding: 1rem;
-          margin-bottom: 2rem;
-        }
-        .info-item {
-          background: #ffffff;
-          padding: 1.5rem 2rem;
-          border-radius: 8px;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-          text-align: left;
-          color: #6b7280;
-          font-size: 1.125rem;
-        }
-        .section-title {
-          text-align: center;
-          font-size: 2.5rem;
-          font-weight: 700;
-          margin-bottom: 1rem;
-        }
-        @media (min-width: 768px) {
-          .hero h1 { font-size: 3rem; }
-          .subtext { font-size: 1.25rem; }
-          .section-title { font-size: 3rem; }
-          .info-item { font-size: 1.25rem; }
+        @media (max-width: 768px) {
+          .hero-title { font-size: 2rem; }
+          .home-top-actions { right: 1rem; top: 1rem; }
+          .feature-badges { flex-direction: column; gap: 0.5rem; margin-top: 2rem; }
         }
       `}</style>
-      <div className="home-top-actions">
-        <Button
-          onClick={() => history.push('/webhook')}
-          variant="primary"
-          size="medium"
-        >
-          Start Testing
-        </Button>
-      </div>
-      <main className="hero">
-        <h1>Debug webhooks <span>effortlessly</span></h1>
-        <p className="subtext">Spin up a session-based URL and watch your requests arrive in real time.</p>
-        {/* Removed endpoint creation controls */}
-      </main>
-      <section className="features">
-        <span className="feature-badge">Easy setup</span>
-        <span className="feature-badge">Open source</span>
-        <span className="feature-badge">Session-based</span>
-      </section>
-      {showMore && (
-        <>
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <p style={{ marginBottom: '0.5rem' }}>Example curl command:</p>
-          <pre className="code-box" style={{ display: 'inline-block', textAlign: 'left' }}>{`curl -X POST http://localhost:3000/<endpoint-id> -H "Content-Type: application/json" -d '{"hello":"world"}'`}</pre>
-        </div>
-        <h2 className="section-title">Features</h2>
-        <div className="info-grid">
-          <div className="info-item">Sidebar navigation with quick access to Start Testing, Dashboard and API Tester</div>
-          <div className="info-item">Export captured requests to JSON</div>
-          <div className="info-item">Clear all requests for an endpoint</div>
-          <div className="info-item">Copy any request as a cURL command</div>
-        </div>
-        <h2 className="section-title">How it works</h2>
-        <div className="info-grid">
-          <div className="info-item">1. Create a unique endpoint from the Start Testing page</div>
-          <div className="info-item">2. Send HTTP requests from your service or via curl</div>
-          <div className="info-item">3. Inspect the requests here in real time</div>
-        </div>
-        </>
-      )}
-    </div>
     </SidebarLayout>
   );
 };
