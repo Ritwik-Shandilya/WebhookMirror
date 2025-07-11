@@ -5,13 +5,13 @@ class Api::EndpointsController < ApplicationController
   end
 
   def create
-    endpoint = Endpoint.create!(uuid: SecureRandom.uuid, expires_at: params[:expires_at])
-    render json: { id: endpoint.id, uuid: endpoint.uuid, expires_at: endpoint.expires_at }
+    endpoint = Endpoint.create!(uuid: SecureRandom.uuid, expires_at: params[:expires_at], custom_subdomain: params[:custom_subdomain])
+    render json: { id: endpoint.id, uuid: endpoint.uuid, expires_at: endpoint.expires_at, custom_subdomain: endpoint.custom_subdomain }
   end
 
   def show_by_uuid
     endpoint = Endpoint.find_by!(uuid: params[:uuid])
-    render json: endpoint.as_json(methods: [ :can_delete, :delete_reason ])
+    render json: endpoint.as_json(methods: [ :can_delete, :delete_reason ], only: [:id, :uuid, :expires_at, :custom_subdomain])
   end
 
   def update
