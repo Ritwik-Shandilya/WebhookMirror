@@ -13,6 +13,7 @@
     "@bigbinary/neeto-hotkeys": "^1.0.9",
     "@bigbinary/neeto-icons": "^1.20.53",
     "@bigbinary/neetoui": "^8.3.13",
+    "@faker-js/faker": "^9.9.0",
     "@heroicons/react": "^2.2.0",
     "@tippyjs/react": "4.2.6",
     "antd": "^5.26.4",

@@ -3,6 +3,7 @@ import Tabs from './Tabs';
 import { JSONTree } from 'react-json-tree';
 import { Button } from '@bigbinary/neetoui';
 import { Copy } from '@bigbinary/neeto-icons';
+import RequestReplay from './RequestReplay';
 
 interface Props {
   request: {
@@ -88,12 +89,12 @@ const RequestInspector: React.FC<Props> = ({ request, endpointUuid }) => {
   return (
     <div className="request-inspector">
       {/* Header Section */}
-      <div className="inspector-header">
+      <div className="inspector-header neeto-header">
         <div className="request-info">
           <div className="request-badge">
             <span 
               className="method-badge"
-              style={{ backgroundColor: getMethodColor(request.method) }}
+              style={{ backgroundColor: '#3b82f6', color: '#fff' }}
             >
               {request.method}
             </span>
@@ -116,7 +117,7 @@ const RequestInspector: React.FC<Props> = ({ request, endpointUuid }) => {
       {/* Tabs */}
       <div className="inspector-tabs">
         <Tabs 
-          tabs={['Raw', 'Headers', 'Body', 'Query Params', 'Cookies']} 
+          tabs={['Raw', 'Headers', 'Body', 'Query Params', 'Cookies', 'Replay']} 
           active={active} 
           onChange={setActive} 
         />
@@ -299,7 +300,67 @@ const RequestInspector: React.FC<Props> = ({ request, endpointUuid }) => {
             </div>
           </div>
         )}
+
+        {active === 'Replay' && (
+          <div className="content-panel">
+            <div className="panel-header">
+              <h3>Request Replay</h3>
+              <span className="data-type">Edit & Resend</span>
+            </div>
+            <div className="data-viewer">
+              <RequestReplay request={request} endpointUuid={endpointUuid} />
+            </div>
+          </div>
+        )}
       </div>
+      <style>{`
+        .neeto-header {
+          background: #fff;
+          border-radius: 16px 16px 0 0;
+          border-bottom: 1px solid #e5e7eb;
+          box-shadow: 0 1px 4px rgba(30,41,59,0.03);
+          padding: 2rem 2rem 1.25rem 2rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+        .request-badge {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+        }
+        .method-badge {
+          background: #3b82f6;
+          color: #fff;
+          font-weight: 700;
+          font-size: 1rem;
+          border-radius: 8px;
+          padding: 0.4rem 1.1rem;
+          letter-spacing: 0.04em;
+          box-shadow: none;
+        }
+        .request-id {
+          font-size: 1.15rem;
+          color: #334155;
+          font-weight: 600;
+        }
+        .request-meta {
+          margin-left: 1.5rem;
+        }
+        .timestamp {
+          color: #64748b;
+          font-size: 1rem;
+          font-weight: 400;
+        }
+        @media (max-width: 600px) {
+          .neeto-header {
+            padding: 1rem 0.5rem 1rem 0.5rem;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+          }
+        }
+      `}</style>
     </div>
   );
 };

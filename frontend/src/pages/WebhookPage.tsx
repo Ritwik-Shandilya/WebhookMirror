@@ -7,6 +7,7 @@ import SearchInput from '../components/SearchInput';
 import LiveIndicator from '../components/LiveIndicator';
 import { Button, DatePicker, Spinner } from '@bigbinary/neetoui';
 import { Copy } from '@bigbinary/neeto-icons';
+import { faker } from '@faker-js/faker';
 
 const WebhookPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -18,6 +19,7 @@ const WebhookPage: React.FC = () => {
   const [selectedRequest, setSelectedRequest] = useState<Req | null>(null);
   const [expiresAt, setExpiresAt] = useState('');
   const [uuidInput, setUuidInput] = useState('');
+  const [customSubdomain, setCustomSubdomain] = useState('');
   const [loaded, setLoaded] = useState(false);
   const [search, setSearch] = useState('');
   const [methodFilter, setMethodFilter] = useState('');
@@ -38,7 +40,7 @@ const WebhookPage: React.FC = () => {
         res = await fetch('/api/endpoints', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ expires_at: expiresAt || null })
+          body: JSON.stringify({ expires_at: expiresAt || null, custom_subdomain: customSubdomain || null })
         });
       }
       if (!res.ok) throw new Error('Failed to load endpoint');
@@ -151,6 +153,29 @@ const WebhookPage: React.FC = () => {
                 onChange={e => setUuidInput(e.target.value)}
                 placeholder="Enter existing endpoint ID or leave blank"
               />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Custom Subdomain (optional)</label>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <input
+                  type="text"
+                  className="form-input"
+                  value={customSubdomain}
+                  onChange={e => setCustomSubdomain(e.target.value)}
+                  placeholder="e.g. stripe-user123"
+                  style={{ flex: 1 }}
+                />
+                <Button
+                  variant="secondary"
+                  size="small"
+                  onClick={() => setCustomSubdomain(
+                    faker.word.adjective() + '-' + faker.word.noun() + '-' + faker.number.int({ min: 100, max: 999 })
+                  )}
+                  style={{ whiteSpace: 'nowrap' }}
+                >
+                  Suggest
+                </Button>
+              </div>
             </div>
             <div className="form-group">
               <label className="form-label">Expiry time (optional)</label>
