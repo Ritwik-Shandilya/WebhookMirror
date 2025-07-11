@@ -44,17 +44,9 @@ const WebhookPage: React.FC = () => {
       }
       if (!res.ok) throw new Error('Failed to load endpoint');
       const data = await res.json();
-      const { protocol, hostname, origin } = window.location;
-      setCaptureUrl(`${origin}/${data.uuid}`);
-      // For localhost, use port 3000 for the Rails server, otherwise use the current origin
-      const endpointBase = hostname === 'localhost'
-        ? `${protocol}//${hostname}:3000`
-        : origin;
-      // The endpoint URL should be the same as the capture URL (just the UUID path)
-      setEndpointUrl(`${endpointBase}/${data.uuid}`);
-      const curlBase = hostname === 'localhost'
-        ? `${protocol}//${hostname}:3000`
-        : origin;
+      setCaptureUrl(`${window.location.origin}/${data.uuid}`);
+      setEndpointUrl(`${window.location.origin}/endpoint/${data.uuid}`);
+      const curlBase = window.location.origin;
       setCurlUrl(`${curlBase}/${data.uuid}`);
       setEndpointId(data.id);
       setApiStatus(`Success: ${res.status}`);
