@@ -19,12 +19,10 @@ const WebhookPage: React.FC = () => {
   const [selectedRequest, setSelectedRequest] = useState<Req | null>(null);
   const [expiresAt, setExpiresAt] = useState('');
   const [uuidInput, setUuidInput] = useState('');
-  const [customSubdomain, setCustomSubdomain] = useState('');
   const [loaded, setLoaded] = useState(false);
   const [search, setSearch] = useState('');
   const [methodFilter, setMethodFilter] = useState('');
   const [copiedUrl, setCopiedUrl] = useState<string | null>(null);
-  const [subdomainUrl, setSubdomainUrl] = useState('');
 
   const [apiStatus, setApiStatus] = useState<string | null>(null);
   const [apiHeaders, setApiHeaders] = useState<Record<string, string> | null>(null);
@@ -41,7 +39,7 @@ const WebhookPage: React.FC = () => {
         res = await fetch('/api/endpoints', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ expires_at: expiresAt || null, custom_subdomain: customSubdomain || null })
+          body: JSON.stringify({ expires_at: expiresAt || null })
         });
       }
       if (!res.ok) throw new Error('Failed to load endpoint');
@@ -65,13 +63,6 @@ const WebhookPage: React.FC = () => {
       setApiHeaders(headersObj);
       setUuidInput(data.uuid);
       setLoaded(true);
-      // Set subdomain URL if custom_subdomain is present
-      if (data.custom_subdomain) {
-        const baseDomain = hostname.split('.').slice(-3).join('.');
-        setSubdomainUrl(`${protocol}//${data.custom_subdomain}.${baseDomain}/`);
-      } else {
-        setSubdomainUrl('');
-      }
     } catch (err) {
       setApiStatus('Error loading endpoint');
     } finally {
@@ -163,29 +154,6 @@ const WebhookPage: React.FC = () => {
               />
             </div>
             <div className="form-group">
-              <label className="form-label">Custom Subdomain (optional)</label>
-              <div style={{ display: 'flex', gap: 8 }}>
-                <input
-                  type="text"
-                  className="form-input"
-                  value={customSubdomain}
-                  onChange={e => setCustomSubdomain(e.target.value)}
-                  placeholder="e.g. stripe-user123"
-                  style={{ flex: 1 }}
-                />
-                <Button
-                  variant="secondary"
-                  size="small"
-                  onClick={() => setCustomSubdomain(
-                    faker.word.adjective() + '-' + faker.word.noun() + '-' + faker.number.int({ min: 100, max: 999 })
-                  )}
-                  style={{ whiteSpace: 'nowrap' }}
-                >
-                  Suggest
-                </Button>
-              </div>
-            </div>
-            <div className="form-group">
               <label className="form-label">Expiry time (optional)</label>
               <DatePicker
                 value={expiresAt}
@@ -212,24 +180,6 @@ const WebhookPage: React.FC = () => {
         {loaded && (
           <div className="endpoint-results">
             <div className="results-grid">
-              {subdomainUrl && (
-                <div className="result-card">
-                  <div className="result-header">
-                    <h3 className="result-title">Subdomain URL</h3>
-                    <Button
-                      onClick={() => copyUrl(subdomainUrl, 'subdomain')}
-                      title="Copy subdomain URL"
-                      variant="primary"
-                      size="small"
-                    >
-                      {copiedUrl === 'subdomain' ? 'Copied!' : 'Copy'}
-                    </Button>
-                  </div>
-                  <div className="url-display">
-                    <code className="url-code">{subdomainUrl}</code>
-                  </div>
-                </div>
-              )}
               <div className="result-card">
                 <div className="result-header">
                   <h3 className="result-title">Capture URL</h3>
@@ -274,7 +224,7 @@ const WebhookPage: React.FC = () => {
             <div className="example-curl-section">
               <h3>Example cURL Commands</h3>
               <pre className="example-curl">
-{`curl -X POST ${subdomainUrl || captureUrl} \
+{`curl -X POST ${captureUrl} \
   -H "Content-Type: application/json" \
   -d '{"message": "Hello Webhook Mirror!"}'`}
               </pre>
