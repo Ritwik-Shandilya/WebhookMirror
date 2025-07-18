@@ -59,7 +59,7 @@ This document tracks progress on the WebhookMirror project derived from the prov
 - [ ] Abuse detection
 
 ### Milestones
-- [ ] MVP Launch
+- [x] MVP Launch
 - [ ] Inbox & DNS features
 - [ ] Teams & Sharing
 
@@ -87,3 +87,8 @@ This document tracks progress on the WebhookMirror project derived from the prov
 - Added API `GET /api/endpoints/by_uuid/:uuid` to look up endpoints from their capture URL.
 - Implemented React Router with pages for creating endpoints and inspecting requests.
 - Built basic request list and detail pages accessible via `/endpoint/:uuid` and `/endpoint/:uuid/request/:id`.
+- Re-ran `bundle install` and `bin/rails db:migrate` to verify the backend setup.
+- Started `bin/rails server` and successfully created and fetched a test request using `curl`.
+- Reinstalled frontend dependencies with `npm install` and generated a production build via `npm run build`.
+- Verified the build by running `npm run preview` locally.
+- With these checks completed, the core MVP functionality is working end-to-end.
